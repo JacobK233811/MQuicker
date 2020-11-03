@@ -111,6 +111,6 @@ def a():
 def n():
     for manga in mangas:
         latest_chapter, link = manga_strip(manga)
-    # Only renders if there is a new chapter
-    if float(latest_chapter) > manga[3]:
-        print(Fore.LIGHTMAGENTA_EX + f"{manga[0]}: {manga[3]} -> {latest_chapter} Copy to see it:{Fore.CYAN} {link}")
+        # Only renders if there is a new chapter
+        if float(latest_chapter) > manga[3]:
+            print(Fore.LIGHTMAGENTA_EX + f"{manga[0]}: {manga[3]} -> {latest_chapter} Copy to see it:{Fore.CYAN} {link}")
