@@ -30,6 +30,7 @@ mangas = [['Attack on Titan', 'https://attackontitanmanga.com/', 'AoT', 134],
           ["Leveling Up, by Only Eating!", 'https://mangadex.org/title/48217/leveling-up-by-only-eating', 'MangaDex', 1],
           ]
 
+
 # On most sites the desired element will be an anchor 'a' tag. However, this default dict allows us to specify exceptions
 source_elements = defaultdict(lambda: 'a')
 source_elements['ZeroLeviatan'] = 'span'
@@ -43,7 +44,8 @@ source_methods = {'AoT': 9, 'Mangelo': 'chapter-name text-nowrap', 'ZeroLeviatan
 
 # The i_or_cls parameter defined in source_methods will decide whether to find by index or class
 # This process will use the typing of that same item to do so
-def finder(parsed, el, i_or_cls):
+def finder(not_parsed, el, i_or_cls):
+    parsed = BeautifulSoup(not_parsed.content, 'html.parser')
     typ = type(i_or_cls)
     # If the source_methods dictionary a class, typ will have str type.
     # If the same dictionary holds index, typ will have int type
@@ -54,6 +56,8 @@ def finder(parsed, el, i_or_cls):
     else:
         tag = 'Error'
     output = tag.text.split()[-1].strip()
+
+    # Handling cases where the chapter number is not the last item of the text split
     try:
         float(output)
     except ValueError:
@@ -67,27 +71,36 @@ def finder(parsed, el, i_or_cls):
             except ValueError or IndexError:
                 # Returns 0 if the tag it found does not hold the chapter number
                 return "0"
+
+    # Posting the link directly to the chapter if possible, and to the chapter list if not
     if el == 'a':
         return output, tag.attrs['href']
-    return output
+    return output, not_parsed.url
+
+
+def manga_strip(manga):
+    # Pulling all the necessary info out of the manga list for quick reference
+    source_url = manga[1]
+    element = source_elements[manga[2]]
+    method = source_methods[manga[2]]
+    webpage = requests.get(source_url)
+
+    # Finder function enables one line to check any new properly defined list item (see line 16 comment)
+    latest_chapter, link = finder(webpage, element, method)
+    # In case it is a local reference to the chapter page (as with MangaDex)
+    if link[:8] != "https://":
+        link = source_url + link
+    return latest_chapter, link
 
 
 def a():
     for manga in mangas:
-        webpage = requests.get(manga[1])
-        soup = BeautifulSoup(webpage.content, 'html.parser')
-        # Finder function enables one line to check any new properly defined list item (see line 7 comment)
-        element = source_elements[manga[2]]
-        if element != 'a':
-            latest_chapter, link = finder(soup, element, source_methods[manga[2]]), manga[1]
-        else:
-            latest_chapter, link = finder(soup, element, source_methods[manga[2]])
-            if link[:8] != "https://":
-                link = manga[1] + link
+        latest_chapter, link = manga_strip(manga)
         # The below if-else statement changes the color of the output when the latest chapter is greater than the latest read
-        # If intending to access file through CLI, change color to "NEW " for the ~if~ and "" for the ~else~
+        # If intending to access file through CLI w/o iPython, change color to "NEW " for the ~if~ and "" for the ~else~
         if float(latest_chapter) > manga[3]:
             color = Fore.LIGHTYELLOW_EX
+            # The placeholder enables the feature of only showing links for items with a new chapter
             link_placeholder = link
         else:
             color = Fore.LIGHTBLUE_EX
@@ -97,15 +110,7 @@ def a():
 
 def n():
     for manga in mangas:
-        soup = BeautifulSoup(requests.get(manga[1]).content, 'html.parser')
-        # Finder function enables one line to check any new properly defined list item (see line 6 comment)
-        element = source_elements[manga[2]]
-        if element != 'a':
-            latest_chapter, link = finder(soup, element, source_methods[manga[2]]), manga[1]
-        else:
-            latest_chapter, link = finder(soup, element, source_methods[manga[2]])
-            if link[:8] != "https://":
-                link = manga[1] + link
-        # Only renders if there is a new chapter
-        if float(latest_chapter) > manga[3]:
-            print(Fore.LIGHTMAGENTA_EX + f"{manga[0]}: {manga[3]} -> {latest_chapter} Copy to see it:{Fore.CYAN} {link}")
+        latest_chapter, link = manga_strip(manga)
+    # Only renders if there is a new chapter
+    if float(latest_chapter) > manga[3]:
+        print(Fore.LIGHTMAGENTA_EX + f"{manga[0]}: {manga[3]} -> {latest_chapter} Copy to see it:{Fore.CYAN} {link}")
