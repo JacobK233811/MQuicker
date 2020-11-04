@@ -57,7 +57,6 @@ def finder(not_parsed, el, i_or_cls):
     else:
         tag = 'Error'
 
-    try:
     # Iterates over all words to find the chapter number and saves that number as an int if possible and if not, a float
     numbers = []
     for word in tag.text.split():
