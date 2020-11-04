@@ -16,18 +16,19 @@ from collections import defaultdict
 # Each list within the mangas list has the following parameters: Name, Link, Source, Latest Chapter Read
 mangas = [['Attack on Titan', 'https://attackontitanmanga.com/', 'AoT', 134],
           ['Solo Leveling', 'https://manganelo.com/manga/pn918005', 'Mangelo', 125],
-          ['Tales of Demons and Gods', 'https://manganelo.com/manga/hyer5231574354229', 'Mangelo', 299.1],
+          ['Tales of Demons and Gods', 'https://manganelo.com/manga/hyer5231574354229', 'Mangelo', 300.1],
           ['The Great Mage Returns After 4000 Years', 'https://manganelo.com/manga/go922760', 'Mangelo', 55],
           ['Second Life Ranker', 'https://zeroscans.com/comics/188504-second-life-ranker', 'ZeroLeviatan', 68],
-          ['I am the Sorcerer King', 'https://leviatanscans.com/comics/i-am-the-sorcerer-king', 'ZeroLeviatan', 114],
-          ['Descent of the Demonic Master', 'https://mangaeffect.com/manga/the-descent-of-the-demonic-master/', 'Effect', 71],
+          ['I am the Sorcerer King', 'https://leviatanscans.com/comics/i-am-the-sorcerer-king', 'ZeroLeviatan', 115],
+          ['Descent of the Demonic Master', 'https://mangaeffect.com/manga/the-descent-of-the-demonic-master/', 'Effect', 72],
           ['Chronicles of Heavenly Demon', 'https://www.readmng.com/chronicles-of-heavenly-demon-3', 'ReadMng', 119],
-          ['Iruma-Kun', 'https://www.readmng.com/mairimashita-iruma-kun', 'ReadMng', 166],
+          ['Iruma-Kun', 'https://www.readmng.com/mairimashita-iruma-kun', 'ReadMng', 168],
           ['Kingdom', 'https://www.readmng.com/kingdom', 'ReadMng', 659],
           ['Solo Auto Hunting', 'https://mangaeffect.com/manga/solo-auto-hunting/', 'Effect', 48],
-          ["The Scholar's Reincarnation", 'https://www.readmng.com/the-scholars-reincarnation', 'ReadMng', 10],
-          ["Demon Magic Emperor", 'https://manhuaplus.com/manga/demon-magic-emperor/', 'Plus', 1],
-          ["Leveling Up, by Only Eating!", 'https://mangadex.org/title/48217/leveling-up-by-only-eating', 'MangaDex', 1],
+          ["The Scholar's Reincarnation", 'https://www.readmng.com/the-scholars-reincarnation', 'ReadMng', 30],
+          ["Lessa", 'https://manganelo.com/manga/lessa', 'Mangelo', 11],
+          ["Demon Magic Emperor", 'https://manhuaplus.com/manga/demon-magic-emperor/', 'Plus', 3],
+          ["Leveling Up, by Only Eating!", 'https://mangadex.org/title/48217/leveling-up-by-only-eating', 'MangaDex', 23],
           ]
 
 
@@ -55,22 +56,22 @@ def finder(not_parsed, el, i_or_cls):
         tag = parsed.findAll(el)[i_or_cls]
     else:
         tag = 'Error'
-    output = tag.text.split()[-1].strip()
 
-    # Handling cases where the chapter number is not the last item of the text split
     try:
-        float(output)
-    except ValueError:
-        output = tag.text.split()[-2].strip()
+    # Iterates over all words to find the chapter number and saves that number as an int if possible and if not, a float
+    numbers = []
+    for word in tag.text.split():
         try:
-            float(output)
+            numbers.append(int(word.strip()))
         except ValueError:
-            output = tag.text.split()[-3].strip()
             try:
-                float(output)
-            except ValueError or IndexError:
-                # Returns 0 if the tag it found does not hold the chapter number
-                return "0"
+                numbers.append(float(word.strip()))
+            except ValueError:
+                pass
+    if numbers:
+        output = str(numbers[0])
+    else:
+        output = "0"
 
     # Posting the link directly to the chapter if possible, and to the chapter list if not
     if el == 'a':
