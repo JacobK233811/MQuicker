@@ -9,4 +9,4 @@ The current recommended use is to open AnacondaPrompt, open an iPython shell, im
 
 <img src="mcheck_ex.png"/>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/AyZsZzuTAPg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/AyZsZzuTAPg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>Failed to load embedded demo video</iframe>
