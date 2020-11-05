@@ -9,4 +9,4 @@ The current recommended use is to open AnacondaPrompt, open an iPython shell, im
 
 <img src="mcheck_ex.png"/>
 
-<video src="MangaNewChapter – checker.py 2020-11-05 14-41-21" controls>Failed to load</video>
+<video src="MangaNewChapter – checker.py 2020-11-05 14-41-21.mp4" controls>Failed to load</video>
