@@ -15,9 +15,9 @@ from collections import defaultdict
 
 # Each list within the mangas list has the following parameters: Name, Link, Source, Latest Chapter Read
 mangas = [['Attack on Titan', 'https://attackontitanmanga.com/', 'AoT', 134],
-          ['Solo Leveling', 'https://manganelo.com/manga/pn918005', 'Mangelo', 125],
+          ['Solo Leveling', 'https://manganelo.com/manga/pn918005', 'Mangelo', 126],
           ['Tales of Demons and Gods', 'https://manganelo.com/manga/hyer5231574354229', 'Mangelo', 300.1],
-          ['The Great Mage Returns After 4000 Years', 'https://manganelo.com/manga/go922760', 'Mangelo', 55],
+          ['The Great Mage Returns After 4000 Years', 'https://manganelo.com/manga/go922760', 'Mangelo', 56],
           ['Second Life Ranker', 'https://zeroscans.com/comics/188504-second-life-ranker', 'ZeroLeviatan', 68],
           ['I am the Sorcerer King', 'https://leviatanscans.com/comics/i-am-the-sorcerer-king', 'ZeroLeviatan', 115],
           ['Descent of the Demonic Master', 'https://mangaeffect.com/manga/the-descent-of-the-demonic-master/', 'Effect', 72],
@@ -26,8 +26,8 @@ mangas = [['Attack on Titan', 'https://attackontitanmanga.com/', 'AoT', 134],
           ['Kingdom', 'https://www.readmng.com/kingdom', 'ReadMng', 659],
           ['Solo Auto Hunting', 'https://mangaeffect.com/manga/solo-auto-hunting/', 'Effect', 48],
           ["The Scholar's Reincarnation", 'https://www.readmng.com/the-scholars-reincarnation', 'ReadMng', 30],
-          ["Lessa", 'https://manganelo.com/manga/lessa', 'Mangelo', 11],
-          ["Demon Magic Emperor", 'https://manhuaplus.com/manga/demon-magic-emperor/', 'Plus', 3],
+          ["Lessa", 'https://manganelo.com/manga/lessa', 'Mangelo', 21],
+          ["Demon Magic Emperor", 'https://manhuaplus.com/manga/demon-magic-emperor/', 'Plus', 8],
           ["Leveling Up, by Only Eating!", 'https://mangadex.org/title/48217/leveling-up-by-only-eating', 'MangaDex', 23],
           ]
 
@@ -109,7 +109,7 @@ def a():
 
 
 def n():
-    for manga in mangas:
+    for manga in mangas[::-1]:
         latest_chapter, link = manga_strip(manga)
         # Only renders if there is a new chapter
         if float(latest_chapter) > manga[3]:
