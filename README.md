@@ -9,4 +9,4 @@ The current recommended use is to open AnacondaPrompt, open an iPython shell, im
 
 <img src="mcheck_ex.png"/>
 
-<video src="https://www.youtube.com/embed/AyZsZzuTAPg" controls>Failed to load demo video</video>
+<a href="https://www.youtube.com/embed/AyZsZzuTAPg">Demo Video</a>
