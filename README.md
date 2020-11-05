@@ -9,4 +9,4 @@ The current recommended use is to open AnacondaPrompt, open an iPython shell, im
 
 <img src="mcheck_ex.png"/>
 
-<video src="demo.mp4/" controls>Failed to load demo video</video>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/AyZsZzuTAPg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
