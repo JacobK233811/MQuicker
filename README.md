@@ -8,3 +8,5 @@ When setting up for yourself, change the contents of the mangas list of lists to
 The current recommended use is to open AnacondaPrompt, open an iPython shell, import the file (I recommend a short name like mcheck.py), and use either the a() function to see all the manga on your list or the n() function to only see manga with new chapters.
 
 <img src="mcheck_ex.png"/>
+
+<video src="demo.mp4/" controls>Failed to load demo video</video>
