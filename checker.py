@@ -87,10 +87,21 @@ def manga_strip(manga):
 
     # Finder function enables one line to check any new properly defined list item (see line 16 comment)
     latest_chapter, link = finder(webpage, element, method)
+    latest_chapter = psych_handler(latest_chapter, link, manga[2])
     # In case it is a local reference to the chapter page (as with MangaDex)
     if link[:8] != "https://":
         link = source_url + link
     return latest_chapter, link
+
+
+def psych_handler(lc, lk, source):
+    if source == "AoT":
+        ch_web = requests.get(lk)
+        ch_soup = BeautifulSoup(ch_web.content, 'html.parser')
+        if ch_soup.strong.text[:14] == "We will update":
+            ch = int(lc) - 1
+        return str(ch)
+    return lc
 
 
 def a():
