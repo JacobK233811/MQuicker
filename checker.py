@@ -15,22 +15,22 @@ from collections import defaultdict
 
 # Each list within the mangas list has the following parameters: Name, Link, Source, Latest Chapter Read
 mangas = [['Attack on Titan', 'https://attackontitanmanga.com/', 'AoT', 134],
-          ['Solo Leveling', 'https://manganelo.com/manga/pn918005', 'Mangelo', 126],
-          ['Tales of Demons and Gods', 'https://manganelo.com/manga/hyer5231574354229', 'Mangelo', 300.1],
-          ['The Great Mage Returns After 4000 Years', 'https://manganelo.com/manga/go922760', 'Mangelo', 56],
+          ['Solo Leveling', 'https://manganelo.com/manga/pn918005', 'Mangelo', 127],
+          ['Tales of Demons and Gods', 'https://manganelo.com/manga/hyer5231574354229', 'Mangelo', 302],
+          ['The Great Mage Returns After 4000 Years', 'https://manganelo.com/manga/go922760', 'Mangelo', 58],
           ['Second Life Ranker', 'https://zeroscans.com/comics/188504-second-life-ranker', 'ZeroLeviatan', 68],
-          ['I am the Sorcerer King', 'https://leviatanscans.com/comics/i-am-the-sorcerer-king', 'ZeroLeviatan', 115],
-          ['Descent of the Demonic Master', 'https://mangaeffect.com/manga/the-descent-of-the-demonic-master/', 'Effect', 72],
-          ['Chronicles of Heavenly Demon', 'https://www.readmng.com/chronicles-of-heavenly-demon-3', 'ReadMng', 120],
-          ['Iruma-Kun', 'https://www.readmng.com/mairimashita-iruma-kun', 'ReadMng', 168],
-          ['Kingdom', 'https://www.readmng.com/kingdom', 'ReadMng', 659],
-          ['Solo Auto Hunting', 'https://mangaeffect.com/manga/solo-auto-hunting/', 'Effect', 48],
-          ["The Scholar's Reincarnation", 'https://www.readmng.com/the-scholars-reincarnation', 'ReadMng', 30],
-          ["Lessa", 'https://manganelo.com/manga/lessa', 'Mangelo', 21],
-          ["Demon Magic Emperor", 'https://manhuaplus.com/manga/demon-magic-emperor/', 'Plus', 8],
-          ["Leveling Up, by Only Eating!", 'https://mangadex.org/title/48217/leveling-up-by-only-eating', 'MangaDex', 23],
+          ['I am the Sorcerer King', 'https://leviatanscans.com/comics/i-am-the-sorcerer-king', 'ZeroLeviatan', 117],
+          ['Descent of the Demonic Master', 'https://mangaeffect.com/manga/the-descent-of-the-demonic-master/', 'Effect', 74],
+          ['Chronicles of Heavenly Demon', 'https://www.readmng.com/chronicles-of-heavenly-demon-3', 'ReadMng', 121],
+          ['Iruma-Kun', 'https://www.readmng.com/mairimashita-iruma-kun', 'ReadMng', 174],
+          ['Kingdom', 'https://www.readmng.com/kingdom', 'ReadMng', 660],
+          ['Solo Auto Hunting', 'https://mangaeffect.com/manga/solo-auto-hunting/', 'Effect', 49],
+          ["The Scholar's Reincarnation", 'https://www.readmng.com/the-scholars-reincarnation', 'ReadMng', 141],
+          ["Lessa", 'https://manganelo.com/manga/lessa_the_crimson_knight_2', 'Mangelo', 113],
+          ["Demon Magic Emperor", 'https://manhuaplus.com/manga/demon-magic-emperor/', 'Plus', 142],
+          ["Leveling Up, by Only Eating!", 'https://mangadex.org/title/48217/leveling-up-by-only-eating', 'MangaDex', 45],
           ]
-
+# https://mangakakalot.com/read-qu0ei158524508422
 
 # On most sites the desired element will be an anchor 'a' tag. However, this default dict allows us to specify exceptions
 source_elements = defaultdict(lambda: 'a')
@@ -40,7 +40,7 @@ source_elements['ReadMng'] = 'span'
 # Now the i_or_cls parameter of finder comes from this neat dictionary
 # Now the i_or_cls parameter of finder comes from this neat dictionary
 source_methods = {'AoT': 9, 'Mangelo': 'chapter-name text-nowrap', 'ZeroLeviatan': 'text-muted text-sm',
-                  'Effect': 113, 'ReadMng': 'val', 'Plus': 104, 'MangaDex': 'text-truncate'}
+                  'Effect': 113, 'ReadMng': 'val', 'Plus': 102, 'MangaDex': 'text-truncate'}
 
 
 # The i_or_cls parameter defined in source_methods will decide whether to find by index or class
