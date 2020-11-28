@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 from colorama import Fore
 from collections import defaultdict
+from datetime import datetime
 
 # Official source names are:
 # attackontitanmanga.com -> AoT
@@ -16,20 +17,20 @@ from collections import defaultdict
 
 # Each list within the mangas list has the following parameters: Name, Link, Source, Latest Chapter Read
 mangas = [['Attack on Titan', 'https://attackontitanmanga.com/', 'AoT', 134],
-          ['Solo Leveling', 'https://manganelo.com/manga/pn918005', 'Mangelo', 127],
-          ['Tales of Demons and Gods', 'https://manganelo.com/manga/hyer5231574354229', 'Mangelo', 302.5],
-          ['The Great Mage Returns After 4000 Years', 'https://manganelo.com/manga/go922760', 'Mangelo', 58],
+          ['Solo Leveling', 'https://manganelo.com/manga/pn918005', 'Mangelo', 128],
+          ['Tales of Demons and Gods', 'https://manganelo.com/manga/hyer5231574354229', 'Mangelo', 303.1],
+          ['The Great Mage Returns After 4000 Years', 'https://manganelo.com/manga/go922760', 'Mangelo', 59],
           ['Second Life Ranker', 'https://zeroscans.com/comics/188504-second-life-ranker', 'ZeroLeviatan', 68],
-          ['I am the Sorcerer King', 'https://leviatanscans.com/comics/i-am-the-sorcerer-king', 'ZeroLeviatan', 117],
+          ['I am the Sorcerer King', 'https://leviatanscans.com/comics/i-am-the-sorcerer-king', 'ZeroLeviatan', 118],
           ['Descent of the Demonic Master', 'https://mangaeffect.com/manga/the-descent-of-the-demonic-master/', 'Effect', 74],
-          ['Chronicles of Heavenly Demon', 'https://www.readmng.com/chronicles-of-heavenly-demon-3', 'ReadMng', 121],
-          ['Iruma-Kun', 'https://www.readmng.com/mairimashita-iruma-kun', 'ReadMng', 174],
+          ['Chronicles of Heavenly Demon', 'https://www.readmng.com/chronicles-of-heavenly-demon-3', 'ReadMng', 123],
+          ['Iruma-Kun', 'https://www.readmng.com/mairimashita-iruma-kun', 'ReadMng', 180],
           ['Kingdom', 'https://www.readmng.com/kingdom', 'ReadMng', 661],
-          ['Solo Auto Hunting', 'https://mangaeffect.com/manga/solo-auto-hunting/', 'Effect', 49],
+          ['Solo Auto Hunting', 'https://mangaeffect.com/manga/solo-auto-hunting/', 'Effect', 50],
           ["The Scholar's Reincarnation", 'https://www.readmng.com/the-scholars-reincarnation', 'ReadMng', 149],
-          ["Lessa", 'https://mangakakalot.com/read-qu0ei158524508422', 'Kakalot', 0],
-          ["Demon Magic Emperor", 'https://manhuaplus.com/manga/demon-magic-emperor/', 'Plus', 142],
-          ["Leveling Up, by Only Eating!", 'https://mangadex.org/title/48217/leveling-up-by-only-eating', 'MangaDex', 45],
+          ["Lessa", 'https://mangakakalot.com/read-qu0ei158524508422', 'Kakalot', 10],
+          ["Demon Magic Emperor", 'https://manhuaplus.com/manga/demon-magic-emperor/', 'Plus', 144],
+          ["Leveling Up, by Only Eating!", 'https://mangadex.org/title/48217/leveling-up-by-only-eating', 'MangaDex', 47],
           ]
 
 # On most sites the desired element will be an anchor 'a' tag. However, this default dict allows us to specify exceptions
@@ -132,3 +133,21 @@ def n():
         # Only renders if there is a new chapter
         if float(latest_chapter) > manga[3]:
             print(Fore.LIGHTMAGENTA_EX + f"{manga[0]}: {manga[3]} -> {latest_chapter} Copy to see it:{Fore.CYAN} {link}")
+
+
+def s():
+    with open(f'saved/{datetime.strftime(datetime.now().date(), "%m%d%y")}.txt', "wt", encoding="utf-8") as f:
+        for i, manga in enumerate(mangas):
+            latest_chapter, link = manga_strip(manga)
+            # The below if-else statement adds NEW to the output when the latest chapter is greater than the latest read
+            if float(latest_chapter) > manga[3]:
+                color = "NEW "
+                # The placeholder enables the feature of only showing links for items with a new chapter
+                link_placeholder = " + Link: " + link
+            else:
+                color = ""
+                link_placeholder = ""
+            f.write(color + f"{manga[0]}: {manga[3]} -> {latest_chapter}{link_placeholder}\n\n")
+            if i % 4 == 0:
+                print("Loading...")
+    print("Done!")
