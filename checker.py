@@ -3,45 +3,59 @@ import requests
 from colorama import Fore
 from collections import defaultdict
 from datetime import datetime
+from itertools import zip_longest
 
 # Official source names are:
 # attackontitanmanga.com -> AoT
 # mangelo.com -> Mangelo
 # zeroscans.com & leviatanscans.com -> ZeroLeviatan
 # mangaeffect.com -> Effect
-# manhuaplus.com -> Plus
+# manhuaplus.com -> Plus (DME), Plus2 (Apo), Plus3 (YZ)
 # readmng.com -> ReadMng
 # mangadex.org -> MangaDex
 # mangkakalot.com -> Kakalot
 
 
 # Each list within the mangas list has the following parameters: Name, Link, Source, Latest Chapter Read
-mangas = [['Attack on Titan', 'https://attackontitanmanga.com/', 'AoT', 134],
-          ['Solo Leveling', 'https://manganelo.com/manga/pn918005', 'Mangelo', 128],
-          ['Tales of Demons and Gods', 'https://manganelo.com/manga/hyer5231574354229', 'Mangelo', 303.1],
-          ['The Great Mage Returns After 4000 Years', 'https://manganelo.com/manga/go922760', 'Mangelo', 59],
-          ['Second Life Ranker', 'https://zeroscans.com/comics/188504-second-life-ranker', 'ZeroLeviatan', 68],
-          ['I am the Sorcerer King', 'https://leviatanscans.com/comics/i-am-the-sorcerer-king', 'ZeroLeviatan', 118],
-          ['Descent of the Demonic Master', 'https://mangaeffect.com/manga/the-descent-of-the-demonic-master/', 'Effect', 74],
-          ['Chronicles of Heavenly Demon', 'https://www.readmng.com/chronicles-of-heavenly-demon-3', 'ReadMng', 123],
-          ['Iruma-Kun', 'https://www.readmng.com/mairimashita-iruma-kun', 'ReadMng', 180],
-          ['Kingdom', 'https://www.readmng.com/kingdom', 'ReadMng', 661],
-          ['Solo Auto Hunting', 'https://mangaeffect.com/manga/solo-auto-hunting/', 'Effect', 50],
-          ["The Scholar's Reincarnation", 'https://www.readmng.com/the-scholars-reincarnation', 'ReadMng', 149],
-          ["Lessa", 'https://mangakakalot.com/read-qu0ei158524508422', 'Kakalot', 10],
-          ["Demon Magic Emperor", 'https://manhuaplus.com/manga/demon-magic-emperor/', 'Plus', 144],
-          ["Leveling Up, by Only Eating!", 'https://mangadex.org/title/48217/leveling-up-by-only-eating', 'MangaDex', 47],
+mangas = [['Attack on Titan', 'https://attackontitanmanga.com/', 'AoT'],
+          ['Solo Leveling', 'https://manganelo.com/manga/pn918005', 'Mangelo'],
+          ['Tales of Demons and Gods', 'https://manganelo.com/manga/hyer5231574354229', 'Mangelo'],
+          ['The Great Mage Returns After 4000 Years', 'https://manganelo.com/manga/go922760', 'Mangelo'],
+          ['Second Life Ranker', 'https://zeroscans.com/comics/188504-second-life-ranker', 'ZeroLeviatan'],
+          ['I am the Sorcerer King', 'https://leviatanscans.com/comics/i-am-the-sorcerer-king', 'ZeroLeviatan'],
+          ['Descent of the Demonic Master', 'https://mangaeffect.com/manga/the-descent-of-the-demonic-master/', 'Effect'],
+          ['Chronicles of Heavenly Demon', 'https://www.readmng.com/chronicles-of-heavenly-demon-3', 'ReadMng'],
+          ['Iruma-Kun', 'https://www.readmng.com/mairimashita-iruma-kun', 'ReadMng'],
+          ['Kingdom', 'https://www.readmng.com/kingdom', 'ReadMng'],
+          ['Solo Auto Hunting', 'https://mangaeffect.com/manga/solo-auto-hunting/', 'Effect'],
+          ["The Scholar's Reincarnation", 'https://www.readmng.com/the-scholars-reincarnation', 'ReadMng'],
+          ["Lessa", 'https://mangakakalot.com/read-qu0ei158524508422', 'Kakalot'],
+          ["Demon Magic Emperor", 'https://manhuaplus.com/manga/demon-magic-emperor/', 'Plus'],
+          ["Leveling Up, by Only Eating!", 'https://mangadex.org/title/48217/leveling-up-by-only-eating', 'MangaDex'],
+          ["Apothesis", "https://manhuaplus.com/manga/demon-magic-emperor/", "Plus2"],
+          ["Yuan Zun", "https://manhuaplus.com/manga/demon-magic-emperor/", "Plus3"],
+          ["Martial Peak", "https://manganelo.com/manga/martial_peak", "Mangelo"],
+          ["Legendary Moonlight Sculptor", "https://www.readmng.com/Dalbic-Jogaksa-2/", "ReadMng"]
           ]
+"""
+with open("saved/latest.txt", "wt", encoding="utf-8") as f:
+  for manga in checker.mangas:
+    f.write(str(manga[3]) + ' utd' + '\n')
+  
+Run the above in iPython to initialize the new latest chapter system if still using the old manga[3] one
+  """
 
 # On most sites the desired element will be an anchor 'a' tag. However, this default dict allows us to specify exceptions
 source_elements = defaultdict(lambda: 'a')
 source_elements['ZeroLeviatan'] = 'span'
 source_elements['ReadMng'] = 'span'
+source_elements['Effect'] = 'li'
 
 # Now the i_or_cls parameter of finder comes from this neat dictionary
 # Now the i_or_cls parameter of finder comes from this neat dictionary
 source_methods = {'AoT': 9, 'Mangelo': 'chapter-name text-nowrap', 'ZeroLeviatan': 'text-muted text-sm',
-                  'Effect': 113, 'ReadMng': 'val', 'Plus': 102, 'MangaDex': 'text-truncate', 'Kakalot': 63}
+                  'Effect': 'wp-manga-chapter', 'ReadMng': 'val', 'Plus': 102, 'MangaDex': 'text-truncate', 'Kakalot': 63,
+                  'Plus2': 86, 'Plus3': 82}  # These source methods enable pulling manga chapters from a link other than their own
 
 
 # The i_or_cls parameter defined in source_methods will decide whether to find by index or class
@@ -52,23 +66,20 @@ def finder(not_parsed, el, i_or_cls):
     # If the source_methods dictionary a class, typ will have str type.
     # If the same dictionary holds index, typ will have int type
     if typ is str:
-        tag = parsed.find(el, {'class': i_or_cls})
+        try:
+            tag = parsed.find(el, class_=i_or_cls).a
+            # Sometimes, a useless anchor tag child exists and creates a None value
+            if tag is None:
+                tag = parsed.find(el, class_=i_or_cls)
+        except AttributeError:
+            tag = parsed.find(el, class_=i_or_cls)
     elif typ is int:
         tag = parsed.findAll(el)[i_or_cls]
     else:
         tag = 'Error'
 
     # Iterates over all words to find the chapter number and saves that number as an int if possible and if not, a float
-    numbers = []
-    for word in tag.text.split():
-        word = word.replace(":", "")
-        try:
-            numbers.append(int(word.strip()))
-        except ValueError:
-            try:
-                numbers.append(float(word.strip()))
-            except ValueError:
-                pass
+    numbers = num_puller(tag.text)
     if numbers:
         output = str(numbers[0])
     else:
@@ -78,6 +89,21 @@ def finder(not_parsed, el, i_or_cls):
     if el == 'a':
         return output, tag.attrs['href']
     return output, not_parsed.url
+
+
+def num_puller(body):
+    # Iterates over all words to find the chapter number and saves that number as an int if possible and if not, a float
+    numbers = []
+    for word in body.split():
+        word = word.replace(":", "")
+        try:
+            numbers.append(int(word.strip()))
+        except ValueError:
+            try:
+                numbers.append(float(word.strip()))
+            except ValueError:
+                pass
+    return numbers
 
 
 def manga_strip(manga):
@@ -112,42 +138,86 @@ def psych_handler(lc, lk, source):
     return str(ch)
 
 
+def update_latest(news, olds):
+    with open("saved/latest.txt", "wt", encoding="utf-8") as latest:
+        for old, new in zip_longest(olds, news):
+            if old is None:
+                latest.write(f"0 yts\n")
+            else:
+                label = old.split()[1]
+                if label == "utd":
+                    latest.write(f"{new} utd\n")
+                elif label == "wip" or label == "yts":
+                    latest.write(old)
+
+    # latest.txt abbreviations: utd = up to date, wip = work in progress, yts = yet to start
+    return None
+
+
 def a():
-    for manga in mangas:
-        latest_chapter, link = manga_strip(manga)
+    latest_chapters = []
+    for i, manga in enumerate(mangas):
+        latest, link = manga_strip(manga)
+        latest_chapters.append(latest)
+        with open("saved/latest.txt") as f:
+            current = f.readlines()
+        try:
+            previous = num_puller(current[i])[0]
+        except IndexError:
+            previous = 0
         # The below if-else statement changes the color of the output when the latest chapter is greater than the latest read
         # If intending to access file through CLI w/o iPython, change color to "NEW " for the ~if~ and "" for the ~else~
-        if float(latest_chapter) > manga[3]:
+        if float(latest) > previous:
             color = Fore.LIGHTYELLOW_EX
             # The placeholder enables the feature of only showing links for items with a new chapter
             link_placeholder = link
         else:
             color = Fore.LIGHTBLUE_EX
             link_placeholder = ""
-        print(color + f"{manga[0]}: {manga[3]} -> {latest_chapter} {Fore.CYAN} {link_placeholder}")
+        print(color + f"{manga[0]}: {previous} -> {latest} {Fore.CYAN} {link_placeholder}")
+    update_latest(latest_chapters, current)
 
 
 def n():
-    for manga in mangas[::-1]:
-        latest_chapter, link = manga_strip(manga)
+    latest_chapters = []
+    for i, manga in enumerate(mangas[::-1]):
+        latest, link = manga_strip(manga)
+        latest_chapters.append(latest)
+        with open("saved/latest.txt") as f:
+            current = f.readlines()[::-1]
+        try:
+            previous = num_puller(current[i])[0]
+        except IndexError:
+            previous = 0
         # Only renders if there is a new chapter
-        if float(latest_chapter) > manga[3]:
-            print(Fore.LIGHTMAGENTA_EX + f"{manga[0]}: {manga[3]} -> {latest_chapter} Copy to see it:{Fore.CYAN} {link}")
+        if float(latest) > previous:
+            print(Fore.LIGHTMAGENTA_EX + f"{manga[0]}: {previous} -> {latest} Copy to see it:{Fore.CYAN} {link}")
+    update_latest(latest_chapters[::-1], current[::-1])
 
 
 def s():
+    latest_chapters = []
     with open(f'saved/{datetime.strftime(datetime.now().date(), "%m%d%y")}.txt', "wt", encoding="utf-8") as f:
         for i, manga in enumerate(mangas):
-            latest_chapter, link = manga_strip(manga)
+            latest, link = manga_strip(manga)
+            latest_chapters.append(latest)
+            with open("saved/latest.txt") as file:
+                current = file.readlines()
+            try:
+                previous = num_puller(current[i])[0]
+            except IndexError:
+                previous = 0
             # The below if-else statement adds NEW to the output when the latest chapter is greater than the latest read
-            if float(latest_chapter) > manga[3]:
+            if float(latest) > previous:
                 color = "NEW "
                 # The placeholder enables the feature of only showing links for items with a new chapter
                 link_placeholder = " + Link: " + link
             else:
                 color = ""
                 link_placeholder = ""
-            f.write(color + f"{manga[0]}: {manga[3]} -> {latest_chapter}{link_placeholder}\n\n")
+            f.write(color + f"{manga[0]}: {previous} -> {latest}{link_placeholder}\n\n")
             if i % 4 == 0:
                 print("Loading...")
+    print("Updating...")
+    update_latest(latest_chapters, current)
     print("Done!")
