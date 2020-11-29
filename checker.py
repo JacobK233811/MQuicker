@@ -33,7 +33,7 @@ mangas = [['Attack on Titan', 'https://attackontitanmanga.com/', 'AoT'],
           ["Demon Magic Emperor", 'https://mangadex.org/title/43692/demonic-emperor', 'MangaDex'],
           ["Leveling Up, by Only Eating!", 'https://mangadex.org/title/48217/leveling-up-by-only-eating', 'MangaDex'],
           ["Apothesis", "https://mangadex.org/title/23001/apotheosis-ascension-to-godhood", "MangaDex"],
-          ["Yuan Zun", "https://mangakakalot.tv/manga/yuan_zun", "Plus3"],
+          ["Yuan Zun", "https://mangakakalot.tv/manga/yuan_zun", "Kakalot"],
           ["Martial Peak", "https://manganelo.com/manga/martial_peak", "Mangelo"],
           ["Legendary Moonlight Sculptor", "https://www.readmng.com/Dalbic-Jogaksa-2/", "ReadMng"]
           ]
