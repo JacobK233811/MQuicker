@@ -30,10 +30,10 @@ mangas = [['Attack on Titan', 'https://attackontitanmanga.com/', 'AoT'],
           ['Solo Auto Hunting', 'https://mangaeffect.com/manga/solo-auto-hunting/', 'Effect'],
           ["The Scholar's Reincarnation", 'https://www.readmng.com/the-scholars-reincarnation', 'ReadMng'],
           ["Lessa", 'https://mangakakalot.com/read-qu0ei158524508422', 'Kakalot'],
-          ["Demon Magic Emperor", 'https://manhuaplus.com/manga/demon-magic-emperor/', 'Plus'],
+          ["Demon Magic Emperor", 'https://mangadex.org/title/43692/demonic-emperor', 'MangaDex'],
           ["Leveling Up, by Only Eating!", 'https://mangadex.org/title/48217/leveling-up-by-only-eating', 'MangaDex'],
-          ["Apothesis", "https://manhuaplus.com/manga/demon-magic-emperor/", "Plus2"],
-          ["Yuan Zun", "https://manhuaplus.com/manga/demon-magic-emperor/", "Plus3"],
+          ["Apothesis", "https://mangadex.org/title/23001/apotheosis-ascension-to-godhood", "MangaDex"],
+          ["Yuan Zun", "https://mangakakalot.tv/manga/yuan_zun", "Plus3"],
           ["Martial Peak", "https://manganelo.com/manga/martial_peak", "Mangelo"],
           ["Legendary Moonlight Sculptor", "https://www.readmng.com/Dalbic-Jogaksa-2/", "ReadMng"]
           ]
@@ -50,12 +50,13 @@ source_elements = defaultdict(lambda: 'a')
 source_elements['ZeroLeviatan'] = 'span'
 source_elements['ReadMng'] = 'span'
 source_elements['Effect'] = 'li'
+source_elements['Kakalot'] = 'div'
 
 # Now the i_or_cls parameter of finder comes from this neat dictionary
 # Now the i_or_cls parameter of finder comes from this neat dictionary
 source_methods = {'AoT': 9, 'Mangelo': 'chapter-name text-nowrap', 'ZeroLeviatan': 'text-muted text-sm',
-                  'Effect': 'wp-manga-chapter', 'ReadMng': 'val', 'Plus': 102, 'MangaDex': 'text-truncate', 'Kakalot': 63,
-                  'Plus2': 86, 'Plus3': 82}  # These source methods enable pulling manga chapters from a link other than their own
+                  'Effect': 'wp-manga-chapter', 'ReadMng': 'val',
+                  'MangaDex': 'text-truncate', 'Kakalot': 'chapter-list'}
 
 
 # The i_or_cls parameter defined in source_methods will decide whether to find by index or class
@@ -133,8 +134,11 @@ def psych_handler(lc, lk, source):
         if ch_soup.strong.text[:14] == "We will update":
             ch -= 1
     if source == "MangaDex":
-        if ch_soup.find("div", {"class": "col-2 col-lg-1 ml-1 text-right text-truncate order-lg-8 text-warning"}).text.strip()[:2] == "in":
-            ch -= 1
+        try:
+            if ch_soup.find("div", {"class": "col-2 col-lg-1 ml-1 text-right text-truncate order-lg-8 text-warning"}).text.strip()[:2] == "in":
+                ch -= 1
+        except AttributeError:
+            pass
     return str(ch)
 
 
@@ -175,7 +179,9 @@ def a():
             color = Fore.LIGHTBLUE_EX
             link_placeholder = ""
         print(color + f"{manga[0]}: {previous} -> {latest} {Fore.CYAN} {link_placeholder}")
+    print(Fore.LIGHTGREEN_EX + "Updating...")
     update_latest(latest_chapters, current)
+    print(Fore.GREEN + "Done!")
 
 
 def n():
@@ -192,12 +198,16 @@ def n():
         # Only renders if there is a new chapter
         if float(latest) > previous:
             print(Fore.LIGHTMAGENTA_EX + f"{manga[0]}: {previous} -> {latest} Copy to see it:{Fore.CYAN} {link}")
+        elif i % 5 == 0:
+            print(Fore.LIGHTGREEN_EX + "Loading...")
+    print(Fore.LIGHTGREEN_EX + "Updating...")
     update_latest(latest_chapters[::-1], current[::-1])
+    print(Fore.GREEN + "Done!")
 
 
 def s():
     latest_chapters = []
-    with open(f'saved/{datetime.strftime(datetime.now().date(), "%m%d%y")}.txt', "wt", encoding="utf-8") as f:
+    with open(f'saved/{datetime.strftime(datetime.now(), "%m%d%y")}.txt', "wt", encoding="utf-8") as f:
         for i, manga in enumerate(mangas):
             latest, link = manga_strip(manga)
             latest_chapters.append(latest)
@@ -217,7 +227,7 @@ def s():
                 link_placeholder = ""
             f.write(color + f"{manga[0]}: {previous} -> {latest}{link_placeholder}\n\n")
             if i % 4 == 0:
-                print("Loading...")
-    print("Updating...")
+                print(Fore.LIGHTGREEN_EX + "Loading...")
+    print(Fore.LIGHTGREEN_EX + "Updating...")
     update_latest(latest_chapters, current)
-    print("Done!")
+    print(Fore.GREEN + "Done!")
