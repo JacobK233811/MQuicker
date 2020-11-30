@@ -10,13 +10,12 @@ from itertools import zip_longest
 # mangelo.com -> Mangelo
 # zeroscans.com & leviatanscans.com -> ZeroLeviatan
 # mangaeffect.com -> Effect
-# manhuaplus.com -> Plus (DME), Plus2 (Apo), Plus3 (YZ)
 # readmng.com -> ReadMng
 # mangadex.org -> MangaDex
 # mangkakalot.com -> Kakalot
 
 
-# Each list within the mangas list has the following parameters: Name, Link, Source, Latest Chapter Read
+# Each list within the mangas list has the following parameters: Name, Link, Source
 mangas = [['Attack on Titan', 'https://attackontitanmanga.com/', 'AoT'],
           ['Solo Leveling', 'https://manganelo.com/manga/pn918005', 'Mangelo'],
           ['Tales of Demons and Gods', 'https://manganelo.com/manga/hyer5231574354229', 'Mangelo'],
@@ -158,26 +157,6 @@ def update_latest(news, olds):
     return None
 
 
-# def wip_link_switch(manga, chapter):
-#     source_url = manga[1]
-#     element = source_elements[manga[2]]
-#     method = source_methods[manga[2]]
-#     webpage = requests.get(source_url)
-#     soup = BeautifulSoup(webpage.content, 'html.parser')
-#
-#     # try:
-#     try:
-#         link = soup.find(element, class_=method).find("a", title=f" {manga[0]}: Chapter: {chapter}")
-#     except AttributeError:
-#         link = soup.find(element, class_=method, title=f"{manga[0]}: Chapter: {chapter}")
-#
-#     if link[:8] != "https://":
-#         link = source_url + link
-#     # except Exception:
-#
-#     return link
-
-
 def a():
     latest_chapters = []
     for i, manga in enumerate(mangas):
@@ -255,7 +234,7 @@ def s():
                 link_placeholder = ""
             f.write(color + f"{manga[0]}: {previous} -> {latest}{link_placeholder}\n\n")
             if i % 4 == 0:
-                print(Fore.LIGHTGREEN_EX + "Loading...")
-    print(Fore.LIGHTGREEN_EX + "Updating...")
+                print("Loading...")
+    print("Updating...")
     update_latest(latest_chapters, current)
-    print(Fore.GREEN + "Done!")
+    print("Done!")
