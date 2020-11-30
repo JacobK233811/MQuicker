@@ -29,7 +29,7 @@ mangas = [['Attack on Titan', 'https://attackontitanmanga.com/', 'AoT'],
           ['Kingdom', 'https://www.readmng.com/kingdom', 'ReadMng'],
           ['Solo Auto Hunting', 'https://mangaeffect.com/manga/solo-auto-hunting/', 'Effect'],
           ["The Scholar's Reincarnation", 'https://www.readmng.com/the-scholars-reincarnation', 'ReadMng'],
-          ["Lessa", 'https://mangakakalot.com/read-qu0ei158524508422', 'Kakalot'],
+          ["LESSA - Servant of Cosmos", 'https://mangakakalot.com/read-qu0ei158524508422', 'Kakalot'],
           ["Demon Magic Emperor", 'https://mangadex.org/title/43692/demonic-emperor', 'MangaDex'],
           ["Leveling Up, by Only Eating!", 'https://mangadex.org/title/48217/leveling-up-by-only-eating', 'MangaDex'],
           ["Apothesis", "https://mangadex.org/title/23001/apotheosis-ascension-to-godhood", "MangaDex"],
@@ -158,6 +158,26 @@ def update_latest(news, olds):
     return None
 
 
+# def wip_link_switch(manga, chapter):
+#     source_url = manga[1]
+#     element = source_elements[manga[2]]
+#     method = source_methods[manga[2]]
+#     webpage = requests.get(source_url)
+#     soup = BeautifulSoup(webpage.content, 'html.parser')
+#
+#     # try:
+#     try:
+#         link = soup.find(element, class_=method).find("a", title=f" {manga[0]}: Chapter: {chapter}")
+#     except AttributeError:
+#         link = soup.find(element, class_=method, title=f"{manga[0]}: Chapter: {chapter}")
+#
+#     if link[:8] != "https://":
+#         link = source_url + link
+#     # except Exception:
+#
+#     return link
+
+
 def a():
     latest_chapters = []
     for i, manga in enumerate(mangas):
@@ -174,7 +194,11 @@ def a():
         if float(latest) > previous:
             color = Fore.LIGHTYELLOW_EX
             # The placeholder enables the feature of only showing links for items with a new chapter
-            link_placeholder = link
+            if current[i].split()[1] != "wip":
+                link_placeholder = link
+            else:
+                # link_placeholder = wip_link_switch(manga, previous)
+                link_placeholder = manga[1]
         else:
             color = Fore.LIGHTBLUE_EX
             link_placeholder = ""
@@ -197,6 +221,8 @@ def n():
             previous = 0
         # Only renders if there is a new chapter
         if float(latest) > previous:
+            if current[i].split()[1] == "wip":
+                link = manga[1]
             print(Fore.LIGHTMAGENTA_EX + f"{manga[0]}: {previous} -> {latest} Copy to see it:{Fore.CYAN} {link}")
         elif i % 5 == 0:
             print(Fore.LIGHTGREEN_EX + "Loading...")
@@ -219,6 +245,8 @@ def s():
                 previous = 0
             # The below if-else statement adds NEW to the output when the latest chapter is greater than the latest read
             if float(latest) > previous:
+                if current[i].split()[1] == "wip":
+                    link = manga[1]
                 color = "NEW "
                 # The placeholder enables the feature of only showing links for items with a new chapter
                 link_placeholder = " + Link: " + link
