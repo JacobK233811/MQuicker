@@ -4,6 +4,7 @@ from colorama import Fore
 from collections import defaultdict
 from datetime import datetime
 from itertools import zip_longest
+from os import mkdir
 
 # Official source names are:
 # attackontitanmanga.com -> AoT
@@ -36,6 +37,14 @@ mangas = [['Attack on Titan', 'https://attackontitanmanga.com/', 'AoT'],
           ["Martial Peak", "https://manganelo.com/manga/martial_peak", "Mangelo"],
           ["Legendary Moonlight Sculptor", "https://www.readmng.com/Dalbic-Jogaksa-2/", "ReadMng"]
           ]
+
+# Set up the saved folder if it doesn't exist yet
+try:
+    mkdir("saved")
+except FileExistsError:
+    pass
+
+
 """
 with open("saved/latest.txt", "wt", encoding="utf-8") as f:
   for manga in checker.mangas:
