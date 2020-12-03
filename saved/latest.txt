@@ -1,11 +1,11 @@
 134 utd
-128 utd
+129.1 utd
 304.1 utd
 59 utd
 68 utd
 119 utd
 76 utd
-123 utd
+124 utd
 182 utd
 662 utd
 51 utd
@@ -14,6 +14,6 @@
 146 utd
 48 utd
 5 wip
-10 wip
+25.5 wip
 30 wip
 12 wip

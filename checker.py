@@ -6,6 +6,15 @@ from datetime import datetime
 from itertools import zip_longest
 from os import mkdir
 
+# Modules for dynamic JS websites
+
+from PyQt5.QtWebEngineWidgets import QWebEnginePage
+from PyQt5.QtWidgets import QApplication
+from PyQt5.QtCore import QUrl
+import sys
+
+
+
 # Official source names are:
 # attackontitanmanga.com -> AoT
 # mangelo.com -> Mangelo
@@ -247,3 +256,35 @@ def s():
     print("Updating...")
     update_latest(latest_chapters, current)
     print("Done!")
+
+
+# Dynamic website offenders include ManhuaPlus and PMScans, who use the same Wordpress template
+dynamic_mangas = [
+                  ['Leveling Up, Only By Eating', 'https://www.pmscans.com/manga/leveling-up-by-only-eating/'],
+                  ['Apotheosis', 'https://manhuaplus.com/manga/apotheosis/#']
+                 ]
+
+
+def d():
+    class Page(QWebEnginePage):
+        def __init__(self, url):
+            self.app = QApplication(sys.argv)
+            QWebEnginePage.__init__(self)
+            self.html = ''
+            self.loadFinished.connect(self._on_load_finished)
+            self.load(QUrl(url))
+            self.app.exec_()
+
+        def _on_load_finished(self):
+            self.html = self.toHtml(self.callable)
+            print(Fore.YELLOW + 'Load finished')
+
+        def callable(self, html_str):
+            self.html = html_str
+            self.app.quit()
+
+    for m in dynamic_mangas:
+        page = Page(m[1])
+        soupy = BeautifulSoup(page.html, 'html.parser')
+        element = soupy.find('li', class_='wp-manga-chapter').a
+        print(Fore.BLUE + f"{m[0]}: Latest Chapter is {num_puller(element.text)[0]}")
