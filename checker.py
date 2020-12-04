@@ -14,7 +14,6 @@ from PyQt5.QtCore import QUrl
 import sys
 
 
-
 # Official source names are:
 # attackontitanmanga.com -> AoT
 # mangelo.com -> Mangelo
@@ -26,25 +25,28 @@ import sys
 
 
 # Each list within the mangas list has the following parameters: Name, Link, Source
-mangas = [['Attack on Titan', 'https://attackontitanmanga.com/', 'AoT'],
+with open("saved/list.txt", "rt", encoding="utf-8") as m_list:
+    mangas = [line.split("|") for line in m_list.readlines()]
+if not mangas:
+    mangas = [['Attack on Titan', 'https://attackontitanmanga.com/', 'AoT|\n'],
           ['Solo Leveling', 'https://manganelo.com/manga/pn918005', 'Mangelo'],
-          ['Tales of Demons and Gods', 'https://manganelo.com/manga/hyer5231574354229', 'Mangelo'],
-          ['The Great Mage Returns After 4000 Years', 'https://manganelo.com/manga/go922760', 'Mangelo'],
-          ['Second Life Ranker', 'https://zeroscans.com/comics/188504-second-life-ranker', 'ZeroLeviatan'],
-          ['I am the Sorcerer King', 'https://leviatanscans.com/comics/i-am-the-sorcerer-king', 'ZeroLeviatan'],
-          ['Descent of the Demonic Master', 'https://mangaeffect.com/manga/the-descent-of-the-demonic-master/', 'Effect'],
-          ['Chronicles of Heavenly Demon', 'https://www.readmng.com/chronicles-of-heavenly-demon-3', 'ReadMng'],
-          ['Iruma-Kun', 'https://www.readmng.com/mairimashita-iruma-kun', 'ReadMng'],
-          ['Kingdom', 'https://www.readmng.com/kingdom', 'ReadMng'],
-          ['Solo Auto Hunting', 'https://mangaeffect.com/manga/solo-auto-hunting/', 'Effect'],
-          ["The Scholar's Reincarnation", 'https://www.readmng.com/the-scholars-reincarnation', 'ReadMng'],
-          ["LESSA - Servant of Cosmos", 'https://mangakakalot.com/read-qu0ei158524508422', 'Kakalot'],
-          ["Demon Magic Emperor", 'https://mangadex.org/title/43692/demonic-emperor', 'MangaDex'],
-          ["Leveling Up, by Only Eating!", 'https://mangadex.org/title/48217/leveling-up-by-only-eating', 'MangaDex'],
-          ["Apothesis", "https://mangadex.org/title/23001/apotheosis-ascension-to-godhood", "MangaDex"],
-          ["Yuan Zun", "https://mangakakalot.tv/manga/yuan_zun", "Kakalot"],
-          ["Martial Peak", "https://manganelo.com/manga/martial_peak", "Mangelo"],
-          ["Legendary Moonlight Sculptor", "https://www.readmng.com/Dalbic-Jogaksa-2/", "ReadMng"]
+          ['Tales of Demons and Gods', 'https://manganelo.com/manga/hyer5231574354229', 'Mangelo|\n'],
+          ['The Great Mage Returns After 4000 Years', 'https://manganelo.com/manga/go922760', 'Mangelo|\n'],
+          ['Second Life Ranker', 'https://zeroscans.com/comics/188504-second-life-ranker', 'ZeroLeviatan|\n'],
+          ['I am the Sorcerer King', 'https://leviatanscans.com/comics/i-am-the-sorcerer-king', 'ZeroLeviatan|\n'],
+          ['Descent of the Demonic Master', 'https://mangaeffect.com/manga/the-descent-of-the-demonic-master/', 'Effect|\n'],
+          ['Chronicles of Heavenly Demon', 'https://www.readmng.com/chronicles-of-heavenly-demon-3', 'ReadMng|\n'],
+          ['Iruma-Kun', 'https://www.readmng.com/mairimashita-iruma-kun', 'ReadMng|\n'],
+          ['Kingdom', 'https://www.readmng.com/kingdom', 'ReadMng|\n'],
+          ['Solo Auto Hunting', 'https://mangaeffect.com/manga/solo-auto-hunting/', 'Effect|\n'],
+          ["The Scholar's Reincarnation", 'https://www.readmng.com/the-scholars-reincarnation', 'ReadMng|\n'],
+          ["LESSA - Servant of Cosmos", 'https://mangakakalot.com/read-qu0ei158524508422', 'Kakalot|\n'],
+          ["Demon Magic Emperor", 'https://mangadex.org/title/43692/demonic-emperor', 'MangaDex|\n'],
+          ["Leveling Up, by Only Eating!", 'https://mangadex.org/title/48217/leveling-up-by-only-eating', 'MangaDex|\n'],
+          ["Apothesis", "https://mangadex.org/title/23001/apotheosis-ascension-to-godhood", "MangaDex|\n"],
+          ["Yuan Zun", "https://mangakakalot.tv/manga/yuan_zun", "Kakalot|\n"],
+          ["Martial Peak", "https://manganelo.com/manga/martial_peak", "Mangelo|\n"],
+          ["Legendary Moonlight Sculptor", "https://www.readmng.com/Dalbic-Jogaksa-2/", "ReadMng|\n"]
           ]
 
 # Set up the saved folder if it doesn't exist yet
@@ -288,3 +290,19 @@ def d():
         soupy = BeautifulSoup(page.html, 'html.parser')
         element = soupy.find('li', class_='wp-manga-chapter').a
         print(Fore.BLUE + f"{m[0]}: Latest Chapter is {num_puller(element.text)[0]}")
+
+
+def primer():
+    if not input("Are you sure? This is a somewhat long process meant only for first-time users." +
+                 "\nPress enter to cancel. Typing anything else will begin the priming procedure.  "):
+        return "Interrupt"
+    with open("saved/list.txt", "wt", encoding="utf-8") as names, \
+            open("saved/latest.txt", "wt", encoding="utf-8") as numbers:
+        for manga in mangas:
+            if input(f"\n\nWould you like to keep {manga[0]} on your list? " +
+                     f"\nType anything for yes or simply press enter for no.  "):
+                names.write("|".join(manga))
+                status = input("\nWhich chapter are you on?  "), \
+                    input("Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
+                          "Please enter the corresponding three letter code found in parentheses.  ")
+                numbers.write(" ".join(status) + "\n")
