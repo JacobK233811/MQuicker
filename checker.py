@@ -78,6 +78,55 @@ source_methods = {'AoT': 9, 'Mangelo': 'chapter-name text-nowrap', 'ZeroLeviatan
                   'MangaDex': 'text-truncate', 'Kakalot': 'chapter-list'}
 
 
+class WebPage(QtWebEngineWidgets.QWebEnginePage):
+    def __init__(self):
+        super(WebPage, self).__init__()
+        self.loadFinished.connect(self.handle_load_finished)
+
+    def start(self, urls):
+        self._urls = iter(urls)
+        self.fetch_next()
+
+    def fetch_next(self):
+        try:
+            url = next(self._urls)
+        except StopIteration:
+            return False
+        else:
+            self.load(QtCore.QUrl(url))
+        return True
+
+    def process_current_page(self, html):
+        global dynamic_run_count
+        global latest_chapters
+        drc = dynamic_run_count
+        dms = dynamic_mangas
+
+        print(Fore.YELLOW + 'Loaded [%d chars] %s' % (len(html), "Dynamically"))
+        soupy = BeautifulSoup(html, 'html.parser')
+        tag = soupy.find("li", class_="wp-manga-chapter").a
+        chapter_num = num_puller(tag.text)[0]
+        chapter_link = tag.attrs["href"]
+        index = dynamic_indexes[dynamic_run_count]
+
+        try:
+            previous = num_puller(current[index])[0]
+        except IndexError:
+            previous = 0
+        if current[index].split()[1] == "utd\n":
+            index *= -1
+            latest_chapters[index-4:index-3] = [49]
+
+        print(Fore.RED + f"{dms[drc][0]}: {previous} -> {chapter_num} {Fore.CYAN} {chapter_link}")
+        dynamic_run_count += 1
+
+        if not self.fetch_next():
+            QtWidgets.qApp.quit()
+
+    def handle_load_finished(self):
+        self.toHtml(self.process_current_page)
+
+
 # The i_or_cls parameter defined in source_methods will decide whether to find by index or class
 # This process will use the typing of that same item to do so
 def finder(not_parsed, el, i_or_cls):
@@ -182,6 +231,9 @@ def update_latest(news, olds):
 latest_chapters = []
 dynamic_indexes = []
 dynamic_mangas = []
+dynamic_run_count = 0
+with open("saved/latest.txt") as f:
+    current = f.readlines()
 
 
 def a():
@@ -192,8 +244,6 @@ def a():
             continue
         latest, link = manga_strip(manga)
         latest_chapters.append(latest)
-        with open("saved/latest.txt") as f:
-            current = f.readlines()
         try:
             previous = num_puller(current[i])[0]
         except IndexError:
@@ -212,23 +262,19 @@ def a():
             color = Fore.LIGHTBLUE_EX
             link_placeholder = ""
         print(color + f"{manga[0]}: {previous} -> {latest} {Fore.CYAN} {link_placeholder}")
-    print(Fore.LIGHTGREEN_EX + "Handling Dynamic Websites...")
-    dynamic_finder(dynamic_indexes, dynamic_mangas)
-    print(Fore.LIGHTGREEN_EX + "Updating...")
-    update_latest(latest_chapters, current)
-    print(Fore.GREEN + "Done!")
+    finisher("a")
 
 
 def n():
+    global current
+    current = current[::-1]
     for i, manga in enumerate(mangas[::-1]):
         if manga[2] == "WP":
-            dynamic_indexes.append(-1 * i - 1)
+            dynamic_indexes.append(i * -1 - 1)
             dynamic_mangas.append(manga)
             continue
         latest, link = manga_strip(manga)
         latest_chapters.append(latest)
-        with open("saved/latest.txt") as f:
-            current = f.readlines()[::-1]
         try:
             previous = num_puller(current[i])[0]
         except IndexError:
@@ -240,11 +286,8 @@ def n():
             print(Fore.LIGHTMAGENTA_EX + f"{manga[0]}: {previous} -> {latest} Copy to see it:{Fore.CYAN} {link}")
         elif i % 5 == 0:
             print(Fore.LIGHTGREEN_EX + "Loading...")
-    print(Fore.LIGHTGREEN_EX + "Handling Dynamic Websites...")
-    dynamic_finder(dynamic_indexes, dynamic_mangas)
-    print(Fore.LIGHTGREEN_EX + "Updating...")
-    update_latest(latest_chapters[::-1], current[::-1])
-    print(Fore.GREEN + "Done!")
+    current = current[::-1]
+    finisher("n")
 
 
 def s():
@@ -256,8 +299,6 @@ def s():
                 continue
             latest, link = manga_strip(manga)
             latest_chapters.append(latest)
-            with open("saved/latest.txt") as file:
-                current = file.readlines()
             try:
                 previous = num_puller(current[i])[0]
             except IndexError:
@@ -275,69 +316,7 @@ def s():
             f.write(color + f"{manga[0]}: {previous} -> {latest}{link_placeholder}\n\n")
             if i % 4 == 0:
                 print("Loading...")
-    print(Fore.LIGHTGREEN_EX + "Handling Dynamic Websites...")
-    dynamic_finder(dynamic_indexes, dynamic_mangas)
-    print("Updating...")
-    update_latest(latest_chapters, current)
-    print("Done!")
-
-
-# Dynamic website offenders include ManhuaPlus and PMScans, who use the same Wordpress template
-dynamic_run_count = 0
-
-
-def dynamic_finder(indexes, dms):
-    d_urls = [m[1] for m in dms]
-
-    class WebPage(QtWebEngineWidgets.QWebEnginePage):
-        def __init__(self):
-            super(WebPage, self).__init__()
-            self.loadFinished.connect(self.handle_load_finished)
-
-        def start(self, urls):
-            self._urls = iter(urls)
-            self.fetch_next()
-
-        def fetch_next(self):
-            try:
-                url = next(self._urls)
-            except StopIteration:
-                return False
-            else:
-                self.load(QtCore.QUrl(url))
-            return True
-        def process_current_page(self, html):
-            global dynamic_run_count
-            drc = dynamic_run_count
-
-            print(Fore.YELLOW + 'Loaded [%d chars] %s' % (len(html), "Dynamically"))
-            soupy = BeautifulSoup(html, 'html.parser')
-            tag = soupy.find("li", class_="wp-manga-chapter").a
-            chapter_num = num_puller(tag.text)[0]
-            chapter_link = tag.attrs["href"]
-            index = indexes[dynamic_run_count]
-            latest_chapters[index:index] = [chapter_num]
-
-            with open("saved/latest.txt") as f:
-                current = f.readlines()
-            try:
-                previous = num_puller(current[index])[0]
-            except IndexError:
-                previous = 0
-
-            print(Fore.RED + f"{dms[drc][0]}: {previous} -> {chapter_num} {Fore.CYAN} {chapter_link}")
-            dynamic_run_count += 1
-
-            if not self.fetch_next():
-                QtWidgets.qApp.quit()
-
-        def handle_load_finished(self):
-            self.toHtml(self.process_current_page)
-
-    app = QtWidgets.QApplication(sys.argv)
-    webpage = WebPage()
-    webpage.start(d_urls)
-    sys.exit(app.exec_())
+    finisher("s")
 
 
 def primer():
@@ -380,3 +359,26 @@ def change_current():
                 numbers.write(" ".join(status) + "\n")
             else:
                 numbers.write(chapters[i])
+
+
+def finisher(ans):
+    d_urls = [m[1] for m in dynamic_mangas]
+
+    print(Fore.GREEN + "Handling Dynamic Websites...")
+    app = QtWidgets.QApplication(sys.argv)
+    webpage = WebPage()
+    webpage.start(d_urls)
+    try:
+        app.exec_()
+    except AttributeError:
+        print("Dynamic Websites Unable to Load.")
+
+    global current
+    global latest_chapters
+    # if ans != "n":
+    #     print(Fore.GREEN + "Updating...")
+    #     # latest_chapters = latest_chapters[::-1]
+    #     update_latest(latest_chapters, current)
+    print(Fore.GREEN + "Done!")
+
+    sys.exit()
