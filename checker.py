@@ -8,9 +8,7 @@ from os import mkdir
 
 # Modules for dynamic JS websites
 
-from PyQt5.QtWebEngineWidgets import QWebEnginePage
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtCore import QUrl
+from PyQt5 import QtCore, QtWidgets, QtWebEngineWidgets
 import sys
 
 
@@ -22,6 +20,7 @@ import sys
 # readmng.com -> ReadMng
 # mangadex.org -> MangaDex
 # mangkakalot.com -> Kakalot
+# pmscans.com & manhuaplus.com -> WP
 
 
 # Each list within the mangas list has the following parameters: Name, Link, Source
@@ -29,25 +28,25 @@ with open("saved/list.txt", "rt", encoding="utf-8") as m_list:
     mangas = [line.split("|") for line in m_list.readlines()]
 if not mangas:
     mangas = [['Attack on Titan', 'https://attackontitanmanga.com/', 'AoT|\n'],
-          ['Solo Leveling', 'https://manganelo.com/manga/pn918005', 'Mangelo'],
-          ['Tales of Demons and Gods', 'https://manganelo.com/manga/hyer5231574354229', 'Mangelo|\n'],
-          ['The Great Mage Returns After 4000 Years', 'https://manganelo.com/manga/go922760', 'Mangelo|\n'],
-          ['Second Life Ranker', 'https://zeroscans.com/comics/188504-second-life-ranker', 'ZeroLeviatan|\n'],
-          ['I am the Sorcerer King', 'https://leviatanscans.com/comics/i-am-the-sorcerer-king', 'ZeroLeviatan|\n'],
-          ['Descent of the Demonic Master', 'https://mangaeffect.com/manga/the-descent-of-the-demonic-master/', 'Effect|\n'],
-          ['Chronicles of Heavenly Demon', 'https://www.readmng.com/chronicles-of-heavenly-demon-3', 'ReadMng|\n'],
-          ['Iruma-Kun', 'https://www.readmng.com/mairimashita-iruma-kun', 'ReadMng|\n'],
-          ['Kingdom', 'https://www.readmng.com/kingdom', 'ReadMng|\n'],
-          ['Solo Auto Hunting', 'https://mangaeffect.com/manga/solo-auto-hunting/', 'Effect|\n'],
-          ["The Scholar's Reincarnation", 'https://www.readmng.com/the-scholars-reincarnation', 'ReadMng|\n'],
-          ["LESSA - Servant of Cosmos", 'https://mangakakalot.com/read-qu0ei158524508422', 'Kakalot|\n'],
-          ["Demon Magic Emperor", 'https://mangadex.org/title/43692/demonic-emperor', 'MangaDex|\n'],
-          ["Leveling Up, by Only Eating!", 'https://mangadex.org/title/48217/leveling-up-by-only-eating', 'MangaDex|\n'],
-          ["Apothesis", "https://mangadex.org/title/23001/apotheosis-ascension-to-godhood", "MangaDex|\n"],
-          ["Yuan Zun", "https://mangakakalot.tv/manga/yuan_zun", "Kakalot|\n"],
-          ["Martial Peak", "https://manganelo.com/manga/martial_peak", "Mangelo|\n"],
-          ["Legendary Moonlight Sculptor", "https://www.readmng.com/Dalbic-Jogaksa-2/", "ReadMng|\n"]
-          ]
+              ['Solo Leveling', 'https://manganelo.com/manga/pn918005', 'Mangelo'],
+              ['Tales of Demons and Gods', 'https://manganelo.com/manga/hyer5231574354229', 'Mangelo|\n'],
+              ['The Great Mage Returns After 4000 Years', 'https://manganelo.com/manga/go922760', 'Mangelo|\n'],
+              ['Second Life Ranker', 'https://zeroscans.com/comics/188504-second-life-ranker', 'ZeroLeviatan|\n'],
+              ['I am the Sorcerer King', 'https://leviatanscans.com/comics/i-am-the-sorcerer-king', 'ZeroLeviatan|\n'],
+              ['Descent of the Demonic Master', 'https://mangaeffect.com/manga/the-descent-of-the-demonic-master/', 'Effect|\n'],
+              ['Chronicles of Heavenly Demon', 'https://www.readmng.com/chronicles-of-heavenly-demon-3', 'ReadMng|\n'],
+              ['Iruma-Kun', 'https://www.readmng.com/mairimashita-iruma-kun', 'ReadMng|\n'],
+              ['Kingdom', 'https://www.readmng.com/kingdom', 'ReadMng|\n'],
+              ['Solo Auto Hunting', 'https://mangaeffect.com/manga/solo-auto-hunting/', 'Effect|\n'],
+              ["The Scholar's Reincarnation", 'https://www.readmng.com/the-scholars-reincarnation', 'ReadMng|\n'],
+              ["LESSA - Servant of Cosmos", 'https://mangakakalot.com/read-qu0ei158524508422', 'Kakalot|\n'],
+              ["Demon Magic Emperor", 'https://mangadex.org/title/43692/demonic-emperor', 'MangaDex|\n'],
+              ["Leveling Up, by Only Eating!", 'https://mangadex.org/title/48217/leveling-up-by-only-eating', 'MangaDex|\n'],
+              ["Apothesis", "https://mangadex.org/title/23001/apotheosis-ascension-to-godhood", "MangaDex|\n"],
+              ["Yuan Zun", "https://mangakakalot.tv/manga/yuan_zun", "Kakalot|\n"],
+              ["Martial Peak", "https://manganelo.com/manga/martial_peak", "Mangelo|\n"],
+              ["Legendary Moonlight Sculptor", "https://www.readmng.com/Dalbic-Jogaksa-2/", "ReadMng|\n"]
+              ]
 
 # Set up the saved folder if it doesn't exist yet
 try:
@@ -69,12 +68,13 @@ source_elements = defaultdict(lambda: 'a')
 source_elements['ZeroLeviatan'] = 'span'
 source_elements['ReadMng'] = 'span'
 source_elements['Effect'] = 'li'
+source_elements['WP'] = 'li'
 source_elements['Kakalot'] = 'div'
 
 # Now the i_or_cls parameter of finder comes from this neat dictionary
 # Now the i_or_cls parameter of finder comes from this neat dictionary
 source_methods = {'AoT': 9, 'Mangelo': 'chapter-name text-nowrap', 'ZeroLeviatan': 'text-muted text-sm',
-                  'Effect': 'wp-manga-chapter', 'ReadMng': 'val',
+                  'Effect': 'wp-manga-chapter', 'ReadMng': 'val', 'WP': 'wp-manga-chapter',
                   'MangaDex': 'text-truncate', 'Kakalot': 'chapter-list'}
 
 
@@ -131,14 +131,16 @@ def manga_strip(manga):
     source_url = manga[1]
     element = source_elements[manga[2]]
     method = source_methods[manga[2]]
-    webpage = requests.get(source_url)
 
+    webpage_request = requests.get(source_url)
     # Finder function enables one line to check any new properly defined list item (see line 16 comment)
-    latest_chapter, link = finder(webpage, element, method)
+    latest_chapter, link = finder(webpage_request, element, method)
+
+    # In case it is a local reference to the chapter page (as with MangaDex)
     if link[:8] != "https://":
         link = source_url + link
     latest_chapter = psych_handler(latest_chapter, link, manga[2])
-    # In case it is a local reference to the chapter page (as with MangaDex)
+
     return latest_chapter, link
 
 
@@ -177,9 +179,17 @@ def update_latest(news, olds):
     return None
 
 
+latest_chapters = []
+dynamic_indexes = []
+dynamic_mangas = []
+
+
 def a():
-    latest_chapters = []
     for i, manga in enumerate(mangas):
+        if manga[2] == "WP":
+            dynamic_indexes.append(i)
+            dynamic_mangas.append(manga)
+            continue
         latest, link = manga_strip(manga)
         latest_chapters.append(latest)
         with open("saved/latest.txt") as f:
@@ -202,14 +212,19 @@ def a():
             color = Fore.LIGHTBLUE_EX
             link_placeholder = ""
         print(color + f"{manga[0]}: {previous} -> {latest} {Fore.CYAN} {link_placeholder}")
+    print(Fore.LIGHTGREEN_EX + "Handling Dynamic Websites...")
+    dynamic_finder(dynamic_indexes, dynamic_mangas)
     print(Fore.LIGHTGREEN_EX + "Updating...")
     update_latest(latest_chapters, current)
     print(Fore.GREEN + "Done!")
 
 
 def n():
-    latest_chapters = []
     for i, manga in enumerate(mangas[::-1]):
+        if manga[2] == "WP":
+            dynamic_indexes.append(-1 * i - 1)
+            dynamic_mangas.append(manga)
+            continue
         latest, link = manga_strip(manga)
         latest_chapters.append(latest)
         with open("saved/latest.txt") as f:
@@ -225,15 +240,20 @@ def n():
             print(Fore.LIGHTMAGENTA_EX + f"{manga[0]}: {previous} -> {latest} Copy to see it:{Fore.CYAN} {link}")
         elif i % 5 == 0:
             print(Fore.LIGHTGREEN_EX + "Loading...")
+    print(Fore.LIGHTGREEN_EX + "Handling Dynamic Websites...")
+    dynamic_finder(dynamic_indexes, dynamic_mangas)
     print(Fore.LIGHTGREEN_EX + "Updating...")
     update_latest(latest_chapters[::-1], current[::-1])
     print(Fore.GREEN + "Done!")
 
 
 def s():
-    latest_chapters = []
     with open(f'saved/{datetime.strftime(datetime.now(), "%m%d%y")}.txt', "wt", encoding="utf-8") as f:
         for i, manga in enumerate(mangas):
+            if manga[2] == "WP":
+                dynamic_indexes.append(i)
+                dynamic_mangas.append(manga)
+                continue
             latest, link = manga_strip(manga)
             latest_chapters.append(latest)
             with open("saved/latest.txt") as file:
@@ -255,41 +275,69 @@ def s():
             f.write(color + f"{manga[0]}: {previous} -> {latest}{link_placeholder}\n\n")
             if i % 4 == 0:
                 print("Loading...")
+    print(Fore.LIGHTGREEN_EX + "Handling Dynamic Websites...")
+    dynamic_finder(dynamic_indexes, dynamic_mangas)
     print("Updating...")
     update_latest(latest_chapters, current)
     print("Done!")
 
 
 # Dynamic website offenders include ManhuaPlus and PMScans, who use the same Wordpress template
-dynamic_mangas = [
-                  ['Leveling Up, Only By Eating', 'https://www.pmscans.com/manga/leveling-up-by-only-eating/'],
-                  ['Apotheosis', 'https://manhuaplus.com/manga/apotheosis/#']
-                 ]
+dynamic_run_count = 0
 
 
-def d():
-    class Page(QWebEnginePage):
-        def __init__(self, url):
-            self.app = QApplication(sys.argv)
-            QWebEnginePage.__init__(self)
-            self.html = ''
-            self.loadFinished.connect(self._on_load_finished)
-            self.load(QUrl(url))
-            self.app.exec_()
+def dynamic_finder(indexes, dms):
+    d_urls = [m[1] for m in dms]
 
-        def _on_load_finished(self):
-            self.html = self.toHtml(self.callable)
-            print(Fore.YELLOW + 'Load finished')
+    class WebPage(QtWebEngineWidgets.QWebEnginePage):
+        def __init__(self):
+            super(WebPage, self).__init__()
+            self.loadFinished.connect(self.handle_load_finished)
 
-        def callable(self, html_str):
-            self.html = html_str
-            self.app.quit()
+        def start(self, urls):
+            self._urls = iter(urls)
+            self.fetch_next()
 
-    for m in dynamic_mangas:
-        page = Page(m[1])
-        soupy = BeautifulSoup(page.html, 'html.parser')
-        element = soupy.find('li', class_='wp-manga-chapter').a
-        print(Fore.BLUE + f"{m[0]}: Latest Chapter is {num_puller(element.text)[0]}")
+        def fetch_next(self):
+            try:
+                url = next(self._urls)
+            except StopIteration:
+                return False
+            else:
+                self.load(QtCore.QUrl(url))
+            return True
+        def process_current_page(self, html):
+            global dynamic_run_count
+            drc = dynamic_run_count
+
+            print(Fore.YELLOW + 'Loaded [%d chars] %s' % (len(html), "Dynamically"))
+            soupy = BeautifulSoup(html, 'html.parser')
+            tag = soupy.find("li", class_="wp-manga-chapter").a
+            chapter_num = num_puller(tag.text)[0]
+            chapter_link = tag.attrs["href"]
+            index = indexes[dynamic_run_count]
+            latest_chapters[index:index] = [chapter_num]
+
+            with open("saved/latest.txt") as f:
+                current = f.readlines()
+            try:
+                previous = num_puller(current[index])[0]
+            except IndexError:
+                previous = 0
+
+            print(Fore.RED + f"{dms[drc][0]}: {previous} -> {chapter_num} {Fore.CYAN} {chapter_link}")
+            dynamic_run_count += 1
+
+            if not self.fetch_next():
+                QtWidgets.qApp.quit()
+
+        def handle_load_finished(self):
+            self.toHtml(self.process_current_page)
+
+    app = QtWidgets.QApplication(sys.argv)
+    webpage = WebPage()
+    webpage.start(d_urls)
+    sys.exit(app.exec_())
 
 
 def primer():
@@ -306,3 +354,29 @@ def primer():
                     input("Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
                           "Please enter the corresponding three letter code found in parentheses.  ")
                 numbers.write(" ".join(status) + "\n")
+
+
+def add():
+    continuation = "Yep"
+    while continuation:
+        with open("saved/list.txt", "at", encoding="utf-8") as names,\
+                open("saved/latest.txt", "at", encoding="utf-8") as numbers:
+            print("Please enter all of the following information for the manga you'd like to add")
+            names.write(f"{input('Name  ')}|{input('Link  ')}|{input('Source (see supported source codes)  ')}|\n")
+            numbers.write(f"{input('Current Chapter  ')} {input('Status (yts/wip/utd)  ')}")
+        continuation = input("Press enter to quit or type anything into the input to continue adding manga  ")
+
+
+def change_current():
+    with open("saved/latest.txt", "rt", encoding="utf-8") as numbers_read:
+        chapters = [line for line in numbers_read.readlines()]
+    with open("saved/latest.txt", "wt", encoding="utf-8") as numbers:
+        for i, manga in enumerate(mangas):
+            if input(f"\nWould you like to update {manga[0]}'s current chapter? Right now it is {chapters[i]}" +
+                     f"Type anything for yes or simply press enter for no.  "):
+                status = input("\nWhich chapter are you on?  "), \
+                    input("Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
+                          "Please enter the corresponding three letter code found in parentheses.  ")
+                numbers.write(" ".join(status) + "\n")
+            else:
+                numbers.write(chapters[i])
