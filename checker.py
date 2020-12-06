@@ -72,6 +72,7 @@ with open("saved/latest.txt") as f:
 dynamic_mangas = []
 dynamic_run_count = 0
 dynamic_indexes = []
+# The following declarations help properly update_latest for the dynamics
 dynamic_ch_use = 0
 dynamic_chapters = []
 
@@ -309,8 +310,10 @@ def finisher(ans):
 
     global current
     global latest_chapters
+    global dynamic_chapters
     print(Fore.GREEN + "Updating...")
     if ans == "n":
+        dynamic_chapters = dynamic_chapters[::-1]
         latest_chapters = latest_chapters[::-1]
         current = current[::-1]
     update_latest(latest_chapters, current)
@@ -361,7 +364,11 @@ class WebPage(QtWebEngineWidgets.QWebEnginePage):
         except IndexError:
             previous = 0
 
-        print(Fore.RED + f"{dms[drc][0]}: {previous} -> {chapter_num} {Fore.CYAN} {chapter_link}")
+        if previous < chapter_num - 5:
+            url_num_loc = chapter_link.find("-", -7) + 1
+            chapter_link = chapter_link[:url_num_loc] + f"{previous + 1}/"
+
+        print(Fore.LIGHTRED_EX + f"{dms[drc][0]}: {previous} -> {chapter_num} {Fore.CYAN} {chapter_link}")
         dynamic_run_count += 1
 
         if not self.fetch_next():
@@ -374,18 +381,23 @@ class WebPage(QtWebEngineWidgets.QWebEnginePage):
 def update_latest(news, olds):
     # Changes the latest chapter read for up-to-date mangas to the last chapter released
     with open("saved/latest.txt", "wt", encoding="utf-8") as latest:
+        global dynamic_ch_use
+
         for old, new in zip_longest(olds, news):
             if old is None:
                 latest.write(f"0 yts\n")
-            elif new == "9999":
-                # Spot fix for dynamic websites
-                latest.write(old)
             else:
                 label = old.split()[1]
-                if label == "utd":
+                if label == "utd" and new != "9999":
                     latest.write(f"{new} utd\n")
                 elif label == "wip" or label == "yts":
                     latest.write(old)
+                else:
+                    # Spot fix for utd dynamic websites
+                    latest.write(f"{dynamic_chapters[dynamic_ch_use]} utd\n")
+
+            if new == "9999":
+                dynamic_ch_use += 1
 
     # latest.txt abbreviations: utd = up to date, wip = work in progress, yts = yet to start
     return None
