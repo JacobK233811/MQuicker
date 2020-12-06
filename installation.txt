@@ -1,0 +1,17 @@
+Please first go to "https://docs.conda.io/en/latest/miniconda.html" and download the appropriate 3.8 installer.
+
+Then run the installer to get access to Python 3.8 and the conda package manager.
+
+Open Anaconda Prompt.
+Navigate to the folder called MangaNewChapter-main.
+Use pip install -r requirements.txt to get all the necessary packages found within.
+
+Type in ipython to open your interactive shell, run the line "import checker" and then use "checker.a()", "checker.n()", or "checker.s()" depending on what you'd like to do.
+a() shows all the manga on the list, n() shows only the ones with new chapters, and s() saves all to a .txt file.
+For editing the .txt files in a safe way, run checker.primer() as a new user that wants to choose which manga of the base
+list to keep, checker.add() to add however many new manga to your list, and checker.change_current() to update which chapter
+you are on for every manga currently on your list. Throughout, pressing enter for input will cancel the action you've taken.
+Alternatively, customize the mangas list within list.txt and the latest chapters you've read within latest.txt while
+keeping in mind proper formatting (look to the original setup for guidance). This alternative is not recommended.
+
+Enjoy!
