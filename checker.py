@@ -4,7 +4,7 @@ from colorama import Fore
 from collections import defaultdict
 from datetime import datetime
 from itertools import zip_longest
-from os import mkdir
+import os
 
 # Modules for dynamic JS websites
 from PyQt5 import QtCore, QtWidgets, QtWebEngineWidgets
@@ -47,7 +47,7 @@ if not mangas:
 
 # Set up the saved folder if it doesn't exist yet
 try:
-    mkdir("saved")
+    os.mkdir("saved")
 except FileExistsError:
     pass
 
@@ -72,6 +72,8 @@ with open("saved/latest.txt") as f:
 dynamic_mangas = []
 dynamic_run_count = 0
 dynamic_indexes = []
+dynamic_ch_use = 0
+dynamic_chapters = []
 
 
 # The following three functions pertain to .txt file handling to keep new users from having to ever open a text file
@@ -295,6 +297,8 @@ def finisher(ans):
     d_urls = [m[1] for m in dynamic_mangas]
 
     print(Fore.GREEN + "Handling Dynamic Websites...")
+    # To suppress error messages in calls of PyQt5 WebEngine
+    os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--disable-logging"
     app = QtWidgets.QApplication(sys.argv)
     webpage = WebPage()
     webpage.start(d_urls)
@@ -311,8 +315,8 @@ def finisher(ans):
         current = current[::-1]
     update_latest(latest_chapters, current)
     print(Fore.GREEN + "Done!")
-
-    sys.exit()
+    #
+    # sys.exit(0)
 
 
 class WebPage(QtWebEngineWidgets.QWebEnginePage):
@@ -324,6 +328,10 @@ class WebPage(QtWebEngineWidgets.QWebEnginePage):
     def start(self, urls):
         self._urls = iter(urls)
         self.fetch_next()
+
+    def javaScriptConsoleMessage(self, level, msg, line, sourceID):
+        # To suppress error messages in calls of PyQt5 WebEngine
+        pass
 
     def fetch_next(self):
         try:
@@ -344,6 +352,7 @@ class WebPage(QtWebEngineWidgets.QWebEnginePage):
         soupy = BeautifulSoup(html, 'html.parser')
         tag = soupy.find("li", class_="wp-manga-chapter").a
         chapter_num = num_puller(tag.text)[0]
+        dynamic_chapters.append(chapter_num)
         chapter_link = tag.attrs["href"]
         index = dynamic_indexes[dynamic_run_count]
 
