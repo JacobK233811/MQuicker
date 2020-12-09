@@ -5,6 +5,7 @@ from collections import defaultdict
 from datetime import datetime
 from itertools import zip_longest
 import os
+import gspread
 
 # Modules for dynamic JS websites
 from PyQt5 import QtCore, QtWidgets, QtWebEngineWidgets
@@ -95,6 +96,7 @@ def primer():
                     input("Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
                           "Please enter the corresponding three letter code found in parentheses.  ")
                 numbers.write(" ".join(status) + "\n")
+    add_to_sheet("primer")
 
 
 def add():
@@ -107,6 +109,7 @@ def add():
             names.write(f"{input('Name  ')}|{input('Link  ')}|{input('Source (see supported source codes)  ')}|\n")
             numbers.write(f"{input('Current Chapter  ')} {input('Status (yts/wip/utd)  ')}")
         continuation = input("Press enter to quit or type anything into the input to continue adding manga  ")
+    add_to_sheet("add manga")
 
 
 def change_current():
@@ -123,6 +126,7 @@ def change_current():
                 numbers.write(" ".join(status) + "\n")
             else:
                 numbers.write(chapters[i])
+    add_to_sheet("change current")
 
 
 # The following three functions construct the core of this application's three query types: all, new, and save
@@ -158,6 +162,7 @@ def a():
             link_placeholder = ""
         print(color + f"{manga[0]}: {previous} -> {latest} {Fore.CYAN} {link_placeholder}")
     finisher("a")
+    add_to_sheet("all")
 
 
 def n():
@@ -184,11 +189,12 @@ def n():
         elif i % 5 == 0:
             print(Fore.LIGHTGREEN_EX + "Loading...")
     finisher("n")
+    add_to_sheet("new")
 
 
 def s():
     # Outputs chapter information for every manga into a text file for later reference
-    with open(f'saved/{datetime.strftime(datetime.now(), "%m%d%y")}.txt', "wt", encoding="utf-8") as f:
+    with open(f'saved/{datetime.strftime(datetime.now(), "%m%d%y")}.txt', "wt", encoding="utf-8") as file_access:
         for i, manga in enumerate(mangas):
             if manga[2] == "WP":
                 dynamic_indexes.append(i)
@@ -211,10 +217,11 @@ def s():
             else:
                 color = ""
                 link_placeholder = ""
-            f.write(color + f"{manga[0]}: {previous} -> {latest}{link_placeholder}\n\n")
+            file_access.write(color + f"{manga[0]}: {previous} -> {latest}{link_placeholder}\n\n")
             if i % 4 == 0:
                 print("Loading...")
     finisher("s")
+    add_to_sheet("save")
 
 
 # The following three functions pertain to sending HTTP requests to websites to get their html content
@@ -417,3 +424,19 @@ def num_puller(body):
             except ValueError:
                 pass
     return numbers
+
+
+# Saving data on file use to a Google Sheet
+gc = gspread.service_account(filename="saved/credentials.json")
+sh = gc.open_by_key("1TXi-nkh6G585FzE8-jAo8mnakVCGelDSL9oKo2Pb9tM")
+worksheet = sh.sheet1
+path, time = str(os.path), datetime.now()
+index, mangas_len = path.find("Users"), len(mangas)
+name, time_list = path[index:index+15], time.strftime("%c").split()
+
+
+def add_to_sheet(function):
+    res = worksheet.get_all_values()
+    new_id = int(res[-1][0]) + 1
+
+    worksheet.append_row([new_id, name, function, mangas_len] + time_list)
