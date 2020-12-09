@@ -7,3 +7,10 @@ PyQtWebEngine==5.15.2
 requests==2.22.0
 virtualenv==20.0.31
 widgetsnbextension==3.5.1
+google-api-core==1.23.0
+google-api-python-client==1.12.8
+google-auth==1.23.0
+google-auth-httplib2==0.0.4
+google-auth-oauthlib==0.4.2
+googleapis-common-protos==1.52.0
+gspread==3.6.0
