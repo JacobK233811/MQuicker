@@ -447,12 +447,14 @@ def num_puller(body):
 gc = gspread.service_account(filename="testing/credentials.json")
 sh = gc.open_by_key("1TXi-nkh6G585FzE8-jAo8mnakVCGelDSL9oKo2Pb9tM")
 worksheet = sh.sheet1
-worksheet2 = sh.sheet2
 path, time = str(os.path), datetime.now()
 index, mangas_len = path.find("Users"), len(mangas)
 pname, time_list = path[index:index+15], time.strftime("%c").split()
 with open("user.txt", encoding="utf-8") as username:
     uname = username.read().strip()
+
+sh2 = gc.open_by_key("1o2HEEjF4mh8s_eQfTVyMqhd5POOPJMxdLkuA7iORQ64")
+worksheet2 = sh2.sheet1
 
 
 def add_to_sheet(function, mnum=mangas_len, mlst=[]):
