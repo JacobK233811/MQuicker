@@ -1,0 +1,1 @@
+Just a bonus Python file that can download Solo Leveling chapters for offline viewing.

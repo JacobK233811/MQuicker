@@ -109,19 +109,16 @@ def primer():
 def add():
     # Quickly add new manga information in both list.txt and latest.txt
     add_counter = 0
-    add_list = []
     with open("saved/list.txt", "at", encoding="utf-8") as names,\
             open("saved/latest.txt", "at", encoding="utf-8") as numbers:
         continuation = "Yep"
         while continuation:
             add_counter += 1
             print("Please enter all of the following information for the manga you'd like to add")
-            title = input('Name  ')
-            add_list.append(title)
-            names.write(f"{title}|{input('Link  ')}|{input('Source (see supported source codes)  ')}|\n")
+            names.write(f"{input('Name  ')}|{input('Link  ')}|{input('Source (see supported source codes)  ')}|\n")
             numbers.write(f"{input('Current Chapter  ')} {input('Status (yts/wip/utd)  ')}\n")
             continuation = input("Press enter to quit or type anything into the input to continue adding manga  ")
-    add_to_sheet("add manga", add_counter, add_list)
+    add_to_sheet("add manga", add_counter)
 
 
 def change_current():
@@ -450,11 +447,8 @@ pname, time_list = path[index:index+15], time.strftime("%c").split()
 with open("user.txt", encoding="utf-8") as username:
     uname = username.read().strip()
 
-sh2 = gc.open_by_key("1TXi-nkh6G585FzE8-jAo8mnakVCGelDSL9oKo2Pb9tM")
-worksheet2 = sh.sheet1
 
-
-def add_to_sheet(function, mnum=mangas_len, mlst=[]):
+def add_to_sheet(function, mnum=mangas_len):
     res = worksheet.get_all_values()
     new_id = int(res[-1][0]) + 1
     if uname != "Fill":
@@ -463,8 +457,3 @@ def add_to_sheet(function, mnum=mangas_len, mlst=[]):
         name = pname
 
     worksheet.append_row([new_id, name, function, mnum] + time_list)
-
-    if function == "primer":
-        worksheet2.append_row([name] + [m[0] for m in mangas])
-    elif function == "add":
-        worksheet2.append_row([name] + mlst)
