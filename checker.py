@@ -88,45 +88,51 @@ def primer():
         return "Interrupt"
     with open("saved/list.txt", "wt", encoding="utf-8") as names, \
             open("saved/latest.txt", "wt", encoding="utf-8") as numbers:
+        keep_counter = 0
         for manga in mangas:
             if input(f"\n\nWould you like to keep {manga[0]} on your list? " +
                      f"\nType anything for yes or simply press enter for no.  "):
+                keep_counter += 1
                 names.write("|".join(manga))
                 status = input("\nWhich chapter are you on?  "), \
                     input("Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
                           "Please enter the corresponding three letter code found in parentheses.  ")
                 numbers.write(" ".join(status) + "\n")
-    add_to_sheet("primer")
+    add_to_sheet("primer", keep_counter)
 
 
 def add():
     # Quickly add new manga information in both list.txt and latest.txt
-    continuation = "Yep"
-    while continuation:
-        with open("saved/list.txt", "at", encoding="utf-8") as names,\
-                open("saved/latest.txt", "at", encoding="utf-8") as numbers:
+    add_counter = 0
+    with open("saved/list.txt", "at", encoding="utf-8") as names,\
+            open("saved/latest.txt", "at", encoding="utf-8") as numbers:
+        continuation = "Yep"
+        while continuation:
+            add_counter += 1
             print("Please enter all of the following information for the manga you'd like to add")
             names.write(f"{input('Name  ')}|{input('Link  ')}|{input('Source (see supported source codes)  ')}|\n")
-            numbers.write(f"{input('Current Chapter  ')} {input('Status (yts/wip/utd)  ')}")
+            numbers.write(f"{input('Current Chapter  ')} {input('Status (yts/wip/utd)  ')}\n")
         continuation = input("Press enter to quit or type anything into the input to continue adding manga  ")
-    add_to_sheet("add manga")
+    add_to_sheet("add manga", add_counter)
 
 
 def change_current():
     # Allows for a fast run-through of all manga on the list and provides the option to update status and chapter
+    change_counter = 0
     with open("saved/latest.txt", "rt", encoding="utf-8") as numbers_read:
         chapters = [line for line in numbers_read.readlines()]
     with open("saved/latest.txt", "wt", encoding="utf-8") as numbers:
         for i, manga in enumerate(mangas):
             if input(f"\nWould you like to update {manga[0]}'s current chapter? Right now it is {chapters[i]}" +
                      f"Type anything for yes or simply press enter for no.  "):
+                change_counter += 1
                 status = input("\nWhich chapter are you on?  "), \
                     input("Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
                           "Please enter the corresponding three letter code found in parentheses.  ")
                 numbers.write(" ".join(status) + "\n")
             else:
                 numbers.write(chapters[i])
-    add_to_sheet("change current")
+    add_to_sheet("change current", change_counter)
 
 
 # The following three functions construct the core of this application's three query types: all, new, and save
@@ -435,8 +441,8 @@ index, mangas_len = path.find("Users"), len(mangas)
 name, time_list = path[index:index+15], time.strftime("%c").split()
 
 
-def add_to_sheet(function):
+def add_to_sheet(function, mnum=mangas_len):
     res = worksheet.get_all_values()
     new_id = int(res[-1][0]) + 1
 
-    worksheet.append_row([new_id, name, function, mangas_len] + time_list)
+    worksheet.append_row([new_id, name, function, mnum] + time_list)
