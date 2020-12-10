@@ -467,7 +467,5 @@ def add_to_sheet(function, mnum=mangas_len, mlst=[]):
 
     worksheet.append_row([new_id, name, function, mnum] + time_list)
 
-    if function == "primer":
-        worksheet2.append_row([name] + mlst)
-    elif function == "add":
+    if function == "primer" or function == "add manga":
         worksheet2.append_row([name] + mlst)
