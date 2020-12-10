@@ -86,6 +86,11 @@ def primer():
     if not input("Are you sure? This is a somewhat long process meant only for first-time users." +
                  "\nPress enter to cancel. Typing anything else will begin the priming procedure.  "):
         return "Interrupt"
+
+    if input("Are you comfortable entering a first name or user name? Type anything for yes or enter for no."):
+        with open("user.txt", "wt", encoding="utf-8") as user:
+            user.write(input("Please enter your name."))
+
     with open("saved/list.txt", "wt", encoding="utf-8") as names, \
             open("saved/latest.txt", "wt", encoding="utf-8") as numbers:
         keep_counter = 0
@@ -438,11 +443,17 @@ sh = gc.open_by_key("1TXi-nkh6G585FzE8-jAo8mnakVCGelDSL9oKo2Pb9tM")
 worksheet = sh.sheet1
 path, time = str(os.path), datetime.now()
 index, mangas_len = path.find("Users"), len(mangas)
-name, time_list = path[index:index+15], time.strftime("%c").split()
+pname, time_list = path[index:index+15], time.strftime("%c").split()
+with open("user.txt", encoding="utf-8") as username:
+    uname = username.read()
 
 
 def add_to_sheet(function, mnum=mangas_len):
     res = worksheet.get_all_values()
     new_id = int(res[-1][0]) + 1
+    if uname != "Fill":
+        name = uname
+    else:
+        name = pname
 
     worksheet.append_row([new_id, name, function, mnum] + time_list)
