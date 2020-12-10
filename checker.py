@@ -112,7 +112,7 @@ def add():
             print("Please enter all of the following information for the manga you'd like to add")
             names.write(f"{input('Name  ')}|{input('Link  ')}|{input('Source (see supported source codes)  ')}|\n")
             numbers.write(f"{input('Current Chapter  ')} {input('Status (yts/wip/utd)  ')}\n")
-        continuation = input("Press enter to quit or type anything into the input to continue adding manga  ")
+            continuation = input("Press enter to quit or type anything into the input to continue adding manga  ")
     add_to_sheet("add manga", add_counter)
 
 
