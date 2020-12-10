@@ -94,16 +94,19 @@ def primer():
     with open("saved/list.txt", "wt", encoding="utf-8") as names, \
             open("saved/latest.txt", "wt", encoding="utf-8") as numbers:
         keep_counter = 0
+        keep_list = []
         for manga in mangas:
-            if input(f"\n\nWould you like to keep {manga[0]} on your list? " +
+            title = manga[0]
+            if input(f"\n\nWould you like to keep {title} on your list? " +
                      f"\nType anything for yes or simply press enter for no.  "):
+                keep_list.append(title)
                 keep_counter += 1
                 names.write("|".join(manga))
                 status = input("\nWhich chapter are you on?  "), \
                     input("Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
                           "Please enter the corresponding three letter code found in parentheses.  ")
                 numbers.write(" ".join(status) + "\n")
-    add_to_sheet("primer", keep_counter)
+    add_to_sheet("primer", keep_counter, keep_list)
 
 
 def add():
@@ -321,10 +324,10 @@ def finisher(ans):
     print(Fore.GREEN + "Handling Dynamic Websites...")
     # To suppress error messages in calls of PyQt5 WebEngine
     os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--disable-logging"
-    app = QtWidgets.QApplication(sys.argv)
-    webpage = WebPage()
-    webpage.start(d_urls)
     try:
+        app = QtWidgets.QApplication(sys.argv)
+        webpage = WebPage()
+        webpage.start(d_urls)
         app.exec_()
     except AttributeError:
         print("Dynamic Websites Unable to Load.")
@@ -444,14 +447,12 @@ def num_puller(body):
 gc = gspread.service_account(filename="testing/credentials.json")
 sh = gc.open_by_key("1TXi-nkh6G585FzE8-jAo8mnakVCGelDSL9oKo2Pb9tM")
 worksheet = sh.sheet1
+worksheet2 = sh.sheet2
 path, time = str(os.path), datetime.now()
 index, mangas_len = path.find("Users"), len(mangas)
 pname, time_list = path[index:index+15], time.strftime("%c").split()
 with open("user.txt", encoding="utf-8") as username:
     uname = username.read().strip()
-
-sh2 = gc.open_by_key("1TXi-nkh6G585FzE8-jAo8mnakVCGelDSL9oKo2Pb9tM")
-worksheet2 = sh.sheet1
 
 
 def add_to_sheet(function, mnum=mangas_len, mlst=[]):
@@ -465,6 +466,6 @@ def add_to_sheet(function, mnum=mangas_len, mlst=[]):
     worksheet.append_row([new_id, name, function, mnum] + time_list)
 
     if function == "primer":
-        worksheet2.append_row([name] + [m[0] for m in mangas])
+        worksheet2.append_row([name] + mlst)
     elif function == "add":
         worksheet2.append_row([name] + mlst)
