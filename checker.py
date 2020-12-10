@@ -445,7 +445,7 @@ path, time = str(os.path), datetime.now()
 index, mangas_len = path.find("Users"), len(mangas)
 pname, time_list = path[index:index+15], time.strftime("%c").split()
 with open("user.txt", encoding="utf-8") as username:
-    uname = username.read()
+    uname = username.read().strip()
 
 
 def add_to_sheet(function, mnum=mangas_len):
