@@ -342,7 +342,7 @@ def finisher(ans):
         current = current[::-1]
     elif ans == "s" and dynamic_chapters[-2:] != [-1] * 2:
         with open(f'saved/{datetime.strftime(datetime.now(), "%m%d%y")}.txt', "at", encoding="utf-8") as file_access:
-            file_access.write("\n".join(['Dynamics', str("\n".join(dynamic_mangas)), str(dynamic_chapters)]))
+            file_access.write("\n\n".join(['Dynamics', "\n".join([str(lst) for lst in dynamic_mangas]), str(dynamic_chapters)]))
     update_latest(latest_chapters, current)
     print(Fore.GREEN + "Done!")
     #
