@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 import requests
-from colorama import Fore
 from collections import defaultdict
 from datetime import datetime
 from itertools import zip_longest
@@ -167,7 +166,7 @@ def a():
         # The below if-else statement changes the color of the output when the latest chapter is greater than the latest read
         # If intending to access file through CLI w/o iPython, change color to "NEW " for the ~if~ and "" for the ~else~
         if float(latest) > previous:
-            color = Fore.LIGHTYELLOW_EX
+            color = "NEW "
             # The placeholder enables the feature of only showing links for items with a new chapter
             if current[i].split()[1] in ["wip", "yts"]:
                 link_placeholder = link
@@ -175,9 +174,9 @@ def a():
                 # link_placeholder = wip_link_switch(manga, previous)
                 link_placeholder = manga[1]
         else:
-            color = Fore.LIGHTBLUE_EX
+            color = ""
             link_placeholder = ""
-        print(color + f"{manga[0]}: {previous} -> {latest} {Fore.CYAN} {link_placeholder}")
+        print(color + f"{manga[0]}: {previous} -> {latest}   Link: {link_placeholder}")
     finisher("a")
     add_to_sheet("all")
 
@@ -202,9 +201,9 @@ def n():
         if float(latest) > previous:
             if current[i].split()[1] in ["wip", "yts"]:
                 link = manga[1]
-            print(Fore.LIGHTMAGENTA_EX + f"{manga[0]}: {previous} -> {latest} Copy to see it:{Fore.CYAN} {link}")
+            print(f"{manga[0]}: {previous} -> {latest} Copy to see it:{link}")
         elif i % 5 == 0:
-            print(Fore.LIGHTGREEN_EX + "Loading...")
+            print("Loading...")
     finisher("n")
     add_to_sheet("new")
 
@@ -321,7 +320,7 @@ def finisher(ans):
     # Runs dynamic website handling, updates latest.txt, and exits
     d_urls = [m[1] for m in dynamic_mangas]
 
-    print(Fore.GREEN + "Handling Dynamic Websites...")
+    print("Handling Dynamic Websites...")
     # To suppress error messages in calls of PyQt5 WebEngine
     os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--disable-logging"
     try:
@@ -335,7 +334,7 @@ def finisher(ans):
     global current
     global latest_chapters
     global dynamic_chapters
-    print(Fore.GREEN + "Updating...")
+    print("Updating...")
     if ans == "n":
         dynamic_chapters = dynamic_chapters[::-1]
         latest_chapters = latest_chapters[::-1]
@@ -344,7 +343,7 @@ def finisher(ans):
         with open(f'saved/{datetime.strftime(datetime.now(), "%m%d%y")}.txt', "at", encoding="utf-8") as file_access:
             file_access.write("\n\n".join(['\nDynamics', "\n".join([str(lst) for lst in dynamic_mangas]), str(dynamic_chapters)]))
     update_latest(latest_chapters, current)
-    print(Fore.GREEN + "Done!")
+    print("Done!")
     #
     # sys.exit(0)
 
@@ -378,7 +377,7 @@ class WebPage(QtWebEngineWidgets.QWebEnginePage):
         drc = dynamic_run_count
         dms = dynamic_mangas
 
-        print(Fore.YELLOW + 'Loaded [%d chars] %s' % (len(html), "Dynamically"))
+        print('Loaded [%d chars] %s' % (len(html), "Dynamically"))
         try:
             soupy = BeautifulSoup(html, 'html.parser')
             tag = soupy.find("li", class_="wp-manga-chapter").a
@@ -396,7 +395,7 @@ class WebPage(QtWebEngineWidgets.QWebEnginePage):
                 url_num_loc = chapter_link.find("-", -7) + 1
                 chapter_link = chapter_link[:url_num_loc] + f"{previous + 1}/"
 
-            print(Fore.LIGHTRED_EX + f"{dms[drc][0]}: {previous} -> {chapter_num} {Fore.CYAN} {chapter_link}")
+            print(f"{dms[drc][0]}: {previous} -> {chapter_num} Link: {chapter_link}")
             dynamic_run_count += 1
         except AttributeError:
             print("Dynamic Website Unable to Load Completely.")
@@ -483,5 +482,5 @@ options = {"1": a, "2": n, "3": s, "4": change_current, "5": add, "6": primer}
 option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer   ")
 # option = input(str(options) + "  ")
 options[option]()
-print(f"\n\n{Fore.RESET}" +
+print(f"\n\n" +
       f"Feel free to use 4, 5, or 6. Do not try and use 1, 2, or 3 without reimporting to avoid complications.")
