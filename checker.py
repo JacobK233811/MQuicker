@@ -169,7 +169,7 @@ def a():
         if float(latest) > previous:
             color = Fore.LIGHTYELLOW_EX
             # The placeholder enables the feature of only showing links for items with a new chapter
-            if current[i].split()[1] != "wip":
+            if current[i].split()[1] in ["wip", "yts"]:
                 link_placeholder = link
             else:
                 # link_placeholder = wip_link_switch(manga, previous)
@@ -200,7 +200,7 @@ def n():
             previous = 0
         # Only renders if there is a new chapter
         if float(latest) > previous:
-            if current[i].split()[1] == "wip":
+            if current[i].split()[1] in ["wip", "yts"]:
                 link = manga[1]
             print(Fore.LIGHTMAGENTA_EX + f"{manga[0]}: {previous} -> {latest} Copy to see it:{Fore.CYAN} {link}")
         elif i % 5 == 0:
@@ -226,7 +226,7 @@ def s():
                 previous = 0
             # The below if-else statement adds NEW to the output when the latest chapter is greater than the latest read
             if float(latest) > previous:
-                if current[i].split()[1] == "wip":
+                if current[i].split()[1] in ["wip", "yts"]:
                     link = manga[1]
                 color = "NEW "
                 # The placeholder enables the feature of only showing links for items with a new chapter
@@ -290,7 +290,7 @@ def finder(not_parsed, el, i_or_cls):
         output = "0"
 
     # Posting the link directly to the chapter if possible, and to the chapter list if not
-    if el == 'a':
+    if tag.name == 'a':
         return output, tag.attrs['href']
     return output, not_parsed.url
 
@@ -340,6 +340,9 @@ def finisher(ans):
         dynamic_chapters = dynamic_chapters[::-1]
         latest_chapters = latest_chapters[::-1]
         current = current[::-1]
+    elif ans == "s" and dynamic_chapters[-2:] != [-1] * 2:
+        with open(f'saved/{datetime.strftime(datetime.now(), "%m%d%y")}.txt', "at", encoding="utf-8") as file_access:
+            file_access.write("\n".join(['Dynamics', str("\n".join(dynamic_mangas)), str(dynamic_chapters)]))
     update_latest(latest_chapters, current)
     print(Fore.GREEN + "Done!")
     #
@@ -376,24 +379,29 @@ class WebPage(QtWebEngineWidgets.QWebEnginePage):
         dms = dynamic_mangas
 
         print(Fore.YELLOW + 'Loaded [%d chars] %s' % (len(html), "Dynamically"))
-        soupy = BeautifulSoup(html, 'html.parser')
-        tag = soupy.find("li", class_="wp-manga-chapter").a
-        chapter_num = num_puller(tag.text)[0]
-        dynamic_chapters.append(chapter_num)
-        chapter_link = tag.attrs["href"]
-        index = dynamic_indexes[dynamic_run_count]
-
         try:
-            previous = num_puller(current[index])[0]
-        except IndexError:
-            previous = 0
+            soupy = BeautifulSoup(html, 'html.parser')
+            tag = soupy.find("li", class_="wp-manga-chapter").a
+            chapter_num = num_puller(tag.text)[0]
+            dynamic_chapters.append(chapter_num)
+            chapter_link = tag.attrs["href"]
+            index_ = dynamic_indexes[dynamic_run_count]
 
-        if previous < chapter_num - 5:
-            url_num_loc = chapter_link.find("-", -7) + 1
-            chapter_link = chapter_link[:url_num_loc] + f"{previous + 1}/"
+            try:
+                previous = num_puller(current[index_])[0]
+            except IndexError:
+                previous = 0
 
-        print(Fore.LIGHTRED_EX + f"{dms[drc][0]}: {previous} -> {chapter_num} {Fore.CYAN} {chapter_link}")
-        dynamic_run_count += 1
+            if previous < chapter_num - 5:
+                url_num_loc = chapter_link.find("-", -7) + 1
+                chapter_link = chapter_link[:url_num_loc] + f"{previous + 1}/"
+
+            print(Fore.LIGHTRED_EX + f"{dms[drc][0]}: {previous} -> {chapter_num} {Fore.CYAN} {chapter_link}")
+            dynamic_run_count += 1
+        except AttributeError:
+            print("Dynamic Website Unable to Load Completely.")
+            dynamic_chapters.append(-1)
+            dynamic_run_count += 1
 
         if not self.fetch_next():
             QtWidgets.qApp.quit()
