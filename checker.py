@@ -477,3 +477,10 @@ def add_to_sheet(function, mnum=mangas_len, mlst=[]):
 
     if function == "primer" or function == "add manga":
         worksheet2.append_row([name] + mlst)
+
+
+options = {"1": a, "2": n, "3": s, "4": change_current, "5": add, "6": primer}
+option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer   ")
+# option = input(str(options) + "  ")
+options[option]()
+print(f"\n\n{Fore.LIGHTWHITE_EX}Feel free to use 4, 5, or 6. Do not try and use 1, 2, or 3 without reimporting to avoid complications.")
