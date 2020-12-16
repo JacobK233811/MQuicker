@@ -105,7 +105,12 @@ def primer():
                 status = input("\nWhich chapter are you on?  "), \
                     input("Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
                           "Please enter the corresponding three letter code found in parentheses.  ")
-                numbers.write(" ".join(status) + "\n")
+                print("Note: If you would like to quickly set up a new \"0 yts\" manga, "
+                      + "please press enter without any input for both of the following")
+                if status[0] == "" and status[1] == "":
+                    numbers.write(" ".join(["0", "yts"]) + "\n")
+                else:
+                    numbers.write(" ".join(status) + "\n")
     add_to_sheet("primer", keep_counter, keep_list)
 
 
@@ -484,4 +489,10 @@ option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5:
 # option = input(str(options) + "  ")
 options[option]()
 print(f"\n\n{Fore.RESET}" +
-      f"Feel free to use 4, 5, or 6. Do not try and use 1, 2, or 3 without reimporting to avoid complications.")
+      "Feel free to use 4, 5, or 6. Do not try and use 1, 2, or 3 without reimporting to avoid complications.")
+option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer, 7: Close  ")
+while option != "7":
+    option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer, 7: Close  ")
+    options[option]()
+    print("\n\n" +
+          "Feel free to use 4, 5, or 6. Do not try and use 1, 2, or 3 without reimporting to avoid complications.")

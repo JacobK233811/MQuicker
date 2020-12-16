@@ -101,10 +101,15 @@ def primer():
                 keep_list.append(title)
                 keep_counter += 1
                 names.write("|".join(manga))
-                status = input("\nWhich chapter are you on?  "), \
+                print("Note: If you would like to quickly set up a new \"0 yts\" manga, "
+                      + "please press enter without any input for both of the following")
+                status = input("\nWhich chapter are you on? "), \
                     input("Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
                           "Please enter the corresponding three letter code found in parentheses.  ")
-                numbers.write(" ".join(status) + "\n")
+                if status[0] == "" and status[1] == "":
+                    numbers.write(" ".join(["0", "yts"]) + "\n")
+                else:
+                    numbers.write(" ".join(status) + "\n")
     add_to_sheet("primer", keep_counter, keep_list)
 
 
@@ -168,15 +173,15 @@ def a():
         if float(latest) > previous:
             color = "NEW "
             # The placeholder enables the feature of only showing links for items with a new chapter
-            if current[i].split()[1] in ["wip", "yts"]:
-                link_placeholder = link
+            if current[i].split()[1] == "utd":
+                link_placeholder = "Link: " + link
             else:
                 # link_placeholder = wip_link_switch(manga, previous)
-                link_placeholder = manga[1]
+                link_placeholder = "Link: " + manga[1]
         else:
             color = ""
             link_placeholder = ""
-        print(color + f"{manga[0]}: {previous} -> {latest}   Link: {link_placeholder}")
+        print(color + f"{manga[0]}: {previous} -> {latest}  {link_placeholder}")
     finisher("a")
     add_to_sheet("all")
 
@@ -483,4 +488,10 @@ option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5:
 # option = input(str(options) + "  ")
 options[option]()
 print(f"\n\n" +
-      f"Feel free to use 4, 5, or 6. Do not try and use 1, 2, or 3 without reimporting to avoid complications.")
+      "Feel free to use 4, 5, or 6. Do not try and use 1, 2, or 3 without reimporting to avoid complications.")
+option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer, 7: Close  ")
+while option != "7":
+    option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer, 7: Close  ")
+    options[option]()
+    print("\n\n" +
+          "Feel free to use 4, 5, or 6. Do not try and use 1, 2, or 3 without reimporting to avoid complications.")
