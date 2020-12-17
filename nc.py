@@ -20,6 +20,7 @@ import sys
 # mangkakalot.com -> Kakalot
 # pmscans.com & manhuaplus.com -> WP
 # lhtranslation.net -> lh
+# asurascans.com -> asura
 
 # Each list within the mangas list has the following parameters: Name, Link, Source
 with open("saved/list.txt", "rt", encoding="utf-8") as m_list:
@@ -54,14 +55,14 @@ except FileExistsError:
 
 # On most sites the desired element will be an anchor 'a' tag. However, this default dict allows us to specify exceptions
 source_elements = defaultdict(lambda: 'a')
-source_elements['ZeroLeviatan'], source_elements['ReadMng'] = ['span'] * 2
+source_elements['ZeroLeviatan'], source_elements['ReadMng'], source_elements["asura"] = ['span'] * 3
 source_elements['Effect'], source_elements['WP'] = ['li'] * 2
 source_elements['Kakalot'] = 'div'
 
 # Now the i_or_cls parameter of finder comes from this neat dictionary. All except AoT use classes intentionally
 source_methods = {'AoT': 9, 'Mangelo': 'chapter-name text-nowrap', 'ZeroLeviatan': 'text-muted text-sm',
                   'Effect': 'wp-manga-chapter', 'ReadMng': 'val', 'WP': 'wp-manga-chapter',
-                  'MangaDex': 'text-truncate', 'Kakalot': 'chapter-list', "lh": "chapter"}
+                  'MangaDex': 'text-truncate', 'Kakalot': 'chapter-list', "lh": "chapter", "asura": "epcur epcurlast"}
 
 # For later use in the update_latest function
 latest_chapters = []
