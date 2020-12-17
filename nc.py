@@ -19,6 +19,7 @@ import sys
 # mangadex.org -> MangaDex
 # mangkakalot.com -> Kakalot
 # pmscans.com & manhuaplus.com -> WP
+# lhtranslation.net -> lh
 
 # Each list within the mangas list has the following parameters: Name, Link, Source
 with open("saved/list.txt", "rt", encoding="utf-8") as m_list:
@@ -60,7 +61,7 @@ source_elements['Kakalot'] = 'div'
 # Now the i_or_cls parameter of finder comes from this neat dictionary. All except AoT use classes intentionally
 source_methods = {'AoT': 9, 'Mangelo': 'chapter-name text-nowrap', 'ZeroLeviatan': 'text-muted text-sm',
                   'Effect': 'wp-manga-chapter', 'ReadMng': 'val', 'WP': 'wp-manga-chapter',
-                  'MangaDex': 'text-truncate', 'Kakalot': 'chapter-list'}
+                  'MangaDex': 'text-truncate', 'Kakalot': 'chapter-list', "lh": "chapter"}
 
 # For later use in the update_latest function
 latest_chapters = []
@@ -86,9 +87,9 @@ def primer():
                  "\nPress enter to cancel. Typing anything else will begin the priming procedure.  "):
         return "Interrupt"
 
-    if input("Are you comfortable entering a first name or user name? Type anything for yes or enter for no."):
+    if input("Are you comfortable entering a first name or user name? Type anything for yes or enter for no.  "):
         with open("user.txt", "wt", encoding="utf-8") as user:
-            user.write(input("Please enter your name."))
+            user.write(input("Please enter your name.  "))
 
     with open("saved/list.txt", "wt", encoding="utf-8") as names, \
             open("saved/latest.txt", "wt", encoding="utf-8") as numbers:
@@ -106,7 +107,7 @@ def primer():
                 status = input("\nWhich chapter are you on? "), \
                     input("Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
                           "Please enter the corresponding three letter code found in parentheses.  ")
-                if status[0] == "" and status[1] == "":
+                if status == ("", ""):
                     numbers.write(" ".join(["0", "yts"]) + "\n")
                 else:
                     numbers.write(" ".join(status) + "\n")
@@ -204,7 +205,7 @@ def n():
             previous = 0
         # Only renders if there is a new chapter
         if float(latest) > previous:
-            if current[i].split()[1] in ["wip", "yts"]:
+            if current[i].split()[1] != "utd":
                 link = manga[1]
             print(f"{manga[0]}: {previous} -> {latest} Copy to see it:{link}")
         elif i % 5 == 0:
@@ -230,7 +231,7 @@ def s():
                 previous = 0
             # The below if-else statement adds NEW to the output when the latest chapter is greater than the latest read
             if float(latest) > previous:
-                if current[i].split()[1] in ["wip", "yts"]:
+                if current[i].split()[1] != "utd":
                     link = manga[1]
                 color = "NEW "
                 # The placeholder enables the feature of only showing links for items with a new chapter
@@ -484,14 +485,9 @@ def add_to_sheet(function, mnum=mangas_len, mlst=[]):
 
 
 options = {"1": a, "2": n, "3": s, "4": change_current, "5": add, "6": primer}
-option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer   ")
-# option = input(str(options) + "  ")
-options[option]()
-print(f"\n\n" +
-      "Feel free to use 4, 5, or 6. Do not try and use 1, 2, or 3 without reimporting to avoid complications.")
 option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer, 7: Close  ")
 while option != "7":
-    option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer, 7: Close  ")
     options[option]()
     print("\n\n" +
           "Feel free to use 4, 5, or 6. Do not try and use 1, 2, or 3 without reimporting to avoid complications.")
+    option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer, 7: Close  ")
