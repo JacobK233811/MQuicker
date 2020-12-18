@@ -464,7 +464,7 @@ sh = gc.open_by_key("1TXi-nkh6G585FzE8-jAo8mnakVCGelDSL9oKo2Pb9tM")
 worksheet = sh.sheet1
 path, time = str(os.path), datetime.now()
 index, mangas_len = path.find("Users"), len(mangas)
-pname, time_list = path[index:index+15], time.strftime("%c").split()
+pname, time_list = path[index+7:index+15], time.strftime("%c").split()
 with open("user.txt", encoding="utf-8") as username:
     uname = username.read().strip()
 
