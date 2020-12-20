@@ -7,12 +7,12 @@ The current recommended use is to open AnacondaPrompt, create an iPython shell, 
 
 <img src="mcheck_ex.png"/>
 
-<a href="https://youtu.be/AyZsZzuTAPg/" target="_blank">For Demo Video Click Here</a>
+<a href="https://youtu.be/AyZsZzuTAPg/" target="_blank">For Demo Video Ctrl+Click Here</a>
 
 <h1 id="su">Four Steps to Set Up</h1>
 <ol>
   <li>Download this GitUp Repository by Clicking the Green "Code" Button followed by Download Zip. Then extract the files to the desired location. </li>
-  <li><a href="https://docs.conda.io/en/latest/miniconda.html">Get the Latest Version of Python</a> for your Operating System </li>
+  <li><a href="https://docs.conda.io/en/latest/miniconda.html">Get the Latest Version of Python</a> (use Ctrl+Click for a new tab) for your Operating System </li>
   <li>Open Anaconda Prompt and Navigate the Folder called MangaNewChapter-main by Using cd folder1\folder2 until arrival. Then run "pip install -r requirements.txt" </li>
   <li>Run "python nc.py". For color, use "ipython" followed by "import checker" and then "checker.a()" </li>
 </ol>
