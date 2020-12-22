@@ -42,7 +42,7 @@ The current recommended use is to open AnacondaPrompt, create an iPython shell, 
  
 # Function Directory
 <ul>
-  <li>primer() - Adjusts the initial list.txt file containing which mangas you'd like to track and latest.txt file containing what chapter you are on.</li>
+  <li>primer() - Adjusts the initial list.txt file containing which mangas you'd like to track and latest.txt file containing what chapter you are on (both found within the saved folder).</li>
   <li>change_current() - Iterates through every manga on your list and lets you change the latest chapter read and status. Easily skip through with the Enter key.</li>
   <li>add() - Add a manga to your list by providing the Name (no requirements), Link (include the https://), Source Code (see Source in Codes above), Current Chapter, and Status Code.</li>
   <li>a() - Shows all manga on your list with the latest chapter released.</li>
