@@ -16,22 +16,30 @@ The current recommended use is to open AnacondaPrompt, create an iPython shell, 
   <li>Open Anaconda Prompt and Navigate the Folder called MangaNewChapter-main by Using cd folder1\folder2 until arrival. Then run "pip install -r requirements.txt" </li>
   <li>Run "python nc.py". For color, use "ipython" followed by "import checker" and then "checker.a()" </li>
 </ol>
+
 # Codes
-+Status - The main difference between the three lies with automatic aligning of your latest chapter read with the latest released for utd. The other two depend upon Change Current.
-  -utd = up to date
-  -wip = work in progess
-  -yts = yet to start
-+Source - There is a select list of supported manga sites that is continuously growing. Names are case-sensitive.
-  -attackontitanmanga.com -> AoT
-  -mangelo.com -> Mangelo
-  -zeroscans.com & leviatanscans.com -> ZeroLeviatan
-  -mangaeffect.com -> Effect
-  -readmng.com -> ReadMng
-  -mangadex.org -> MangaDex
-  -mangkakalot.com -> Kakalot
-  -pmscans.com & manhuaplus.com -> WP
-  -lhtranslation.net -> lh
-  -asurascans.com -> asura
+
+### Status - The main difference between the three lies with automatic aligning of your latest chapter read with the latest released for utd. The other two depend upon Change Current.
+<ul>
+  <li>utd = up to date</li>
+  <li>wip = work in progess</li>
+  <li>yts = yet to start</li>
+</ul>
+
+### Source - There is a select list of supported manga sites that is continuously growing. Names are case-sensitive.
+<ul>
+  <li>attackontitanmanga.com -> AoT</li>
+  <li>mangelo.com -> Mangelo</li>
+  <li>zeroscans.com & leviatanscans.com -> ZeroLeviatan</li>
+  <li>mangaeffect.com -> Effect</li>
+  <li>readmng.com -> ReadMng</li>
+  <li>mangadex.org -> MangaDex</li>
+  <li>mangkakalot.com -> Kakalot</li>
+  <li>pmscans.com & manhuaplus.com -> WP</li>
+  <li>lhtranslation.net -> lh</li>
+  <li>asurascans.com -> asura</li>
+ </ul>
+ 
 # Function Directory
 <ul>
   <li>primer() - Adjusts the initial list.txt file containing which mangas you'd like to track and latest.txt file containing what chapter you are on.</li>
