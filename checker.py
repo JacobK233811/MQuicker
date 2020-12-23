@@ -33,7 +33,8 @@ if not mangas:
               ['The Great Mage Returns After 4000 Years', 'https://manganelo.com/manga/go922760', 'Mangelo|\n'],
               ['Second Life Ranker', 'https://zeroscans.com/comics/188504-second-life-ranker', 'ZeroLeviatan|\n'],
               ['I am the Sorcerer King', 'https://leviatanscans.com/comics/i-am-the-sorcerer-king', 'ZeroLeviatan|\n'],
-              ['Descent of the Demonic Master', 'https://mangaeffect.com/manga/the-descent-of-the-demonic-master/', 'Effect|\n'],
+              ['Descent of the Demonic Master', 'https://mangaeffect.com/manga/the-descent-of-the-demonic-master/',
+               'Effect|\n'],
               ['Chronicles of Heavenly Demon', 'https://www.readmng.com/chronicles-of-heavenly-demon-3', 'ReadMng|\n'],
               ['Iruma-Kun', 'https://www.readmng.com/mairimashita-iruma-kun', 'ReadMng|\n'],
               ['Kingdom', 'https://www.readmng.com/kingdom', 'ReadMng|\n'],
@@ -41,7 +42,8 @@ if not mangas:
               ["The Scholar's Reincarnation", 'https://www.readmng.com/the-scholars-reincarnation', 'ReadMng|\n'],
               ["LESSA - Servant of Cosmos", 'https://mangakakalot.com/read-qu0ei158524508422', 'Kakalot|\n'],
               ["Demon Magic Emperor", 'https://mangadex.org/title/43692/demonic-emperor', 'MangaDex|\n'],
-              ["Leveling Up, by Only Eating!", 'https://mangadex.org/title/48217/leveling-up-by-only-eating', 'MangaDex|\n'],
+              ["Leveling Up, by Only Eating!", 'https://mangadex.org/title/48217/leveling-up-by-only-eating',
+               'MangaDex|\n'],
               ["Apothesis", "https://mangadex.org/title/23001/apotheosis-ascension-to-godhood", "MangaDex|\n"],
               ["Yuan Zun", "https://mangakakalot.tv/manga/yuan_zun", "Kakalot|\n"],
               ["Martial Peak", "https://manganelo.com/manga/martial_peak", "Mangelo|\n"],
@@ -82,7 +84,7 @@ dynamic_chapters = []
 
 # The following three functions pertain to .txt file handling to keep new users from having to ever open a text file
 # Progressive input statements provide a clean text editing experience with proper formatting and alignment
-# Deters user error or frustration with sensitive entries. Next code section starts at line 125
+# Deters user error or frustration with sensitive entries. Next code section starts at line 175
 def primer():
     # Choosing which manga of the base list to keep and setting their current chapter/status for that one-by-one
     if not input("Are you sure? This is a somewhat long process meant only for first-time users." +
@@ -105,8 +107,8 @@ def primer():
                 keep_counter += 1
                 names.write("|".join(manga))
                 status = input("\nWhich chapter are you on?  "), \
-                    input("Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
-                          "Please enter the corresponding three letter code found in parentheses.  ")
+                         input("Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
+                               "Please enter the corresponding three letter code found in parentheses.  ")
                 print("Note: If you would like to quickly set up a new \"0 yts\" manga, "
                       + "please press enter without any input for both of the following")
                 if status == ("", ""):
@@ -120,7 +122,7 @@ def add():
     # Quickly add new manga information in both list.txt and latest.txt
     add_counter = 0
     add_list = []
-    with open("saved/list.txt", "at", encoding="utf-8") as names,\
+    with open("saved/list.txt", "at", encoding="utf-8") as names, \
             open("saved/latest.txt", "at", encoding="utf-8") as numbers:
         continuation = "Yep"
         while continuation:
@@ -145,18 +147,35 @@ def change_current():
                      f"Type anything for yes or simply press enter for no.  "):
                 change_counter += 1
                 status = input("\nWhich chapter are you on?  "), \
-                    input("Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
-                          "Please enter the corresponding three letter code found in parentheses.  ")
+                         input("Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
+                               "Please enter the corresponding three letter code found in parentheses.  ")
                 numbers.write(" ".join(status) + "\n")
             else:
                 numbers.write(chapters[i])
     add_to_sheet("change current", change_counter)
 
 
+# Rate/Recommend Interlude
+def rate():
+    # The rate function collects user ratings to help build a database for a future recommend feature
+    rate_list = []
+    for manga in mangas:
+        if input(f"\nWould you like to rate {manga[0]}? " +
+                 f"Type anything for yes or simply press enter for no.  "):
+            ratings = [manga[0]]
+            for scale in ["Overall", "Plot", "Action", "Romance", "Comedy", "Art"]:
+                ratings.append(input(f"\nHow would you rate {manga[0]}'s {scale} on a scale of 1 - 10?"))
+            for boolean in ["Family Friendly", "Happy"]:
+                ratings.append(input(f"\nDid you find {manga[0]} {boolean} " +
+                                     "Type 1 for yes and 0 for no  "))
+            rate_list.append(ratings)
+    add_to_sheet("rate", mlst=rate_list)
+
+
 # The following three functions construct the core of this application's three query types: all, new, and save
 # Each one goes through the list of manga, calling other functions in this .py file for various functionality
 # Users call these whenever they want to check for new chapters and each one caters to a different need
-# Near every line of code comes into play on the call of one of these functions. Next sections starts line 217
+# Near every line of code comes into play on the call of one of these functions. Next sections starts line 270
 def a():
     # Simply outputs chapter information for every include manga within list.txt
     for i, manga in enumerate(mangas):
@@ -209,7 +228,7 @@ def n():
         if float(latest) > previous:
             if current[i].split()[1] != "utd":
                 link = manga[1]
-            print(Fore.LIGHTMAGENTA_EX + f"{manga[0]}: {previous} -> {latest} Copy to see it:{Fore.CYAN} {link}")
+            print(Fore.LIGHTMAGENTA_EX + f"{manga[0]}: {previous} -> {latest} Copy to see it:  {Fore.CYAN} {link}")
         elif i % 5 == 0:
             print(Fore.LIGHTGREEN_EX + "Loading...")
     finisher("n")
@@ -249,7 +268,7 @@ def s():
 
 
 # The following three functions pertain to sending HTTP requests to websites to get their html content
-# Ends with the desired most recent chapter number. Next and final section start on line 291
+# Ends with the desired most recent chapter number. Next and final section start on line 346
 def manga_strip(manga):
     # Pulling all the necessary info out of the manga list for quick reference
     source_url = manga[1]
@@ -315,7 +334,9 @@ def psych_handler(lc, lk, source):
             ch -= 1
     if source == "MangaDex":
         try:
-            if ch_soup.find("div", {"class": "col-2 col-lg-1 ml-1 text-right text-truncate order-lg-8 text-warning"}).text.strip()[:2] == "in":
+            if ch_soup.find("div", {
+                "class": "col-2 col-lg-1 ml-1 text-right text-truncate order-lg-8 text-warning"}).text.strip()[
+               :2] == "in":
                 ch -= 1
         except AttributeError:
             pass
@@ -349,7 +370,8 @@ def finisher(ans):
         current = current[::-1]
     elif ans == "s" and dynamic_chapters[-2:] != [-1] * 2:
         with open(f'saved/{datetime.strftime(datetime.now(), "%m%d%y")}.txt', "at", encoding="utf-8") as file_access:
-            file_access.write("\n\n".join(['\nDynamics', "\n".join([str(lst) for lst in dynamic_mangas]), str(dynamic_chapters)]))
+            file_access.write(
+                "\n\n".join(['\nDynamics', "\n".join([str(lst) for lst in dynamic_mangas]), str(dynamic_chapters)]))
     update_latest(latest_chapters, current)
     print(Fore.GREEN + "Done!")
     #
@@ -464,12 +486,15 @@ sh = gc.open_by_key("1TXi-nkh6G585FzE8-jAo8mnakVCGelDSL9oKo2Pb9tM")
 worksheet = sh.sheet1
 path, time = str(os.path), datetime.now()
 index, mangas_len = path.find("Users"), len(mangas)
-pname, time_list = path[index+7:index+15], time.strftime("%c").split()
+pname, time_list = path[index + 7:index + 15], time.strftime("%c").split()
 with open("user.txt", encoding="utf-8") as username:
     uname = username.read().strip()
 
 sh2 = gc.open_by_key("1o2HEEjF4mh8s_eQfTVyMqhd5POOPJMxdLkuA7iORQ64")
 worksheet2 = sh2.sheet1
+
+sh3 = gc.open_by_key("1eG1rgmkOGj6xAMNgLB24uvA4ocjxnDYUKr7svitpLVE")
+worksheet3 = sh3.sheet1
 
 
 def add_to_sheet(function, mnum=mangas_len, mlst=[]):
@@ -480,16 +505,11 @@ def add_to_sheet(function, mnum=mangas_len, mlst=[]):
     else:
         name = pname
 
-    worksheet.append_row([new_id, name, function, mnum] + time_list)
+    if function != "rate":
+        worksheet.append_row([new_id, name, function, mnum] + time_list)
 
-    if function == "primer" or function == "add manga":
-        worksheet2.append_row([name] + mlst)
-
-
-# options = {"1": a, "2": n, "3": s, "4": change_current, "5": add, "6": primer}
-# option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer  ")
-# while option != "7":
-#     options[option]()
-#     print("\n\n" +
-#           "Feel free to use 4, 5, or 6. Do not try and use 1, 2, or 3 without reimporting to avoid complications.")
-#     option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer, 7: Close  ")
+        if function == "primer" or function == "add manga":
+            worksheet2.append_row([name] + mlst)
+    else:
+        for rating in mlst:
+            worksheet3.append_row([name] + rating)

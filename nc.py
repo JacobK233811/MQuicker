@@ -81,7 +81,7 @@ dynamic_chapters = []
 
 # The following three functions pertain to .txt file handling to keep new users from having to ever open a text file
 # Progressive input statements provide a clean text editing experience with proper formatting and alignment
-# Deters user error or frustration with sensitive entries. Next code section starts at line 125
+# Deters user error or frustration with sensitive entries. Next code section starts at line 172
 def primer():
     # Choosing which manga of the base list to keep and setting their current chapter/status for that one-by-one
     if not input("Are you sure? This is a somewhat long process meant only for first-time users." +
@@ -152,10 +152,27 @@ def change_current():
     add_to_sheet("change current", change_counter)
 
 
+# Rate/Recommend Interlude
+def rate():
+    # The rate function collects user ratings to help build a database for a future recommend feature
+    rate_list = []
+    for manga in mangas:
+        if input(f"\nWould you like to rate {manga[0]}? " +
+                 f"Type anything for yes or simply press enter for no.  "):
+            ratings = [manga[0]]
+            for scale in ["Overall", "Plot", "Action", "Romance", "Comedy", "Art"]:
+                ratings.append(input(f"\nHow would you rate {manga[0]}'s {scale} on a scale of 1 - 10?"))
+            for boolean in ["Family Friendly", "Happy"]:
+                ratings.append(input(f"\nDid you find {manga[0]} {boolean} " +
+                                     "Type 1 for yes and 0 for no  "))
+            rate_list.append(ratings)
+    add_to_sheet("rate", mlst=rate_list)
+
+
 # The following three functions construct the core of this application's three query types: all, new, and save
 # Each one goes through the list of manga, calling other functions in this .py file for various functionality
 # Users call these whenever they want to check for new chapters and each one caters to a different need
-# Near every line of code comes into play on the call of one of these functions. Next sections starts line 217
+# Near every line of code comes into play on the call of one of these functions. Next sections starts line 267
 def a():
     # Simply outputs chapter information for every include manga within list.txt
     for i, manga in enumerate(mangas):
@@ -208,7 +225,7 @@ def n():
         if float(latest) > previous:
             if current[i].split()[1] != "utd":
                 link = manga[1]
-            print(f"{manga[0]}: {previous} -> {latest} Copy to see it:{link}")
+            print(f"{manga[0]}: {previous} -> {latest} Copy to see it:  {link}")
         elif i % 5 == 0:
             print("Loading...")
     finisher("n")
@@ -248,7 +265,7 @@ def s():
 
 
 # The following three functions pertain to sending HTTP requests to websites to get their html content
-# Ends with the desired most recent chapter number. Next and final section start on line 291
+# Ends with the desired most recent chapter number. Next and final section start on line 341
 def manga_strip(manga):
     # Pulling all the necessary info out of the manga list for quick reference
     source_url = manga[1]
@@ -470,6 +487,9 @@ with open("user.txt", encoding="utf-8") as username:
 sh2 = gc.open_by_key("1o2HEEjF4mh8s_eQfTVyMqhd5POOPJMxdLkuA7iORQ64")
 worksheet2 = sh2.sheet1
 
+sh3 = gc.open_by_key("1eG1rgmkOGj6xAMNgLB24uvA4ocjxnDYUKr7svitpLVE")
+worksheet3 = sh3.sheet1
+
 
 def add_to_sheet(function, mnum=mangas_len, mlst=[]):
     res = worksheet.get_all_values()
@@ -479,16 +499,22 @@ def add_to_sheet(function, mnum=mangas_len, mlst=[]):
     else:
         name = pname
 
-    worksheet.append_row([new_id, name, function, mnum] + time_list)
+    if function != "rate":
+        worksheet.append_row([new_id, name, function, mnum] + time_list)
 
-    if function == "primer" or function == "add manga":
-        worksheet2.append_row([name] + mlst)
+        if function == "primer" or function == "add manga":
+            worksheet2.append_row([name] + mlst)
+    else:
+        for rating in mlst:
+            worksheet3.append_row([name] + rating)
 
 
-options = {"1": a, "2": n, "3": s, "4": change_current, "5": add, "6": primer}
-option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer, 7: Close  ")
-while option != "7":
+options = {"1": a, "2": n, "3": s, "4": change_current, "5": add, "6": primer, "7": rate}
+option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer, 7: Rate, 8: Close  ")
+while option != "8":
+    if not option:
+        option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer, 7: Rate, 8: Close  ")
+        continue
     options[option]()
-    print("\n\n" +
-          "Feel free to use 4, 5, or 6. Do not try and use 1, 2, or 3 without reimporting to avoid complications.")
-    option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer, 7: Close  ")
+    print("\n")
+    option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer, 7: Rate, 8: Close  ")
