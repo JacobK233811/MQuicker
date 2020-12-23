@@ -15,7 +15,8 @@ Note: It is highly recommended to use Ctrl+Click to open each of these in a new 
   <a href="setup.ps1"><li>Download the ZIP file and Miniconda</li></a>
   <a href="setup2.ps1"><li>Install required packages and run the file</li></a>
 </ol>
-<a href="launch.ps1">After setting up in this way, you can click here whenever you'd like to look for new chapters, or just find the launch.ps1 file on your computer :)
+<a href="launch.ps1">After setting up in this way, you can click here whenever you'd like to look for new chapters, or just find the launch.ps1 file on your computer :)</a> Also, a shortcut to this program called "MQuicker - For Desktop" is included within C:\Extracts\MQuicker. I recommend moving it to your Desktop, right clicking the icon, selecting Open With -> Choose Another App -> Always Use this App to Open .ps1 Files -> More Apps -> Look for an App on Your PC and then find and choose powershell.exe to easily access MQuicker from the Desktop.
+(I found Powershell in C:\Users\YOURNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell)
 
 <h1 id="su">Four Steps to Set Up on Windows</h1>
 <ol>
