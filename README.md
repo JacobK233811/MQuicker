@@ -9,6 +9,14 @@ The current recommended use is to open AnacondaPrompt, create an iPython shell, 
 
 <a href="https://youtu.be/AyZsZzuTAPg/" target="_blank">For Demo Video Ctrl+Click Here</a>
 
+<h1 id="su">Two Step Windows Set Up (Experimental)</h1>
+Note: It is highly recommended to use Ctrl+Click to open each of these in a new tab and then copy their contents into Windows Powershell program on your computer.
+<ol>
+  <a href="setup.ps1"><li>Download the ZIP file and Miniconda</li></a>
+  <a href="setup2.ps1"><li>Install required packages and run the file</li></a>
+</ol>
+<a href="launch.ps1">After setting up in this way, you can click here whenever you'd like to look for new chapters, or just find the launch.ps1 file on your computer :)
+
 <h1 id="su">Four Steps to Set Up on Windows</h1>
 <ol>
   <li>Download this GitHub Repository by <a href="https://github.com/JacobK233811/MangaNewChapter/archive/main.zip">Clicking the Green "Code" Button followed by Download ZIP</a>. Then extract the files to the desired location. </li>
