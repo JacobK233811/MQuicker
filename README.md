@@ -13,16 +13,16 @@ The current recommended use is to open AnacondaPrompt, create an iPython shell, 
 <ol>
   <li>Download this GitHub Repository by Clicking the Green "Code" Button followed by Download ZIP. Then extract the files to the desired location. </li>
   <li><a href="https://docs.conda.io/en/latest/miniconda.html">Get the 3.8 64-bit Version of Python</a> (use Ctrl+Click for a new tab) for Windows </li>
-  <li>Open Anaconda Prompt and Navigate the Folder called MangaNewChapter-main by Using "cd Downloads\MangaNewChapter-main" until arrival. Then run "pip install -r requirements.txt" </li>
-  <li>Run "python nc.py". For color, use "ipython" followed by "import checker" and then "checker.a()" </li>
+  <li>Open Anaconda Prompt Program and Navigate the Folder called MangaNewChapter-main by Using <p style="background-color: black; color: white">cd Downloads\MangaNewChapter-main</p> until arrival. Then run <p style="background-color: black; color: white">pip install -r requirements.txt</p> </li>
+  <li>Run <p style="background-color: black; color: white">python nc.py</p>. For color, use <p style="background-color: black; color: white">ipython</p> followed by <p style="background-color: black; color: white">import checker</p> and then <p style="background-color: black; color: white">checker.a()</p> </li>
 </ol>
 
 <h1 id="su">Four Steps to Set Up on Mac</h1>
 <ol>
-  <li>Download this GitHub Repository by Clicking the Green "Code" Button followed by Download ZIP. Then extract the files to the desired location. </li>
+  <li>Download this GitHub Repository by Clicking the Green "Code" Button followed by Download ZIP. Note the folder location (it is usually Downloads/MangaNewChapter-main). </li>
   <li><a href="https://docs.conda.io/en/latest/miniconda.html">Get the 3.8 64-bit Version of Python from the pkg installer.</a> (use Ctrl+Click for a new tab) for Mac </li>
-  <li>Open Anaconda Prompt and Navigate the Folder called MangaNewChapter-main by Using "cd Downloads/MangaNewChapter-main" until arrival. Then run "pip3 install -r requirements.txt" </li>
-  <li>Run "python3 nc.py". For color, use "ipython" followed by "import checker" and then "checker.a()" </li>
+  <li>Open Terminal Program and Navigate the Folder called MangaNewChapter-main by Using <p style="background-color: black; color: white">cd Downloads\MangaNewChapter-main</p> until arrival. Then run <p style="background-color: black; color: white">pip install -r requirements.txt</p> </li>
+  <li>Run <p style="background-color: black; color: white">python nc.py</p>. For color, use <p style="background-color: black; color: white">ipython</p>
 </ol>
 
 # Codes
@@ -49,10 +49,12 @@ The current recommended use is to open AnacondaPrompt, create an iPython shell, 
  </ul>
  
 # Function Directory
-<ul>
-  <li>primer() - Adjusts the initial list.txt file containing which mangas you'd like to track and latest.txt file containing what chapter you are on (both found within the saved folder).</li>
-  <li>change_current() - Iterates through every manga on your list and lets you change the latest chapter read and status. Easily skip through with the Enter key.</li>
-  <li>add() - Add a manga to your list by providing the Name (no requirements), Link (include the https://), Source Code (see Source in Codes above), Current Chapter, and Status Code.</li>
+<ol>
   <li>a() - Shows all manga on your list with the latest chapter released.</li>
   <li>n() - Shows all manga on your list where you have not read the latest chapter released.</li>
   <li>s() - Saves all manga on your list with the latest chapter released to a text file named MM/DD/YY.txt within the saved folder.</li>
+  <li>change_current() - Iterates through every manga on your list and lets you change the latest chapter read and status. Easily skip through with the Enter key.</li>
+  <li>add() - Add a manga to your list by providing the Name (no requirements), Link (include the https://), Source Code (see Source in Codes above), Current Chapter, and Status Code.</li>
+    <li>primer() - Adjusts the initial list.txt file containing which mangas you'd like to track and latest.txt file containing what chapter you are on (both found within the saved folder).</li>
+</ol>
+
