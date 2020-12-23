@@ -11,16 +11,17 @@ The current recommended use is to open AnacondaPrompt, create an iPython shell, 
 
 <h1 id="su">Four Steps to Set Up on Windows</h1>
 <ol>
-  <li>Download this GitHub Repository by Clicking the Green "Code" Button followed by Download ZIP. Then extract the files to the desired location. </li>
-  <li><a href="https://docs.conda.io/en/latest/miniconda.html">Get the 3.8 64-bit Version of Python</a> (use Ctrl+Click for a new tab) for Windows </li>
+  <li>Download this GitHub Repository by <a href="https://github.com/JacobK233811/MangaNewChapter/archive/main.zip">Clicking the Green "Code" Button followed by Download ZIP</a>. Then extract the files to the desired location. </li>
+  <li><a href="https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe">Get the 3.8 64-bit Version of Python</a> for Windows </li>
   <li>Open Anaconda Prompt Program and Navigate to the Folder called MangaNewChapter-main by Using <em>cd Downloads\MangaNewChapter-main</em> until arrival. Then run <em>pip install -r requirements.txt</em> Only do this in set up.</li>
   <li>Run <em>python nc.py</em>. For color, use <em>ipython</em> followed by <em>import checker</em> and then <em>checker.a()</em> This process will be how you normally access the program, preceded by naviagting to the MangaNewChapter-main folder.</li>
 </ol>
 
+
 <h1 id="su">Four Steps to Set Up on Mac</h1>
 <ol>
-  <li>Download this GitHub Repository by Clicking the Green "Code" Button followed by Download ZIP. Note the folder location (it is usually Downloads/MangaNewChapter-main). </li>
-  <li><a href="https://docs.conda.io/en/latest/miniconda.html">Get the 3.8 64-bit Version of Python from the pkg installer.</a> (use Ctrl+Click for a new tab) for Mac </li>
+  <li>Download this GitHub Repository by <a href="https://github.com/JacobK233811/MangaNewChapter/archive/main.zip">Clicking the Green "Code" Button followed by Download ZIP</a>. Note the folder location (it is usually Downloads/MangaNewChapter-main). </li>
+  <li><a href="https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.pkg">Get the 3.8 64-bit Version of Python from the pkg installer.</a> (use Ctrl+Click for a new tab) for Mac </li>
   <li>Open Terminal Program and Navigate to the Folder called MangaNewChapter-main by Using <em>cd Downloads\MangaNewChapter-main</em> until arrival. Then run <em>pip install -r requirements.txt</em> Only do this in set up.</li>
   <li>Run <em>python nc.py</em>. For color, use <em>ipython</em> followed by <em>import checker</em> and then <em>checker.a()</em> This process will be how you normally access the program, preceded by naviagting to the MangaNewChapter-main folder.</li>
 </ol>
