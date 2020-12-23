@@ -48,6 +48,25 @@ The current recommended use is to open AnacondaPrompt, create an iPython shell, 
   <li>asurascans.com -> asura</li>
  </ul>
  
+### Tier - My personal rankings of the "starter pack" manga as seen in tier.txt. Intended to help selective new readers choose only the best. Found as (#) in manga names.
+<ol>
+  <li>The Top Tier reserved for my favorites.</li>
+  <li>The Middle Tier for all the manga I really liked.</li>
+  <li>The Bottom Tier holds manga that I liked some parts and not others. </li>
+ </ol>
+ Note: I read and enjoyed all manga within the initial list.txt file so don't take this to mean Tier 2 or 3 are low quality.
+ 
+### Categories - My personal categories for the "starter pack" manga as seen in categories.txt. Intended to help readers identify preferences. Found as \[Abcd\] in manga names.
+<ol>
+  <li>System Leveling - Worlds where there exists a system of some sort that allows "players" or "hunters" to level up and become physically stronger.</li>
+  <li>Culivator Reincarnation - The main character reincarnated and uses his knowledge to cultivate faster. More fantastical/magical than below.</li>
+  <li>Martial Reincarnation - The main character reincarnated and uses his knowledge to train faster. More realistic than above.</li>
+  <li>Plot Heavy - Stories where the action takes a backseat to adventure and character development.</li>
+  <li>Underdog Cultivator - Someone, typically the weakest character, miraculously acquires an artifact or method to rise up and become the strongest.</li>
+  <li>Virtual Reality Game - Worlds where there exists a very popular VR game that the main character enters and becomes famous within.</li>
+ </ol>
+ Note: Order of categories does not mark my preferences.
+ 
 # Function Directory
 <ol>
   <li>a() - Shows all manga on your list with the latest chapter released.</li>
