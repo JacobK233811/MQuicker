@@ -1,4 +1,4 @@
-cd ..\..
+cd c:\
 $url = 'https://github.com/JacobK233811/MangaNewChapter/archive/main.zip'
 New-Item -ItemType Directory Zips
 $Dest = 'C:\Zips\MQ.zip'

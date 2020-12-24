@@ -1,4 +1,4 @@
-cd ..\..\Extracts\MQuicker
+cd c:\Extracts\MQuicker
 pip install virtualenv
 virtualenv mq
 .\mq\Scripts\activate
