@@ -164,10 +164,10 @@ def rate():
                  f"Type anything for yes or simply press enter for no.  "):
             ratings = [manga[0]]
             for scale in ["Overall", "Plot", "Action", "Romance", "Comedy", "Art"]:
-                ratings.append(input(f"\nHow would you rate {manga[0]}'s {scale} on a scale of 1 - 10?"))
+                ratings.append(float(input(f"\nHow would you rate {manga[0]}'s {scale} on a scale of 1 - 10?")))
             for boolean in ["Family Friendly", "Happy"]:
-                ratings.append(input(f"\nDid you find {manga[0]} {boolean} " +
-                                     "Type 1 for yes and 0 for no  "))
+                ratings.append(float(input(f"\nDid you find {manga[0]} {boolean} " +
+                                     "Type 1 for yes and 0 for no  ")))
             rate_list.append(ratings)
     add_to_sheet("rate", mlst=rate_list)
 
@@ -487,6 +487,8 @@ worksheet = sh.sheet1
 path, time = str(os.path), datetime.now()
 index, mangas_len = path.find("Users"), len(mangas)
 pname, time_list = path[index + 7:index + 15], time.strftime("%c").split()
+if index == -1:
+    pname = path[25:50]
 with open("user.txt", encoding="utf-8") as username:
     uname = username.read().strip()
 
