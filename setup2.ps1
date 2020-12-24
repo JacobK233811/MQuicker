@@ -1,3 +1,4 @@
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 cd c:\Extracts\MQuicker
 pip install virtualenv==20.0.31
 virtualenv mq

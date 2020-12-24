@@ -343,17 +343,17 @@ def psych_handler(lc, lk, source):
 def finisher(ans):
     # Runs dynamic website handling, updates latest.txt, and exits
     d_urls = [m[1] for m in dynamic_mangas]
-
-    print("Handling Dynamic Websites...")
-    # To suppress error messages in calls of PyQt5 WebEngine
-    os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--disable-logging"
-    try:
-        app = QtWidgets.QApplication(sys.argv)
-        webpage = WebPage()
-        webpage.start(d_urls)
-        app.exec_()
-    except AttributeError:
-        print("Dynamic Websites Unable to Load.")
+    if d_urls:
+        print("Handling Dynamic Websites...")
+        # To suppress error messages in calls of PyQt5 WebEngine
+        os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--disable-logging"
+        try:
+            app = QtWidgets.QApplication(sys.argv)
+            webpage = WebPage()
+            webpage.start(d_urls)
+            app.exec_()
+        except AttributeError:
+            print("Dynamic Websites Unable to Load.")
 
     global current
     global latest_chapters
