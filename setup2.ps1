@@ -1,5 +1,5 @@
 cd c:\Extracts\MQuicker
-pip install virtualenv
+pip install virtualenv==20.0.31
 virtualenv mq
 .\mq\Scripts\activate
 Write-Host ("`Please exercise patience as the following packages install.")

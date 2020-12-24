@@ -1,12 +1,14 @@
-cd c:\
+cd 'c:\Program Files\'
+New-Item -ItemType Directory MQuicker
+cd MQuicker
 $url = 'https://github.com/JacobK233811/MangaNewChapter/archive/main.zip'
 New-Item -ItemType Directory Zips
-$Dest = 'C:\Zips\MQ.zip'
+$Dest = 'C:\Program Files\MQuicker\Zips\MQ.zip'
 $web = New-Object -TypeName System.Net.WebClient
 $web.DownloadFile($url, $Dest)
 
 New-Item -ItemType Directory Extracts
-$ExtractDir = 'C:\Extracts'
+$ExtractDir = 'C:\Program Files\MQuicker\Extracts'
 
 $ExtShell = New-Object -ComObject Shell.Application
 $file = $ExtShell.Namespace($Dest).Items()
@@ -43,9 +45,32 @@ Write-Host "`nDownloading Miniconda Installer...`n"
 
 # Install Python environment through Miniconda
 Write-Host "Installing Miniconda...`n"
-Start-Process Miniconda_Install.exe "/S /AddToPath=1 /D=$pwd\$InstallDir" -Wait
+Start-Process Miniconda_Install.exe "/S /AddToPath=0 /D=$pwd\$InstallDir" -Wait
 
 # Cleanup
 Remove-Item "Miniconda_Install.exe"
 
 Write-Host ("Close this shell, open a new one, and run the contents of setup2.ps1")
+
+# ---------------------------------------------------------------------------------------------------------
+
+cd 'c:\Program Files\MQuicker'
+pip install virtualenv
+virtualenv mq
+.\mq\Scripts\activate
+cd MQuicker
+Write-Host ("`Please exercise patience as the following packages install.")
+pip install -r requirements.txt
+Write-Host ("`nCongratulations on Setting Up MQuicker!!")
+python nc.py
+
+# -----------------------------------------------------------------------------------------------------------
+
+cd 'c:\Program Files\MQuicker'
+.\mq\Scripts\activate
+cd MQuicker
+Write-Host ("`nWelcome to MQuicker!")
+python nc.py
+
+# ------------------------------------------------------------------------------------------------------------
+
