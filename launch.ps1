@@ -1,4 +1,4 @@
 cd c:\Extracts\MQuicker
 .\mq\Scripts\activate
-Write-Host ("`nWelcome to MQuicker!")
+Write-Host -ForegroundColor Green ("`nWelcome to MQuicker!")
 python nc.py
