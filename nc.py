@@ -348,8 +348,8 @@ def psych_handler(lc, lk, source):
 def finisher(ans):
     # Runs dynamic website handling, updates latest.txt, and exits
     d_urls = [m[1] for m in dynamic_mangas]
+    global dynamic_happened
     if d_urls and not dynamic_happened:
-        global dynamic_happened
         dynamic_happened = True
         print("Handling Dynamic Websites...")
         # To suppress error messages in calls of PyQt5 WebEngine

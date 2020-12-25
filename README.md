@@ -14,9 +14,11 @@ Note: It is highly recommended to use Ctrl+Click to open each of these in a new 
 <ol>
   <a href="setup.ps1"><li>Download the ZIP file and Miniconda</li></a>
   <a href="setup2.ps1"><li>Install required packages and run the file</li></a>
+  Note: During the second step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.
 </ol>
-<a href="launch.ps1">After setting up in this way, you can click here whenever you'd like to look for new chapters, or just find the launch.ps1 file on your computer :)</a> Also, a shortcut to this program called "MQuicker - For Desktop" is included within C:\Extracts\MQuicker. I recommend moving it to your Desktop, right clicking the icon, selecting Open With -> Choose Another App -> Always Use this App to Open .ps1 Files -> More Apps -> Look for an App on Your PC and then find and choose powershell.exe to easily access MQuicker from the Desktop.
-(I found Powershell in C:\Users\YOURNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell)
+<a href="launch.ps1">After setting up in this way, you can click here whenever you'd like to look for new chapters, or just find the launch.ps1 file on your computer :)</a> Also, a shortcut to this program called "MQuicker - For Desktop" is included within C:\Extracts\MQuicker.
+I recommend moving it to your Desktop, right clicking the icon, selecting Open With -> Choose Another App -> Always Use this App to Open .ps1 Files -> More Apps -> Look for an App on Your PC and then find and choose powershell.exe to easily access MQuicker from the Desktop.
+(I found Powershell in C:\Users\YOURNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell) Alternatively, right click the shortcut and select "Run with Powershell"
 
 <h1 id="su">Four Steps to Set Up on Windows</h1>
 <ol>
@@ -84,6 +86,6 @@ Note: It is highly recommended to use Ctrl+Click to open each of these in a new 
   <li>s() - Saves all manga on your list with the latest chapter released to a text file named MM/DD/YY.txt within the saved folder.</li>
   <li>change_current() - Iterates through every manga on your list and lets you change the latest chapter read and status. Easily skip through with the Enter key.</li>
   <li>add() - Add a manga to your list by providing the Name (no requirements), Link (include the https://), Source Code (see Source in Codes above), Current Chapter, and Status Code.</li>
-    <li>primer() - Adjusts the initial list.txt file containing which mangas you'd like to track and latest.txt file containing what chapter you are on (both found within the saved folder).</li>
+  <li>primer() - Adjusts the initial list.txt file containing which mangas you'd like to track and latest.txt file containing what chapter you are on (both found within the saved folder).</li>
 </ol>
 

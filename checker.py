@@ -55,6 +55,8 @@ try:
     os.mkdir("saved")
 except FileExistsError:
     pass
+os.system("Cls")
+print(Fore.LIGHTGREEN_EX + "Welcome to MQuicker!" + Fore.RESET)
 
 # On most sites the desired element will be an anchor 'a' tag. However, this default dict allows us to specify exceptions
 source_elements = defaultdict(lambda: 'a')
@@ -267,7 +269,7 @@ def s():
                 link_placeholder = ""
             file_access.write(color + f"{manga[0]}: {previous} -> {latest}{link_placeholder}\n\n")
             if i % 4 == 0:
-                print("Loading...")
+                print(Fore.LIGHTGREEN_EX + "Loading...")
     finisher("s")
     add_to_sheet("save")
 
@@ -353,8 +355,8 @@ def psych_handler(lc, lk, source):
 def finisher(ans):
     # Runs dynamic website handling, updates latest.txt, and exits
     d_urls = [m[1] for m in dynamic_mangas]
+    global dynamic_happened
     if d_urls and not dynamic_happened:
-        global dynamic_happened
         dynamic_happened = True
         print(Fore.GREEN + "Handling Dynamic Websites...")
         # To suppress error messages in calls of PyQt5 WebEngine
@@ -380,7 +382,7 @@ def finisher(ans):
             file_access.write(
                 "\n\n".join(['\nDynamics', "\n".join([str(lst) for lst in dynamic_mangas]), str(dynamic_chapters)]))
     update_latest(latest_chapters, current)
-    print(Fore.GREEN + "Done!")
+    print(Fore.GREEN + "Done!" + Fore.RESET)
     #
     # sys.exit(0)
 
@@ -451,7 +453,7 @@ def update_latest(news, olds):
     with open("saved/latest.txt", "wt", encoding="utf-8") as latest:
         global dynamic_ch_use
 
-        for old, new in zip_longest(olds, news):
+        for old, new in zip_longest(olds, news[:mangas_len]):
             if old is None:
                 latest.write(f"0 yts\n")
             else:
