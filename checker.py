@@ -77,6 +77,7 @@ with open("saved/latest.txt") as f:
 dynamic_mangas = []
 dynamic_run_count = 0
 dynamic_indexes = []
+dynamic_happened = False
 # The following declarations help properly update_latest for the dynamics
 dynamic_ch_use = 0
 dynamic_chapters = []
@@ -352,7 +353,9 @@ def psych_handler(lc, lk, source):
 def finisher(ans):
     # Runs dynamic website handling, updates latest.txt, and exits
     d_urls = [m[1] for m in dynamic_mangas]
-    if d_urls:
+    if d_urls and not dynamic_happened:
+        global dynamic_happened
+        dynamic_happened = True
         print(Fore.GREEN + "Handling Dynamic Websites...")
         # To suppress error messages in calls of PyQt5 WebEngine
         os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--disable-logging"
