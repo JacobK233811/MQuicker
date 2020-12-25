@@ -463,8 +463,11 @@ def update_latest(news, olds):
                 elif label == "wip" or label == "yts":
                     latest.write(old)
                 else:
-                    # Spot fix for utd dynamic websites
-                    latest.write(f"{dynamic_chapters[dynamic_ch_use]} utd\n")
+                    try:
+                        # Spot fix for utd dynamic websites
+                        latest.write(f"{dynamic_chapters[dynamic_ch_use]} utd\n")
+                    except IndexError:
+                        latest.write(old)
 
             if new == "9999":
                 dynamic_ch_use += 1
@@ -525,3 +528,14 @@ def add_to_sheet(function, mnum=mangas_len, mlst=[]):
             res = worksheet3.get_all_values()
             new_id = int(res[-1][0]) + 1
             worksheet3.append_row([new_id, name] + rating)
+
+
+options = {"1": a, "2": n, "3": s, "4": change_current, "5": add, "6": primer, "7": rate}
+option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer, 7: Rate, 8: Close  ")
+while option != "8":
+    if not option:
+        option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer, 7: Rate, 8: Close  ")
+        continue
+    options[option]()
+    print("\n")
+    option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer, 7: Rate, 8: Close  ")
