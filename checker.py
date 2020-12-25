@@ -1,11 +1,12 @@
 from bs4 import BeautifulSoup
 import requests
-from colorama import Fore
+from colorama import Fore, Back
 from collections import defaultdict
 from datetime import datetime
 from itertools import zip_longest
 import os
 import gspread
+import webbrowser
 
 # Modules for dynamic JS websites
 from PyQt5 import QtCore, QtWidgets, QtWebEngineWidgets
@@ -92,39 +93,51 @@ dynamic_chapters = []
 # Deters user error or frustration with sensitive entries. Next code section starts at line 175
 def primer():
     # Choosing which manga of the base list to keep and setting their current chapter/status for that one-by-one
-    if not input("Are you sure? This is a somewhat long process meant only for first-time users." +
-                 "\nPress enter to cancel. Typing anything else will begin the priming procedure.  "):
+    if not input(
+            f"{Fore.LIGHTYELLOW_EX}Are you sure? This is a somewhat long process meant only for first-time users." +
+            f"\n{Fore.LIGHTRED_EX}Press enter to cancel. {Fore.LIGHTGREEN_Ex}Typing anything else will begin the " +
+            f"priming procedure.  {Fore.RESET}"):
         return "Interrupt"
 
-    if input("Are you comfortable entering a first name or user name? Type anything for yes or enter for no.  "):
+    if input(
+            f"{Fore.LIGHTMAGENTA_EX}Are you comfortable entering a first name or user name? " +
+            f"{Fore.LIGHTGREEN_EX}Type anything for yes {Fore.LIGHTRED_EX}or enter for no.  {Fore.RESET}"):
         with open("user.txt", "wt", encoding="utf-8") as user:
-            written_name = input("Please enter your name.  ")
+            written_name = input(f"{Fore.LIGHTWHITE_EX}Please enter your name.  {Fore.RESET}")
             user.write(written_name)
             global uname
             uname = written_name
 
     with open("saved/list.txt", "wt", encoding="utf-8") as names, \
             open("saved/latest.txt", "wt", encoding="utf-8") as numbers:
+        global mangas
+        global current
         keep_counter = 0
         keep_list = []
         for manga in mangas:
             title = manga[0]
-            if input(f"\n\nWould you like to keep {title} on your list? " +
-                     f"\nType anything for yes or simply press enter for no.  "):
+            if input(f"\n\n{Fore.LIGHTYELLOW_EX}Would you like to keep {title} on your list? " +
+                     f"\n{Fore.LIGHTGREEN_EX}Type anything for yes {Fore.LIGHTRED_EX}or enter for no.  {Fore.RESET}"):
                 keep_list.append(title)
                 keep_counter += 1
                 names.write("|".join(manga))
-                status = input("\nWhich chapter are you on?  "), \
-                         input("Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
-                               "Please enter the corresponding three letter code found in parentheses.  ")
-                print("Note: If you would like to quickly set up a new \"0 yts\" manga, "
+                print(f"{Fore.GREEN}Note: If you would like to quickly set up a new \"0 yts\" manga, "
                       + "please press enter without any input for both of the following")
+                status = input(f"\n{Fore.LIGHTWHITE_EX}Which chapter are you on?  {Fore.RESET}"), \
+                         input(
+                             f"{Fore.LIGHTMAGENTA_Ex}Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
+                             f"{Fore.LIGHTWHITE_EX}Please enter the corresponding three letter code found in parentheses.  {Fore.RESET}")
                 if status == ("", ""):
                     numbers.write(" ".join(["0", "yts"]) + "\n")
                 else:
                     numbers.write(" ".join(status) + "\n")
     add_to_sheet("primer", keep_counter, keep_list)
-    print("Well Done! You've primed your personal MQuicker. To let the changes set in, please press 8 and reopen.")
+    print(f"{Fore.LIGHTGREEN_EX}Well Done! You've primed your personal MQuicker.{Fore.RESET}")
+    # Sets the mangas and current lists to the recent adjustments in case of subsequent calls to a, n, or s
+    with open("saved/list.txt", "rt", encoding="utf-8") as new_list:
+        mangas = [line.split("|") for line in new_list.readlines()]
+    with open("saved/latest.txt") as new_latest:
+        current = new_latest.readlines()
 
 
 def add():
@@ -136,12 +149,13 @@ def add():
         continuation = "Yep"
         while continuation:
             add_counter += 1
-            print("Please enter all of the following information for the manga you'd like to add")
-            title = input('Name  ')
+            print(f"{Fore.LIGHTWHITE_EX}Please enter all of the following information for the manga you'd like to add")
+            title = input(f'{Fore.RESET}Name  ')
             add_list.append(title)
             names.write(f"{title}|{input('Link  ')}|{input('Source (see supported source codes)  ')}|\n")
             numbers.write(f"{input('Current Chapter  ')} {input('Status (yts/wip/utd)  ')}\n")
-            continuation = input("Press enter to quit or type anything into the input to continue adding manga  ")
+            continuation = input(
+                f"{Fore.LIGHTRED_EX}Press enter to quit {Fore.LIGHTGREEN_EX}or type anything into the input to continue adding manga  ")
     add_to_sheet("add manga", add_counter, add_list)
 
 
@@ -152,12 +166,15 @@ def change_current():
         chapters = [line for line in numbers_read.readlines()]
     with open("saved/latest.txt", "wt", encoding="utf-8") as numbers:
         for i, manga in enumerate(mangas):
-            if input(f"\nWould you like to update {manga[0]}'s current chapter? Right now it is {chapters[i]}" +
-                     f"Type anything for yes or simply press enter for no.  "):
+            if input(
+                    f"\n{Fore.LIGHTMAGENTA_EX}Would you like to update {manga[0]}'s current chapter? " +
+                    f"{Fore.LIGHTWHITE_EX}Right now it is {chapters[i]}" +
+                    f"{Fore.LIGHTGREEN_EX}Type anything for yes {Fore.LIGHTRED_EX}or simply press enter for no.  {Fore.RESET}"):
                 change_counter += 1
-                status = input("\nWhich chapter are you on?  "), \
-                         input("Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
-                               "Please enter the corresponding three letter code found in parentheses.  ")
+                status = input(f"\n{Fore.LIGHTWHITE_EX}Which chapter are you on?  {Fore.RESET}"), \
+                         input(
+                             f"{Fore.LIGHTMAGENTA_EX}Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
+                             f"{Fore.LIGHTWHITE_EX}Please enter the corresponding three letter code found in parentheses.  {Fore.RESET}")
                 numbers.write(" ".join(status) + "\n")
             else:
                 numbers.write(chapters[i])
@@ -169,14 +186,15 @@ def rate():
     # The rate function collects user ratings to help build a database for a future recommend feature
     rate_list = []
     for manga in mangas:
-        if input(f"\nWould you like to rate {manga[0]}? " +
-                 f"Type anything for yes or simply press enter for no.  "):
+        if input(f"\n{Fore.LIGHTYELLOW_EX}Would you like to rate {manga[0]}? " +
+                 f"{Fore.LIGHTGREEN_EX}Type anything for yes {Fore.LIGHTRED_EX}or simply press enter for no.  {Fore.RESET}"):
             ratings = [manga[0]]
             for scale in ["Overall", "Plot", "Action", "Romance", "Comedy", "Art"]:
-                ratings.append(float(input(f"\nHow would you rate {manga[0]}'s {scale} on a scale of 1 - 10?")))
+                ratings.append(float(input(
+                    f"\n{Fore.LIGHTMAGENTA_EX}How would you rate {manga[0]}'s {scale} on a scale of 1 - 10? {Fore.RESET}")))
             for boolean in ["Family Friendly", "Happy"]:
-                ratings.append(float(input(f"\nDid you find {manga[0]} {boolean} " +
-                                           "Type 1 for yes and 0 for no  ")))
+                ratings.append(float(input(f"\n{Fore.LIGHTMAGENTA_EX}Did you find {manga[0]} {boolean} " +
+                                           f"{Fore.LIGHTGREEN_EX}Type 1 for yes {Fore.LIGHTRED_EX}and 0 for no  {Fore.RESET}")))
             rate_list.append(ratings)
     add_to_sheet("rate", mlst=rate_list)
 
@@ -206,13 +224,15 @@ def a():
             # The placeholder enables the feature of only showing links for items with a new chapter
             if current[i].split()[1] == "utd":
                 link_placeholder = link
+                # Automatically opens the latest chapter
+                webbrowser.open_new_tab(link)
             else:
                 # link_placeholder = wip_link_switch(manga, previous)
                 link_placeholder = manga[1]
         else:
-            color = Fore.LIGHTBLUE_EX
+            color = Fore.CYAN
             link_placeholder = ""
-        print(color + f"{manga[0]}: {previous} -> {latest} {Fore.CYAN} {link_placeholder}")
+        print(color + f"{manga[0]}: {previous} -> {latest} {Fore.LIGHTBLUE_EX} {link_placeholder}")
     finisher("a")
     add_to_sheet("all")
 
@@ -237,6 +257,9 @@ def n():
         if float(latest) > previous:
             if current[i].split()[1] != "utd":
                 link = manga[1]
+            else:
+                # Automatically opens the latest chapter
+                webbrowser.open_new_tab(link)
             print(Fore.LIGHTMAGENTA_EX + f"{manga[0]}: {previous} -> {latest} Copy to see it:  {Fore.CYAN} {link}")
         elif i % 5 == 0:
             print(Fore.LIGHTGREEN_EX + "Loading...")
@@ -360,7 +383,7 @@ def finisher(ans):
     global dynamic_happened
     if d_urls and not dynamic_happened:
         dynamic_happened = True
-        print(Fore.GREEN + "Handling Dynamic Websites...")
+        print(Fore.LIGHTGREEN_EX + "Handling Dynamic Websites...")
         # To suppress error messages in calls of PyQt5 WebEngine
         os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--disable-logging"
         try:
@@ -369,12 +392,12 @@ def finisher(ans):
             webpage.start(d_urls)
             app.exec_()
         except AttributeError:
-            print("Dynamic Websites Unable to Load.")
+            print(f"{Fore.LIGHTRED_EX}Dynamic Websites Unable to Load.")
 
     global current
     global latest_chapters
     global dynamic_chapters
-    print(Fore.GREEN + "Updating...")
+    print(Fore.LIGHTGREEN_EX + "Updating...")
     if ans == "n":
         dynamic_chapters = dynamic_chapters[::-1]
         latest_chapters = latest_chapters[::-1]
@@ -384,7 +407,7 @@ def finisher(ans):
             file_access.write(
                 "\n\n".join(['\nDynamics', "\n".join([str(lst) for lst in dynamic_mangas]), str(dynamic_chapters)]))
     update_latest(latest_chapters, current)
-    print(Fore.GREEN + "Done!" + Fore.RESET)
+    print(Fore.LIGHTGREEN_EX + "Done!" + Fore.RESET)
     #
     # sys.exit(0)
 
@@ -418,7 +441,7 @@ class WebPage(QtWebEngineWidgets.QWebEnginePage):
         drc = dynamic_run_count
         dms = dynamic_mangas
 
-        print(Fore.YELLOW + 'Loaded [%d chars] %s' % (len(html), "Dynamically"))
+        print(Fore.LIGHTYELLOW_EX + 'Loaded [%d chars] %s' % (len(html), "Dynamically"))
         try:
             soupy = BeautifulSoup(html, 'html.parser')
             tag = soupy.find("li", class_="wp-manga-chapter").a
@@ -436,10 +459,10 @@ class WebPage(QtWebEngineWidgets.QWebEnginePage):
                 url_num_loc = chapter_link.find("-", -7) + 1
                 chapter_link = chapter_link[:url_num_loc] + f"{previous + 1}/"
 
-            print(Fore.LIGHTRED_EX + f"{dms[drc][0]}: {previous} -> {chapter_num} {Fore.CYAN} {chapter_link}")
+            print(Fore.GREEN + f"{dms[drc][0]}: {previous} -> {chapter_num} {Fore.LIGHTBLUE_EX} {chapter_link}")
             dynamic_run_count += 1
         except AttributeError:
-            print("Dynamic Website Unable to Load Completely.")
+            print(f"{Fore.LIGHTRED_EX}Dynamic Website Unable to Load Completely.")
             dynamic_chapters.append(-1)
             dynamic_run_count += 1
 
@@ -533,20 +556,22 @@ def add_to_sheet(function, mnum=mangas_len, mlst=[]):
 
 
 options = {"1": a, "2": n, "3": s, "4": change_current, "5": add, "6": primer, "7": rate}
-option = input(f"1: {Fore.LIGHTBLUE_EX}Show All{Fore.RESET}, 2: {Fore.LIGHTCYAN_EX}Show New{Fore.RESET}, " +
-               f"3: {Fore.GREEN}Save Results{Fore.RESET}, " +
-               f"4: {Fore.LIGHTYELLOW_EX}Change Current{Fore.RESET}, 5: {Fore.LIGHTRED_EX}Add Manga{Fore.RESET}, " +
-               f"6: {Fore.LIGHTMAGENTA_EX}Primer{Fore.RESET}, 7: {Fore.LIGHTWHITE_EX}Rate{Fore.RESET}, 8: Close  ")
+option = input(f"{Back.RESET}1: {Fore.LIGHTCYAN_EX}Show All{Fore.RESET}, 2: {Fore.LIGHTCYAN_EX}Show New{Fore.RESET}, " +
+               f"3: {Fore.LIGHTCYAN_EX}Save Results{Fore.RESET}, " +
+               f"4: {Fore.LIGHTCYAN_EX}Change Current{Fore.RESET}, 5: {Fore.LIGHTCYAN_EX}Add Manga{Fore.RESET}, " +
+               f"6: {Fore.LIGHTCYAN_EX}Primer{Fore.RESET}, 7: {Fore.LIGHTCYAN_EX}Rate{Fore.RESET}, 8: Close  ")
 while option != "8":
     if not option or option not in options:
-        option = input(f"1: {Fore.LIGHTBLUE_EX}Show All{Fore.RESET}, 2: {Fore.LIGHTCYAN_EX}Show New{Fore.RESET}, " +
-                       f"3: {Fore.GREEN}Save Results{Fore.RESET}, " +
-                       f"4: {Fore.LIGHTYELLOW_EX}Change Current{Fore.RESET}, 5: {Fore.LIGHTRED_EX}Add Manga{Fore.RESET}, " +
-                       f"6: {Fore.LIGHTMAGENTA_EX}Primer{Fore.RESET}, 7: {Fore.LIGHTWHITE_EX}Rate{Fore.RESET}, 8: Close  ")
+        option = input(
+            f"{Back.RESET}1: {Fore.LIGHTCYAN_EX}Show All{Fore.RESET}, 2: {Fore.LIGHTCYAN_EX}Show New{Fore.RESET}, " +
+            f"3: {Fore.LIGHTCYAN_EX}Save Results{Fore.RESET}, " +
+            f"4: {Fore.LIGHTCYAN_EX}Change Current{Fore.RESET}, 5: {Fore.LIGHTCYAN_EX}Add Manga{Fore.RESET}, " +
+            f"6: {Fore.LIGHTCYAN_EX}Primer{Fore.RESET}, 7: {Fore.LIGHTCYAN_EX}Rate{Fore.RESET}, 8: Close  ")
         continue
     options[option]()
     print("\n")
-    option = input(f"1: {Fore.LIGHTBLUE_EX}Show All{Fore.RESET}, 2: {Fore.LIGHTCYAN_EX}Show New{Fore.RESET}, " +
-                   f"3: {Fore.GREEN}Save Results{Fore.RESET}, " +
-                   f"4: {Fore.LIGHTYELLOW_EX}Change Current{Fore.RESET}, 5: {Fore.LIGHTRED_EX}Add Manga{Fore.RESET}, " +
-                   f"6: {Fore.LIGHTMAGENTA_EX}Primer{Fore.RESET}, 7: {Fore.LIGHTWHITE_EX}Rate{Fore.RESET}, 8: Close  ")
+    option = input(
+        f"{Back.RESET}1: {Fore.LIGHTCYAN_EX}Show All{Fore.RESET}, 2: {Fore.LIGHTCYAN_EX}Show New{Fore.RESET}, " +
+        f"3: {Fore.LIGHTCYAN_EX}Save Results{Fore.RESET}, " +
+        f"4: {Fore.LIGHTCYAN_EX}Change Current{Fore.RESET}, 5: {Fore.LIGHTCYAN_EX}Add Manga{Fore.RESET}, " +
+        f"6: {Fore.LIGHTCYAN_EX}Primer{Fore.RESET}, 7: {Fore.LIGHTCYAN_EX}Rate{Fore.RESET}, 8: Close  ")
