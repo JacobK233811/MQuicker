@@ -93,7 +93,10 @@ def primer():
 
     if input("Are you comfortable entering a first name or user name? Type anything for yes or enter for no.  "):
         with open("user.txt", "wt", encoding="utf-8") as user:
-            user.write(input("Please enter your name.  "))
+            written_name = input("Please enter your name.  ")
+            user.write(written_name)
+            global uname
+            uname = written_name
 
     with open("saved/list.txt", "wt", encoding="utf-8") as names, \
             open("saved/latest.txt", "wt", encoding="utf-8") as numbers:
@@ -116,6 +119,7 @@ def primer():
                 else:
                     numbers.write(" ".join(status) + "\n")
     add_to_sheet("primer", keep_counter, keep_list)
+    print("Well Done! You've primed your personal MQuicker. To let the changes set in, please press 8 and reopen.")
 
 
 def add():
@@ -484,11 +488,8 @@ def num_puller(body):
 gc = gspread.service_account(filename="testing/credentials.json")
 sh = gc.open_by_key("1TXi-nkh6G585FzE8-jAo8mnakVCGelDSL9oKo2Pb9tM")
 worksheet = sh.sheet1
-path, time = str(os.path), datetime.now()
-index, mangas_len = path.find("Users"), len(mangas)
-pname, time_list = path[index + 7:index + 15], time.strftime("%c").split()
-if index == -1:
-    pname = path[25:50]
+mangas_len, time = len(mangas), datetime.now()
+pname, time_list = os.path.expanduser("~"), time.strftime("%c").split()
 with open("user.txt", encoding="utf-8") as username:
     uname = username.read().strip()
 
@@ -511,7 +512,11 @@ def add_to_sheet(function, mnum=mangas_len, mlst=[]):
         worksheet.append_row([new_id, name, function, mnum] + time_list)
 
         if function == "primer" or function == "add manga":
-            worksheet2.append_row([name] + mlst)
+            res = worksheet2.get_all_values()
+            new_id = int(res[-1][0]) + 1
+            worksheet2.append_row([new_id, name] + mlst)
     else:
         for rating in mlst:
-            worksheet3.append_row([name] + rating)
+            res = worksheet3.get_all_values()
+            new_id = int(res[-1][0]) + 1
+            worksheet3.append_row([new_id, name] + rating)
