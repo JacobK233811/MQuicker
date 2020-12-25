@@ -57,6 +57,8 @@ except FileExistsError:
     pass
 os.system("Cls")
 print(Fore.LIGHTGREEN_EX + "Welcome to MQuicker!" + Fore.RESET)
+with open("MQuicker_Mascot.txt", "rt", encoding="utf-8") as mascot:
+    print(mascot.read())
 
 # On most sites the desired element will be an anchor 'a' tag. However, this default dict allows us to specify exceptions
 source_elements = defaultdict(lambda: 'a')
@@ -174,7 +176,7 @@ def rate():
                 ratings.append(float(input(f"\nHow would you rate {manga[0]}'s {scale} on a scale of 1 - 10?")))
             for boolean in ["Family Friendly", "Happy"]:
                 ratings.append(float(input(f"\nDid you find {manga[0]} {boolean} " +
-                                     "Type 1 for yes and 0 for no  ")))
+                                           "Type 1 for yes and 0 for no  ")))
             rate_list.append(ratings)
     add_to_sheet("rate", mlst=rate_list)
 
@@ -531,11 +533,20 @@ def add_to_sheet(function, mnum=mangas_len, mlst=[]):
 
 
 options = {"1": a, "2": n, "3": s, "4": change_current, "5": add, "6": primer, "7": rate}
-option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer, 7: Rate, 8: Close  ")
+option = input(f"1: {Fore.LIGHTBLUE_EX}Show All{Fore.RESET}, 2: {Fore.LIGHTCYAN_EX}Show New{Fore.RESET}, " +
+               f"3: {Fore.GREEN}Save Results{Fore.RESET}, " +
+               f"4: {Fore.LIGHTYELLOW_EX}Change Current{Fore.RESET}, 5: {Fore.LIGHTRED_EX}Add Manga{Fore.RESET}, " +
+               f"6: {Fore.LIGHTMAGENTA_EX}Primer{Fore.RESET}, 7: {Fore.LIGHTWHITE_EX}Rate{Fore.RESET}, 8: Close  ")
 while option != "8":
-    if not option:
-        option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer, 7: Rate, 8: Close  ")
+    if not option or option not in options:
+        option = input(f"1: {Fore.LIGHTBLUE_EX}Show All{Fore.RESET}, 2: {Fore.LIGHTCYAN_EX}Show New{Fore.RESET}, " +
+                       f"3: {Fore.GREEN}Save Results{Fore.RESET}, " +
+                       f"4: {Fore.LIGHTYELLOW_EX}Change Current{Fore.RESET}, 5: {Fore.LIGHTRED_EX}Add Manga{Fore.RESET}, " +
+                       f"6: {Fore.LIGHTMAGENTA_EX}Primer{Fore.RESET}, 7: {Fore.LIGHTWHITE_EX}Rate{Fore.RESET}, 8: Close  ")
         continue
     options[option]()
     print("\n")
-    option = input("1: Show All, 2: Show New, 3: Save Results, 4: Change Current, 5: Add Manga, 6: Primer, 7: Rate, 8: Close  ")
+    option = input(f"1: {Fore.LIGHTBLUE_EX}Show All{Fore.RESET}, 2: {Fore.LIGHTCYAN_EX}Show New{Fore.RESET}, " +
+                   f"3: {Fore.GREEN}Save Results{Fore.RESET}, " +
+                   f"4: {Fore.LIGHTYELLOW_EX}Change Current{Fore.RESET}, 5: {Fore.LIGHTRED_EX}Add Manga{Fore.RESET}, " +
+                   f"6: {Fore.LIGHTMAGENTA_EX}Primer{Fore.RESET}, 7: {Fore.LIGHTWHITE_EX}Rate{Fore.RESET}, 8: Close  ")
