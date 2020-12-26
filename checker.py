@@ -260,8 +260,8 @@ def n():
             else:
                 # Automatically opens the latest chapter
                 webbrowser.open_new_tab(link)
-            print(Fore.LIGHTMAGENTA_EX + f"{manga[0]}: {previous} -> {latest} Copy to see it:  {Fore.CYAN} {link}")
-        elif i % 5 == 0:
+            print(Fore.LIGHTMAGENTA_EX + f"{manga[0]}: {previous} -> {latest} Copy to see it:  {Fore.LIGHTBLUE_EX} {link}")
+        elif i % 5 == 0 and i != 0:
             print(Fore.LIGHTGREEN_EX + "Loading...")
     finisher("n")
     add_to_sheet("new")
@@ -293,7 +293,7 @@ def s():
                 color = ""
                 link_placeholder = ""
             file_access.write(color + f"{manga[0]}: {previous} -> {latest}{link_placeholder}\n\n")
-            if i % 4 == 0:
+            if i % 4 == 0 and i != 0:
                 print(Fore.LIGHTGREEN_EX + "Loading...")
     finisher("s")
     add_to_sheet("save")
