@@ -1,5 +1,5 @@
 cd 'c:/'
-url='https://github.com/JacobK233811/MangaNewChapter/archive/main.zip'
+url='https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'
 mkdir Zips
 Dest='C:/Zips'
 
@@ -12,7 +12,7 @@ unzip -q main.zip -d $ExtractDir
 # cd $ExtractDir
 cd ..
 rm -r Zips
-mv "./MangaNewChapter-main" './MQuicker'
+mv "./MangaNewChapter-MQuicker-minimal" './MQuicker'
 cd MQuicker
 
 cd "c:/MQuicker"

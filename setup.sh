@@ -1,5 +1,5 @@
 cd 'c:/'
-url='https://github.com/JacobK233811/MangaNewChapter/archive/main.zip'
+url='https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'
 mkdir Zips
 Dest='C:/Zips'
 
