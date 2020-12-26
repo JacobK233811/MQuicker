@@ -3,7 +3,7 @@ Stop clicking through endless links to see if there is a new chapter available. 
 
 When <a href="#su">setting up for yourself</a>, follow the linked 4 steps.
 
-The current recommended use is to open AnacondaPrompt, create an iPython shell, import the file , and use either the a() function to see all the manga on your list, the n() function to only see manga with new chapters, or the s() function to save results to a .txt file.
+Windows Users who use the Two-Step Powershell Install can run in one click! Mac Users should go through the Four-Step Install and then navigate to the MangaNewChapter-main folder within terminal with <em>cd \<other folders\>/MangaNewChapter-main</em>. Then they can run <em>python3 checker.py</em>. Improvements to the Mac experience coming soon.
 
 <img src="mcheck_ex.png"/>
 
@@ -16,16 +16,16 @@ Note: It is highly recommended to use Ctrl+Click to open each of these in a new 
   <a href="setup2.ps1"><li>Install required packages and run the file</li></a>
   Note: During the second step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.
 </ol>
-<a href="launch.ps1">After setting up in this way, you can click here whenever you'd like to look for new chapters, or just find the launch.ps1 file on your computer :)</a> Also, a shortcut to this program called "MQuicker - For Desktop" is included within C:\Extracts\MQuicker.
-I recommend moving it to your Desktop, right clicking the icon, selecting Open With -> Choose Another App -> Always Use this App to Open .ps1 Files -> More Apps -> Look for an App on Your PC and then find and choose powershell.exe to easily access MQuicker from the Desktop.
-(I found Powershell in C:\Users\YOURNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell) Alternatively, right click the shortcut and select "Run with Powershell"
+<a href="launch.ps1">After setting up in this way, you can click here whenever you'd like to look for new chapters, or just find the launch.ps1 file on your computer :)</a> <p>Also, a shortcut to this program called "MQuicker - For Desktop" is included within C:\Extracts\MQuicker.
+I recommend moving it to your Desktop, and <a href="https://www.top-password.com/blog/set-ps1-script-to-open-with-powershell-by-default/">setting PowerShell as the default program to open .ps1</a> by right clicking the icon, selecting Open With -> Choose Another App -> Always Use this App to Open .ps1 Files -> More Apps -> Look for an App on Your PC and then find and choose powershell.exe to easily access MQuicker from the Desktop.
+(I found Powershell in C:\Windows\System32\WindowsPowerShell\v1.0) Alternatively, right click the shortcut and select "Run with Powershell"</p>
 
 <h1 id="su">Four Steps to Set Up on Windows</h1>
 <ol>
   <li>Download this GitHub Repository by <a href="https://github.com/JacobK233811/MangaNewChapter/archive/main.zip">Clicking the Green "Code" Button followed by Download ZIP</a>. Then extract the files to the desired location. </li>
   <li><a href="https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe">Get the 3.8 64-bit Version of Python</a> for Windows </li>
   <li>Open Anaconda Prompt Program and Navigate to the Folder called MangaNewChapter-main by Using <em>cd Downloads\MangaNewChapter-main</em> until arrival. Then run <em>pip install -r requirements.txt</em> Only do this in set up.</li>
-  <li>Run <em>python nc.py</em>. For color, use <em>ipython</em> followed by <em>import checker</em> and then <em>checker.a()</em> This process will be how you normally access the program, preceded by naviagting to the MangaNewChapter-main folder.</li>
+  <li>Run <em>python checker.py</em>. This process will be how you normally access the program, preceded by naviagting to the MangaNewChapter-main folder.</li>
 </ol>
 
 
@@ -33,8 +33,8 @@ I recommend moving it to your Desktop, right clicking the icon, selecting Open W
 <ol>
   <li>Download this GitHub Repository by <a href="https://github.com/JacobK233811/MangaNewChapter/archive/main.zip">Clicking the Green "Code" Button followed by Download ZIP</a>. Note the folder location (it is usually Downloads/MangaNewChapter-main). </li>
   <li><a href="https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.pkg">Get the 3.8 64-bit Version of Python from the pkg installer.</a> (use Ctrl+Click for a new tab) for Mac </li>
-  <li>Open Terminal Program and Navigate to the Folder called MangaNewChapter-main by Using <em>cd Downloads\MangaNewChapter-main</em> until arrival. Then run <em>pip install -r requirements.txt</em> Only do this in set up.</li>
-  <li>Run <em>python nc.py</em>. For color, use <em>ipython</em> followed by <em>import checker</em> and then <em>checker.a()</em> This process will be how you normally access the program, preceded by naviagting to the MangaNewChapter-main folder.</li>
+  <li>Open Terminal Program and Navigate to the Folder called MangaNewChapter-main by Using <em>cd Downloads\MangaNewChapter-main</em> until arrival. Then run <em>pip3 install -r requirements.txt</em> Only do this in set up.</li>
+  <li>Run <em>python3 checker.py</em>. This process will be how you normally access the program, preceded by naviagting to the MangaNewChapter-main folder.</li>
 </ol>
 
 # Codes
