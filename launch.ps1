@@ -1,4 +1,4 @@
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
-cd c:\Extracts\MQuicker
+cd c:\MQuicker
 .\mq\Scripts\activate
 python checker.py

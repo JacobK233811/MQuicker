@@ -5,14 +5,15 @@ $Dest = 'C:\Zips\MQ.zip'
 $web = New-Object -TypeName System.Net.WebClient
 $web.DownloadFile($url, $Dest)
 
-New-Item -ItemType Directory Extracts
-$ExtractDir = 'C:\Extracts'
+# New-Item -ItemType Directory Extracts
+$ExtractDir = 'C:\'
 
 $ExtShell = New-Object -ComObject Shell.Application
 $file = $ExtShell.Namespace($Dest).Items()
 $ExtShell.Namespace($ExtractDir).CopyHere($file)
-cd Extracts
+# cd MQuicker
 Rename-Item -Path .\MangaNewChapter-main .\MQuicker
+rm -r Zips
 cd MQuicker
 
 # Credits to deto's Miniconda-Install GitHub repository

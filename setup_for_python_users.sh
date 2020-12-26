@@ -1,3 +1,20 @@
+cd 'c:/'
+url='https://github.com/JacobK233811/MangaNewChapter/archive/main.zip'
+mkdir Zips
+Dest='C:/Zips'
+
+wget $url -P $Dest
+
+# mkdir Extracts
+ExtractDir='C:/'
+cd Zips
+unzip -q main.zip -d $ExtractDir
+# cd $ExtractDir
+cd ..
+rm -r Zips
+mv "./MangaNewChapter-main" './MQuicker'
+cd MQuicker
+
 cd "c:/MQuicker"
 pip install virtualenv==20.0.31
 virtualenv mq
