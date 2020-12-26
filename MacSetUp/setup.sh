@@ -22,7 +22,7 @@ set -e
 AppName="Python, Pip, & Conda"
 
 # Set your project's install directory name here
-InstallDir="SetUp"
+InstallDir="PythonFiles"
 
 # Install the package from PyPi
 # Comment out next line if installing locally
@@ -44,7 +44,7 @@ then
     exit 1
 fi
 
-rm "SetUp/create.txt"
+rm "PythonFiles/create.txt"
 # Test if new directory is empty.  Exit if it's not
 if [ -d $(pwd)/$InstallDir ]; then
     if [ "$(ls -A $(pwd)/$InstallDir)" ]; then

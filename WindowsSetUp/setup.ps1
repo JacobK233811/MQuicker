@@ -23,7 +23,7 @@ $ErrorActionPreference = "Stop"
 $AppName="Python, Pip, & Conda"
 
 # Set your project's install directory name here
-$InstallDir="SetUp"
+$InstallDir="PythonFiles"
 
 # Dependencies installed with pip instead
 # Comment out the next line if no PyPi dependencies
