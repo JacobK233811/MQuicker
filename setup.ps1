@@ -28,11 +28,6 @@ $InstallDir="SetUp"
 # Comment out the next line if no PyPi dependencies
 $PyPiPackage="-r requirements.txt"
 
-# Entry points to add to the path
-# Comment out the next line of no entry point
-#   (Though not sure why this script would be useful otherwise)
-# $EntryPoint="YourApplicationName"
-
 Write-Host ("`nInstalling $AppName to "+(get-location).path+"\$InstallDir")
 
 
