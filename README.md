@@ -36,7 +36,7 @@ Note: It is highly recommended to use Ctrl+Click to open each of these in a new 
   <a href="setup2.sh"><li>Install required packages and run the file</li></a>
   Note: During the second step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.
 </ol>
-<a href="launch.sh">After setting up in this way, you can click here whenever you'd like to look for new chapters, or just find the launch.ps1 file on your computer :)</a> <p>Also, a shortcut to this program called "MQuicker - For Mac Desktop" is included within C:\Extracts\MQuicker.
+<a href="launch.sh">After setting up in this way, you can click here whenever you'd like to look for new chapters, or just find the launch.sh file on your computer :)</a> <p>Also, a shortcut to this program called "MQuicker - For Mac Desktop" is included within C:\Extracts\MQuicker.
 I recommend moving it to your Desktop, and setting Terminal as the default program to open .sh by right clicking the icon, selecting Open With -> Choose Another App -> Always Use this App to Open .sh Files -> More Apps -> Look for an App on Your PC and then find and choose Terminal to easily access MQuicker from the Desktop.</p>
 
 # Codes
@@ -89,5 +89,6 @@ I recommend moving it to your Desktop, and setting Terminal as the default progr
   <li>change_current() - Iterates through every manga on your list and lets you change the latest chapter read and status. Easily skip through with the Enter key.</li>
   <li>add() - Add a manga to your list by providing the Name (no requirements), Link (include the https://), Source Code (see Source in Codes above), Current Chapter, and Status Code.</li>
   <li>primer() - Adjusts the initial list.txt file containing which mangas you'd like to track and latest.txt file containing what chapter you are on (both found within the saved folder).</li>
+  <li>rate() - Lets you rate all the manga on your list on a variety of criteria including but not limited to Overall, Action, and Happy.</li>
 </ol>
 
