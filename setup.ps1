@@ -1,5 +1,5 @@
 cd c:\
-$url = 'https://github.com/JacobK233811/MangaNewChapter/archive/main.zip'
+$url = 'https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'
 New-Item -ItemType Directory Zips
 $Dest = 'C:\Zips\MQ.zip'
 $web = New-Object -TypeName System.Net.WebClient
@@ -12,7 +12,7 @@ $ExtShell = New-Object -ComObject Shell.Application
 $file = $ExtShell.Namespace($Dest).Items()
 $ExtShell.Namespace($ExtractDir).CopyHere($file)
 # cd MQuicker
-Rename-Item -Path .\MangaNewChapter-main .\MQuicker
+Rename-Item -Path .\MangaNewChapter-MQuicker-minimal .\MQuicker
 rm -r Zips
 cd MQuicker
 

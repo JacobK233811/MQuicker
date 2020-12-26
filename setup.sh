@@ -8,11 +8,11 @@ wget $url -P $Dest
 # mkdir Extracts
 ExtractDir='C:/'
 cd Zips
-unzip -q main.zip -d $ExtractDir
+unzip -q MQuicker-minimal.zip -d $ExtractDir
 # cd $ExtractDir
 cd ..
 rm -r Zips
-mv "./MangaNewChapter-main" './MQuicker'
+mv "./MangaNewChapter-MQuicker-minimal" './MQuicker'
 cd MQuicker
 
 # Credits to deto's Miniconda-Install GitHub repository
