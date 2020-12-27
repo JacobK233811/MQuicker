@@ -1,37 +1,64 @@
-## Welcome to GitHub Pages
+## Welcome to the MQuicker Website
+The first priority of this website is to enable copying of Powershell/Terminal text.
 
-You can use the [editor on GitHub](https://github.com/JacobK233811/MangaNewChapter/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+### Windows Two-Step
+<div>
+     <input type="text" value="""cd c:\
+$url = 'https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'
+New-Item -ItemType Directory Zips
+$Dest = 'C:\Zips\MQ.zip'
+$web = New-Object -TypeName System.Net.WebClient
+$web.DownloadFile($url, $Dest)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+# New-Item -ItemType Directory Extracts
+$ExtractDir = 'C:\'
 
-### Markdown
+$ExtShell = New-Object -ComObject Shell.Application
+$file = $ExtShell.Namespace($Dest).Items()
+$ExtShell.Namespace($ExtractDir).CopyHere($file)
+# cd MQuicker
+Rename-Item -Path .\MangaNewChapter-MQuicker-minimal .\MQuicker
+rm -r Zips
+cd MQuicker
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+# Credits to deto's Miniconda-Install GitHub repository
+$ErrorActionPreference = "Stop"
 
-```markdown
-Syntax highlighted code block
+# Name of application to install
+$AppName="Python, Pip, & Conda"
 
-# Header 1
-## Header 2
-### Header 3
+# Set your project's install directory name here
+$InstallDir="PythonFiles"
 
-- Bulleted
-- List
+# Dependencies installed with pip instead
+# Comment out the next line if no PyPi dependencies
+$PyPiPackage="-r requirements.txt"
 
-1. Numbered
-2. List
+Write-Host -Foreground Green ("`nInstalling $AppName to "+(get-location).path+"\$InstallDir")
 
-**Bold** and _Italic_ and `Code` text
 
-[Link](url) and ![Image](src)
-```
+# Download Latest Miniconda Installer
+Write-Host -Foreground Green "`nDownloading Miniconda Installer...`n"
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+(New-Object System.Net.WebClient).DownloadFile("https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe", "$pwd\Miniconda_Install.exe")
 
-### Jekyll Themes
+# Install Python environment through Miniconda
+Write-Host "Installing Miniconda...`n"
+Start-Process Miniconda_Install.exe "/S /AddToPath=1 /D=$pwd\$InstallDir" -Wait
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/JacobK233811/MangaNewChapter/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+# Cleanup
+Remove-Item "Miniconda_Install.exe"
 
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Write-Host -Foreground Green ("Close this shell, open a new one, and run the contents of setup2.ps1")" id="copyMe">
+     <button onclick="copyMyText()""">Copy To Clipboard</button>
+</div>
+<script>
+function copyMyText() {
+     //select the element with the id "copyMe", must be a text box
+     var textToCopy = document.getElementById("copyMe");
+     //select the text in the text box
+     textToCopy.select();
+     //copy the text to the clipboard
+     document.execCommand("copy");
+}
+</script>
