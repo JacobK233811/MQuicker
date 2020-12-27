@@ -12,18 +12,6 @@ import webbrowser
 from PyQt5 import QtCore, QtWidgets, QtWebEngineWidgets
 import sys
 
-# Official source names are:
-# attackontitanmanga.com -> AoT
-# mangelo.com -> Mangelo
-# zeroscans.com & leviatanscans.com -> ZeroLeviatan
-# mangaeffect.com -> Effect
-# readmng.com -> ReadMng
-# mangadex.org -> MangaDex
-# mangkakalot.com -> Kakalot
-# pmscans.com & manhuaplus.com -> WP
-# lhtranslation.net -> lh
-# asurascans.com -> asura
-
 # Each list within the mangas list has the following parameters: Name, Link, Source
 with open("saved/list.txt", "rt", encoding="utf-8") as m_list:
     mangas = [line.split("|") for line in m_list.readlines()]
@@ -56,6 +44,7 @@ try:
     os.mkdir("saved")
 except FileExistsError:
     pass
+os.system("clear")
 os.system("Cls")
 print(Fore.LIGHTGREEN_EX + "Welcome to MQuicker!" + Fore.RESET)
 with open("MQuicker_Mascot.txt", "rt", encoding="utf-8") as mascot:
