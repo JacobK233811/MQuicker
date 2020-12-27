@@ -1,19 +1,12 @@
-<link type="text/css" rel="stylesheet" href="/alek.css"/>
-
 ## Welcome to the MQuicker Website
 The first priority of this website is to enable copying of Powershell/Terminal text.
 
 ### Windows Two-Step
 <div>
-   <input type="text" value="The Text to Copy" id="copyMe">
-   <button onclick="copyMyText()">Copy To Clipboard</button>
-</div>
-<br>
-<div>
-     <button class="copy-code-button" style="width: 300px;">Copy Step 1       </button>
-     <button class="copy-code-button" style=style="width: 300px;">Copy Step 2      </button>
+     <button style="width: 225px;">Copy Step 1</button>
+     <button style="width: 225px;">Copy Step 2</button>
      <div style="background-color: #012456; color: white; max-height: 400px; overflow: scroll;">
-          <p id="copyMe2">cd c:\<br>
+          <p id="copyMe">cd c:\<br>
 $url = 'https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'<br>
 New-Item -ItemType Directory Zips<br>
 $Dest = 'C:\Zips\MQ.zip'<br>
