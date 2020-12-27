@@ -73,7 +73,7 @@ python checker.py</p>
      <button style="width: 250px;" onclick="CopyToClipboard('mstep1');return false;">Copy Step 1</button>
      <button class="button" style="width: 250px;" onclick="CopyToClipboard('mstep2');return false;">Copy Step 2</button>
      <br>
-     <div style="background-color: white; color: black; max-height: 400px; overflow: scroll;">
+     <div style="background-color: #f4f4f4; color: black; max-height: 400px; overflow: scroll;">
           <p id="mstep1">cd $HOME<br>
 url='https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'<br>
 mkdir Zips<br>
@@ -152,7 +152,7 @@ conda init zsh<br>
 echo "Close this shell, open a new one, and run the contents of setup2.sh"<br></p>
      </div>
      <br>
-     <div style="background-color: white; color: black; max-height: 400px; overflow: scroll;">
+     <div style="background-color: #f4f4f4; color: black; max-height: 400px; overflow: scroll;">
           <p id="mstep2">cd $HOME/MQuicker/MacSetUp<br>
 pip3 install virtualenv==20.0.31<br>
 virtualenv mq<br>
