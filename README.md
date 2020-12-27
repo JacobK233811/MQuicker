@@ -9,17 +9,17 @@ Users can run in one click! Just seek out the "MQuicker - For Desktop" shortcut 
 
 <a href="https://youtu.be/AyZsZzuTAPg/" target="_blank">For Demo Video Ctrl+Click Here</a>
 
-<b id="su">If at any time during install it seems as if the program has gotten stuck, try clicking on the window and pressing enter once. Sometimes, working on other tasks or clicking out of the tab will pause the process.</b>
-<h1>Two Step Windows Set Up</h1>
+<h1 id="su">Two Step Windows Set Up</h1>
 <ul>
+  <li>If at any time during install it seems as if the program has gotten stuck, try clicking on the window and pressing enter once. Sometimes, working on other tasks or clicking out of the tab will pause the process.</li>
   <li>It is highly recommended to use Ctrl+Click to open each of these in a new tab and then copy their contents into Windows Powershell program on your computer.</li>
   <li>Find Windows Powershell by clicking the Windows button on your computer and typing Powershell.</li>
   <li>To paste text into Powershell, use your right click.</li>
+  <li>During the second step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.</li>
 </ul>
 <ol>
   <a href="WindowsSetUp\setup.ps1"><li>Download the ZIP file and Miniconda</li></a>
   <a href="WindowsSetUp\setup2.ps1"><li>Install required packages and run the file</li></a>
-  Note: During the second step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.
 </ol>
 <p><a href="WindowsSetUp\launch.ps1">Copying and pasting this</a> or finding the launch.ps1 file within <em>C:\MQuicker\WindowsSetUp</em> and running it in Powershell will open MQuicker. Also, a shortcut to this program called "MQuicker - For Desktop" should appear on your Desktop (specifically <em>C:\Users\YOURNAME\Desktop</em>).
 <a href="https://www.top-password.com/blog/set-ps1-script-to-open-with-powershell-by-default/">Setting PowerShell as the default program to open .ps1</a> by right clicking the icon, selecting Open With -> Choose Another App -> Always Use this App to Open .ps1 Files -> More Apps -> Look for an App on Your PC and then find and choose powershell.exe (the .exe usually is not shown) to easily access MQuicker from the Desktop. Following this, opening the shortcut will run the program.
@@ -27,6 +27,7 @@ Users can run in one click! Just seek out the "MQuicker - For Desktop" shortcut 
 
 <h1 id="2m">Two Step Set Up on Mac</h1>
 <ul>
+  <li>If at any time during install it seems as if the program has gotten stuck, try clicking on the window and pressing enter once. Sometimes, working on other tasks or clicking out of the tab will pause the process.</li>
   <li>It is highly recommended to use Ctrl+Click to open each of these in a new tab and then copy their contents into Terminal program on your computer.</li>
   <li>Find Terminal by going to Spotlight Search on your computer and typing Terminal.</li>
   <li>To paste text into Terminal, use your right click.</li>
@@ -40,10 +41,12 @@ Users can run in one click! Just seek out the "MQuicker - For Desktop" shortcut 
 Setting Terminal as the default program to open .sh by right clicking the icon, selecting Open With -> Choose Another App -> Always Use this App to Open .sh Files -> More Apps -> Look for an App on Your PC and then find and choose Terminal to easily access MQuicker from the Desktop.</p>
 
 <h1 id="2m">One-Step Set Up on Mac (Only for Those Who Have Python [test by entering pip in Terminal])</h1>
+<ul>
   <li>It is highly recommended to use Ctrl+Click to open each of these in a new tab and then copy their contents into Terminal program on your computer.</li>
   <li>Find Terminal by going to Spotlight Search on your computer and typing Terminal.</li>
   <li>To paste text into Terminal, use your right click.</li>
   <li>During this step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.</li>
+</ul>
 <ol>
   <a href="MacSetUp\setup_for_python_users.sh"><li>Download the ZIP file, Create a Virtual Environment, and Run the File</li></a>
 </ol>
