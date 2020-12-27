@@ -1,12 +1,5 @@
 <link type="text/css" rel="stylesheet" href="/alek.css"/>
-
-## Welcome to the MQuicker Website
-The first priority of this website is to enable copying of Powershell/Terminal text.
-
-### Windows Two-Step
-<div>
-     <button class="copy-code-button" onclick="copyMyText()">Copy Step 1 To Clipboard</button>     <button onclick="copyMyText()">Copy Step 1 To Clipboard</button>
-     <p class="copy-code-container" id="copyMe">cd c:\
+{% capture WS1 %}cd c:\
 $url = 'https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'
 New-Item -ItemType Directory Zips
 $Dest = 'C:\Zips\MQ.zip'
@@ -52,7 +45,14 @@ Start-Process Miniconda_Install.exe "/S /AddToPath=1 /D=$pwd\$InstallDir" -Wait
 # Cleanup
 Remove-Item "Miniconda_Install.exe"
 
-Write-Host -Foreground Green ("Close this shell, open a new one, and run the contents of setup2.ps1")</p>
+Write-Host -Foreground Green ("Close this shell, open a new one, and run the contents of setup2.ps1"){% endcapture %}
+
+## Welcome to the MQuicker Website
+The first priority of this website is to enable copying of Powershell/Terminal text.
+
+### Windows Two-Step
+<div>
+     <p><button onclick="AdvancedCopy({{ WS1 }})">Copy Step 1</button></p>
 </div>
 
 
