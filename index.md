@@ -54,7 +54,27 @@ Write-Host -Foreground Green ("Close this shell, open a new one, and run the con
      </div>     
 </div>
 
+{% capture WS2 %}
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
+cd c:\MQuicker\WindowsSetUp
+pip install virtualenv==20.0.31
+virtualenv mq
+.\mq\Scripts\activate
+Write-Host -Foreground Green ("`Please exercise patience as the following packages install.")
+pip install -r "..\requirements.txt"
+mv ".\MQuicker - For Desktop.lnk" ($env:USERPROFILE + "\Desktop")
+Write-Host ("`nCongratulations on Setting Up MQuicker!!")
+cd ..
+python checker.py
+{% endcapture %}
+### Windows Two-Step 2
+<!-- The text field -->
+<input type="text" value='{{WS2}}' id="myInput">
+
+<!-- The button used to copy the text -->
+<button onclick="myFunction()">Copy text</button>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.4.0/clipboard.min.js">(function(){
     new Clipboard('#copy-button');
 })();</script>
+<script src="w3.js"></script>
