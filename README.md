@@ -26,20 +26,26 @@ Users can run in one click! Just seek out the "MQuicker - For Desktop" shortcut 
 (I found Powershell in C:\Windows\System32\WindowsPowerShell\v1.0) Alternatively, right click the shortcut and select "Run with Powershell"</p>
 
 <h1 id="2m">Two Step Set Up on Mac</h1>
-Note: It is highly recommended to use Ctrl+Click to open each of these in a new tab and then copy their contents into Terminal program on your computer.
+<ul>
+  <li>It is highly recommended to use Ctrl+Click to open each of these in a new tab and then copy their contents into Terminal program on your computer.</li>
+  <li>Find Terminal by going to Spotlight Search on your computer and typing Terminal.</li>
+  <li>To paste text into Terminal, use your right click.</li>
+  <li>During the second step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.</li>
+</ul>
 <ol>
   <a href="MacSetUp\setup.sh"><li>Download the ZIP file and Miniconda</li></a>
   <a href="MacSetUp\setup2.sh"><li>Install required packages and run the file</li></a>
-  Note: During the second step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.
 </ol>
 <a href="MacSetUp\launch.sh">Copying and pasting this</a> or finding the launch.sh file within <em>C:/MQuicker/MacSetUp</em> and running it in Terrminal will open MQuicker. Also, a shortcut to this program called "MQuicker - For Desktop" should appear on your Desktop (specifically <em>C:/Users/YOURNAME/Desktop</em>).
 Setting Terminal as the default program to open .sh by right clicking the icon, selecting Open With -> Choose Another App -> Always Use this App to Open .sh Files -> More Apps -> Look for an App on Your PC and then find and choose Terminal to easily access MQuicker from the Desktop.</p>
 
 <h1 id="2m">One-Step Set Up on Mac (Only for Those Who Have Python [test by entering pip in Terminal])</h1>
-Note: It is highly recommended to use Ctrl+Click to open each of these in a new tab and then copy their contents into Terminal program on your computer.
+  <li>It is highly recommended to use Ctrl+Click to open each of these in a new tab and then copy their contents into Terminal program on your computer.</li>
+  <li>Find Terminal by going to Spotlight Search on your computer and typing Terminal.</li>
+  <li>To paste text into Terminal, use your right click.</li>
+  <li>During this step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.</li>
 <ol>
   <a href="MacSetUp\setup_for_python_users.sh"><li>Download the ZIP file, Create a Virtual Environment, and Run the File</li></a>
-  Note: During this step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.
 </ol>
 <a href="MacSetUp\launch.sh">Copying and pasting this</a> or finding the launch.sh file within <em>C:/MQuicker/MacSetUp</em> and running it in Terrminal will open MQuicker. Also, a shortcut to this program called "MQuicker - For Desktop" should appear on your Desktop (specifically <em>C:/Users/YOURNAME/Desktop</em>).
 Setting Terminal as the default program to open .sh by right clicking the icon, selecting Open With -> Choose Another App -> Always Use this App to Open .sh Files -> More Apps -> Look for an App on Your PC and then find and choose Terminal to easily access MQuicker from the Desktop.</p>
