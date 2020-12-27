@@ -5,9 +5,8 @@ The first priority of this website is to enable copying of Powershell/Terminal t
 
 ### Windows Two-Step
 <div>
-     <button onclick="copyMyText()" class="copy-code-button">Copy Step 1</button>
-     <em>                         </em>
-     <button onclick="copyMyText2()" class="copy-code-button">Copy Step 2</button>
+     <button onclick="copyMyText()" class="copy-code-button" style="text-indent: 5em;">Copy Step 1</button>
+     <button onclick="copyMyText2()" class="copy-code-button" style="text-indent: 5em;">Copy Step 2</button>
      <div style="background-color: #012456; color: white; max-height: 400px; overflow: scroll;">
           <p id="copyMe">cd c:\<br>
 $url = 'https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'<br>
