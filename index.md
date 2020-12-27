@@ -153,17 +153,17 @@ echo "Close this shell, open a new one, and run the contents of setup2.sh"<br></
      </div>
      <br>
      <div style="background-color: white; color: black; max-height: 400px; overflow: scroll;">
-          <p id="mstep2">Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force<br>
-cd c:\MQuicker\WindowsSetUp<br>
-pip install virtualenv==20.0.31<br>
+          <p id="mstep2">cd $HOME/MQuicker/MacSetUp<br>
+pip3 install virtualenv==20.0.31<br>
 virtualenv mq<br>
-.\mq\Scripts\activate<br>
-Write-Host -Foreground Green ("`Please exercise patience as the following packages install.")<br>
-pip install -r "..\requirements.txt"<br>
-mv ".\MQuicker - For Desktop.lnk" ($env:USERPROFILE + "\Desktop")<br>
-Write-Host ("`nCongratulations on Setting Up MQuicker!!")<br>
+source "./mq/bin/activate"<br>
+python3 -m pip install -U pip<br>
+echo -e "\033[1;33mPlease exercise patience as the following packages install."<br>
+python3 -m pip install -r "../requirements.txt"<br>
+mv "./launch.sh" $HOME<br>
+echo "Congratulations on Setting Up MQuicker!!"<br>
 cd ..<br>
-python checker.py</p>
+python3 checker.py</p>
      </div>     
 </div>
 
