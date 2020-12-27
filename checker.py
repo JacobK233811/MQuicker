@@ -95,7 +95,7 @@ def primer():
     # Choosing which manga of the base list to keep and setting their current chapter/status for that one-by-one
     if not input(
             f"{Fore.LIGHTYELLOW_EX}Are you sure? This is a somewhat long process meant only for first-time users." +
-            f"\n{Fore.LIGHTRED_EX}Press enter to cancel. {Fore.LIGHTGREEN_Ex}Typing anything else will begin the " +
+            f"\n{Fore.LIGHTRED_EX}Press enter to cancel. {Fore.LIGHTGREEN_EX}Typing anything else will begin the " +
             f"priming procedure.  {Fore.RESET}"):
         return "Interrupt"
 
@@ -125,7 +125,7 @@ def primer():
                       + "please press enter without any input for both of the following")
                 status = input(f"\n{Fore.LIGHTWHITE_EX}Which chapter are you on?  {Fore.RESET}"), \
                          input(
-                             f"{Fore.LIGHTMAGENTA_Ex}Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
+                             f"{Fore.LIGHTMAGENTA_EX}Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
                              f"{Fore.LIGHTWHITE_EX}Please enter the corresponding three letter code found in parentheses.  {Fore.RESET}")
                 if status == ("", ""):
                     numbers.write(" ".join(["0", "yts"]) + "\n")
