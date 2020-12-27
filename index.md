@@ -52,7 +52,7 @@ The first priority of this website is to enable copying of Powershell/Terminal t
 
 ### Windows Two-Step
 <div>
-     <p><button onclick="AdvancedCopy({{ WS1 }})">Copy Step 1</button></p>
+     <p><button onclick="AdvancedCopy('{{ WS1 }}')">Copy Step 1</button></p>
 </div>
 
 
