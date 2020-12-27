@@ -29,8 +29,8 @@ Users can run in one click! Just seek out the "MQuicker - For Desktop" shortcut 
 <ul>
   <li>If at any time during install it seems as if the program has gotten stuck, try clicking on the window and pressing enter once. Sometimes, working on other tasks or clicking out of the tab will pause the process.</li>
   <li>It is highly recommended to use Cmnd+Click to open each of these in a new tab and then copy their contents into Terminal program on your computer.</li>
-  <li>Find Terminal by going to Spotlight Search on your computer and typing Terminal.</li>
-  <li>To paste text into Terminal, use your right click.</li>
+  <li>Find Terminal by going to Spotlight Search (top right of the screen) on your computer and typing Terminal.</li>
+  <li>To paste text into Terminal, use Cmnd+V. You may not see all of the lines if you scroll up, but that is simply Terminal limiting your scrolling. They are there.</li>
   <li>During the second step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.</li>
 </ul>
 <ol>
@@ -43,8 +43,8 @@ Setting Terminal as the default program to open .sh by right clicking the icon, 
 <h1 id="2m">One-Step Set Up on Mac (Only for Those Who Have Python [test by entering pip in Terminal])</h1>
 <ul>
   <li>It is highly recommended to use Cmnd+Click to open each of these in a new tab and then copy their contents into Terminal program on your computer.</li>
-  <li>Find Terminal by going to Spotlight Search on your computer and typing Terminal.</li>
-  <li>To paste text into Terminal, use your right click.</li>
+  <li>Find Terminal by going to Spotlight Search (top right of the screen) on your computer and typing Terminal.</li>
+  <li>To paste text into Terminal, use Cmnd+V. You may not see all of the lines if you scroll up, but that is simply Terminal limiting your scrolling. They are there.</li>
   <li>During this step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.</li>
 </ul>
 <ol>
