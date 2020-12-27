@@ -9,7 +9,8 @@ Users can run in one click! Just seek out the "MQuicker - For Desktop" shortcut 
 
 <a href="https://youtu.be/AyZsZzuTAPg/" target="_blank">For Demo Video Ctrl+Click Here</a>
 
-<h1 id="su">Two Step Windows Set Up</h1>
+<b id="su">If at any time during install it seems as if the program has gotten stuck, try clicking on the window and pressing enter once. Sometimes, working on other tasks or clicking out of the tab will pause the process.</b>
+<h1>Two Step Windows Set Up</h1>
 Note: It is highly recommended to use Ctrl+Click to open each of these in a new tab and then copy their contents into Windows Powershell program on your computer.
 <ol>
   <a href="WindowsSetUp\setup.ps1"><li>Download the ZIP file and Miniconda</li></a>
