@@ -2,7 +2,7 @@
 The first priority of this website is to enable copying of Powershell/Terminal text.
 
 <!-- The text field -->
-<input type="text" value="Hello World" id="myInput">
+<input type="text" value="Goodbye World">
 
 <!-- The button used to copy the text -->
 <button onclick="myFunction()">Copy text</button>
@@ -11,7 +11,7 @@ The first priority of this website is to enable copying of Powershell/Terminal t
      <button style="width: 230px;">Copy Step 1</button>
      <button style="width: 230px;">Copy Step 2</button>
      <div style="background-color: #012456; color: white; max-height: 400px; overflow: scroll;">
-          <p id="copyMe">cd c:\<br>
+          <p id="myInput">cd c:\<br>
 $url = 'https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'<br>
 New-Item -ItemType Directory Zips<br>
 $Dest = 'C:\Zips\MQ.zip'<br>
