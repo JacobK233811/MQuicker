@@ -6,7 +6,7 @@ The first priority of this website is to enable copying of Powershell/Terminal t
      <button style="width: 230px;">Copy Step 1</button>
      <button class="button" style="width: 230px;" id="copy-button" data-clipboard-target="#WS1">Step Copy</button>
      <div style="background-color: #012456; color: white; max-height: 400px; overflow: scroll;">
-          <p id="WS1">cd c:\<br>
+          <p id="sample">cd c:\<br>
 $url = 'https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'<br>
 New-Item -ItemType Directory Zips<br>
 $Dest = 'C:\Zips\MQ.zip'<br>
@@ -74,7 +74,21 @@ python checker.py
 <!-- The button used to copy the text -->
 <button onclick="myFunction()">Copy text</button>
 
+<a href="#" onclick="CopyToClipboard('sample');return false;">Copy Text</a>
+
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.4.0/clipboard.min.js">(function(){
     new Clipboard('#copy-button');
 })();</script>
 <script src="w3.js"></script>
+<script>
+function CopyToClipboard(id)
+{
+var r = document.createRange();
+r.selectNode(document.getElementById(id));
+window.getSelection().removeAllRanges();
+window.getSelection().addRange(r);
+document.execCommand('copy');
+window.getSelection().removeAllRanges();
+}
+</script>
