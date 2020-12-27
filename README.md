@@ -3,7 +3,7 @@
 
 When <a href="#su">setting up for yourself</a>, follow the linked steps for your OS. All Windows Users should go through Two-Step Install, regardless of having Python. Mac Users should go through the Two-Step Install if they do not have Python and One-Step Install if they do.
 
-Users can run in one click! Just seek out the "MQuicker - For Desktop" shortcut that should be on your Desktop. If you can't find it, look for it in "C:\MQuicker\(Windows or Mac)SetUp and then drag it to your Desktop."
+Windows Users who use the Two-Step Powershell Install can run in one click! Mac Users who go through the Four-Step Install and then navigate to the MangaNewChapter-main folder within terminal with <em>cd Downloads/MangaNewChapter-main</em>. Then they can run python3 checker.py. Two-Step Install for Mac needs further testing, but is available <a href="2m">here.</a> After using Two-Step Install, users can open Terminal and run <em>sh launch.sh</em> to start the program. If this does not work, try <em>sh $HOME/launch.sh</em>
 
 <img src="mcheck_ex.png"/>
 
@@ -25,11 +25,23 @@ Users can run in one click! Just seek out the "MQuicker - For Desktop" shortcut 
 <a href="https://www.top-password.com/blog/set-ps1-script-to-open-with-powershell-by-default/">Setting PowerShell as the default program to open .ps1</a> by right clicking the icon, selecting Open With -> Choose Another App -> Always Use this App to Open .ps1 Files -> More Apps -> Look for an App on Your PC and then find and choose powershell.exe (the .exe usually is not shown) to easily access MQuicker from the Desktop. Following this, opening the shortcut will run the program.
 (I found Powershell in C:\Windows\System32\WindowsPowerShell\v1.0) Alternatively, right click the shortcut and select "Run with Powershell"</p>
 
-<h1 id="2m">Two Step Set Up on Mac</h1>
+<h1>Four Step Set Up on Mac</h1>
+<ul>
+  <li>If at any time during install it seems as if the program has gotten stuck, try clicking on the window and pressing enter once. Sometimes, working on other tasks or clicking out of the tab will pause the process.</li>
+  <li>Find Terminal by going to Spotlight Search (magnifying glass in the top right of the screen) on your computer and typing Terminal.</li>
+</ul>
+<ol>
+  <li>Download this GitHub Repository by <a href="https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip">Clicking the Green "Code" Button followed by Download ZIP</a>. Double clicking on the zip file should create a new folder. Note the folder location (it is usually Downloads/MangaNewChapter-main). </li>
+  <li><a href="https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.pkg">Get the 3.8 64-bit Version of Python from the pkg installer.</a> for Mac</li>
+  <li>Open Terminal Program and Navigate to the Folder called MangaNewChapter-main by Using <em>cd Downloads/MangaNewChapter-main</em> until arrival. Then run <em>pip3 install -r requirements.txt</em> This may ask you to download software development tools, which you should do if prompted. Only do this in set up.</li>
+  <li>Run <em>python3 checker.py</em>. This process will be how you normally access the program, preceded by naviagting to the MangaNewChapter-main folder.</li>
+</ol>
+
+<h1 id="2m">Two Step Set Up on Mac (Experimental)</h1>
 <ul>
   <li>If at any time during install it seems as if the program has gotten stuck, try clicking on the window and pressing enter once. Sometimes, working on other tasks or clicking out of the tab will pause the process.</li>
   <li>It is highly recommended to use Cmnd+Click to open each of these in a new tab and then copy their contents into Terminal program on your computer.</li>
-  <li>Find Terminal by going to Spotlight Search (top right of the screen) on your computer and typing Terminal.</li>
+  <li>Find Terminal by going to Spotlight Search (magnifying glass in the top right of the screen) on your computer and typing Terminal.</li>
   <li>To paste text into Terminal, use Cmnd+V. You may not see all of the lines if you scroll up, but that is simply Terminal limiting your scrolling. They are there.</li>
   <li>During the second step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.</li>
 </ul>
@@ -37,21 +49,18 @@ Users can run in one click! Just seek out the "MQuicker - For Desktop" shortcut 
   <a href="MacSetUp\setup.sh"><li>Download the ZIP file and Miniconda</li></a>
   <a href="MacSetUp\setup2.sh"><li>Install required packages and run the file</li></a>
 </ol>
-<a href="MacSetUp\launch.sh">Copying and pasting this</a> or finding the launch.sh file within <em>C:/MQuicker/MacSetUp</em> and running it in Terrminal will open MQuicker. Also, a shortcut to this program called "MQuicker - For Desktop" should appear on your Desktop (specifically <em>C:/Users/YOURNAME/Desktop</em>).
-Setting Terminal as the default program to open .sh by right clicking the icon, selecting Open With -> Choose Another App -> Always Use this App to Open .sh Files -> More Apps -> Look for an App on Your PC and then find and choose Terminal to easily access MQuicker from the Desktop.</p>
-
-<h1 id="2m">One-Step Set Up on Mac (Only for Those Who Have Python [test by entering pip in Terminal])</h1>
+<a href="MacSetUp\launch.sh">Copying and pasting this</a> or running <em>sh launch.sh</em> in your Terminal will start the program.
+<h1 id="2m">One-Step Set Up on Mac (Only for Those Who Have Python [test by entering pip3 in Terminal])</h1>
 <ul>
-  <li>It is highly recommended to use Cmnd+Click to open each of these in a new tab and then copy their contents into Terminal program on your computer.</li>
-  <li>Find Terminal by going to Spotlight Search (top right of the screen) on your computer and typing Terminal.</li>
+  <li>It is highly recommended to use Cmnd+Click to open each of these in a new tab and their copy their contents into Terminal program on your computer.</li>
+  <li>Find Terminal by going to Spotlight Search (magnifying glass in the top right of the screen) on your computer and typing Terminal.</li>
   <li>To paste text into Terminal, use Cmnd+V. You may not see all of the lines if you scroll up, but that is simply Terminal limiting your scrolling. They are there.</li>
   <li>During this step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.</li>
 </ul>
 <ol>
   <a href="MacSetUp\setup_for_python_users.sh"><li>Download the ZIP file, Create a Virtual Environment, and Run the File</li></a>
 </ol>
-<a href="MacSetUp\launch.sh">Copying and pasting this</a> or finding the launch.sh file within <em>C:/MQuicker/MacSetUp</em> and running it in Terrminal will open MQuicker. Also, a shortcut to this program called "MQuicker - For Desktop" should appear on your Desktop (specifically <em>C:/Users/YOURNAME/Desktop</em>).
-Setting Terminal as the default program to open .sh by right clicking the icon, selecting Open With -> Choose Another App -> Always Use this App to Open .sh Files -> More Apps -> Look for an App on Your PC and then find and choose Terminal to easily access MQuicker from the Desktop.</p>
+<a href="MacSetUp\launch.sh">Copying and pasting this</a> or running <em>sh launch.sh</em> in your Terminal will start the program.
 
 # Codes
 

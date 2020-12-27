@@ -1,12 +1,12 @@
-cd 'c:/'
+cd $HOME
 url='https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'
 mkdir Zips
-Dest='C:/Zips'
+Dest=$HOME/Zips
 
-wget $url -P $Dest
+curl $url -L -o $Dest
 
 # mkdir Extracts
-ExtractDir='C:/'
+ExtractDir=$HOME
 cd Zips
 unzip -q MQuicker-minimal.zip -d $ExtractDir
 # cd $ExtractDir
@@ -69,5 +69,8 @@ bash Miniconda_Install.sh -b -f -p $InstallDir
 
 # Cleanup
 rm Miniconda_Install.sh
+
+source "./PythonFiles/bin/activate"
+conda init zsh
 
 echo "Close this shell, open a new one, and run the contents of setup2.sh"
