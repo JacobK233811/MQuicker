@@ -1,10 +1,15 @@
 ## Welcome to the MQuicker Website
 The first priority of this website is to enable copying of Powershell/Terminal text.
 
+<!-- The text field -->
+<input type="text" value="Hello World" id="myInput">
+
+<!-- The button used to copy the text -->
+<button onclick="myFunction()">Copy text</button>
 ### Windows Two-Step
 <div>
-     <button style="width: 225px;">Copy Step 1</button>
-     <button style="width: 225px;">Copy Step 2</button>
+     <button style="width: 230px;">Copy Step 1</button>
+     <button style="width: 230px;">Copy Step 2</button>
      <div style="background-color: #012456; color: white; max-height: 400px; overflow: scroll;">
           <p id="copyMe">cd c:\<br>
 $url = 'https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'<br>
@@ -55,4 +60,4 @@ Write-Host -Foreground Green ("Close this shell, open a new one, and run the con
 </div>
 
 
-<script src="demo.js" type="text/javascript"></script>
+<script src="w3.js" type="text/javascript"></script>
