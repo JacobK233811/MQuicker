@@ -114,30 +114,30 @@ echo<br>
 # Miniconda doesn't work for directory structures with spaces<br>
 if [[ $(pwd) == *" "* ]]<br>
 then<br>
-    <p>echo "ERROR: Cannot install into a directory with a space in its path" >&2<br>
-    echo "Exiting..."<br>
-    echo<br>
-    exit 1</p>
+    &nbsp;&nbsp;&nbsp;&nbsp;echo "ERROR: Cannot install into a directory with a space in its path" >&2<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;echo "Exiting..."<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;echo<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;exit 1<br>
 fi<br>
 
 rm "PythonFiles/create.txt"<br>
 # Test if new directory is empty.  Exit if it's not<br>
 if [ -d $(pwd)/$InstallDir ]; then<br>
-    <p>if [ "$(ls -A $(pwd)/$InstallDir)" ]; then
-        <p>echo "ERROR: Directory is not empty" >&2<br>
-        echo "If you want to install into $(pwd)/$InstallDir, "<br>
-        echo "clear the directory first and run this script again."<br>
-        echo "Exiting..."<br>
-        echo<br>
-        exit 1</p>
-    fi</p>
+    &nbsp;&nbsp;&nbsp;&nbsp;if [ "$(ls -A $(pwd)/$InstallDir)" ]; then<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo "ERROR: Directory is not empty" >&2<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo "If you want to install into $(pwd)/$InstallDir, "<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo "clear the directory first and run this script again."<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo "Exiting..."<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit 1<br>
+    fi<br>
 fi<br>
 
 # Download and install Miniconda<br>
 set +e<br>
 curl "https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh" -o Miniconda_Install.sh<br>
 if [ $? -ne 0 ]; then<br>
-    curl "https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh" -o Miniconda_Install.sh<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;curl "https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh" -o Miniconda_Install.sh<br>
 fi<br>
 set -e<br>
 
@@ -181,5 +181,8 @@ window.getSelection().removeAllRanges();
 window.getSelection().addRange(r);
 document.execCommand('copy');
 window.getSelection().removeAllRanges();
+     
+/* Alert the copied text */
+alert("Copied the code for this step.");
 }
 </script>
