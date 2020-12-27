@@ -52,7 +52,12 @@ The first priority of this website is to enable copying of Powershell/Terminal t
 
 ### Windows Two-Step
 <div>
-     <p id="copyMe" style="background-color: #012456; color: white;">{{ WS1 }}</p>
+     <div id="copyMe style="background-color: #012456; color: white;">
+                                                                     <p>cd c:\</p>
+                                                                     <p>$url = 'https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'
+</p>
+                                                                     <p>New-Item -ItemType Directory Zips</p>
+     </div>
      <button onclick="copyMyText()">Copy To Clipboard</button>
 </div>
 
