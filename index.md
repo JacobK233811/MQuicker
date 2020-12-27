@@ -4,7 +4,7 @@ The first priority of this website is to enable copying of Powershell/Terminal t
 ### Windows Two-Step
 <div>
      <button style="width: 230px;">Copy Step 1</button>
-     <button style="width: 230px;" id="copy-button" data-clipboard-target="#WS1">Copy</button>
+     <button class="button" style="width: 230px;" id="copy-button" data-clipboard-target="#WS1">Step Copy</button>
      <div style="background-color: #012456; color: white; max-height: 400px; overflow: scroll;">
           <p id="WS1">cd c:\<br>
 $url = 'https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'<br>
