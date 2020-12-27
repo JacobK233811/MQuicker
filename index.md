@@ -55,4 +55,4 @@ Write-Host -Foreground Green ("Close this shell, open a new one, and run the con
 </div>
 
 
-<script src="/demo.js"></script>
+<script src="demo.js" type="text/javascript"></script>
