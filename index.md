@@ -52,7 +52,7 @@ The first priority of this website is to enable copying of Powershell/Terminal t
 
 ### Windows Two-Step
 <div>
-     <p id="copyMe" style="background-color: #012456;">{{ WS1 }}</p>
+     <input type="text" value={{ WS1 }} id="copyMe" style="background-color: #012456; color: white;">
      <button onclick="copyMyText()">Copy To Clipboard</button>
 </div>
 
