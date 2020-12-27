@@ -1,17 +1,12 @@
 ## Welcome to the MQuicker Website
 The first priority of this website is to enable copying of Powershell/Terminal text.
 
-<!-- The text field -->
-<input type="text" value="Goodbye World">
-
-<!-- The button used to copy the text -->
-<button onclick="myFunction()">Copy text</button>
 ### Windows Two-Step
 <div>
      <button style="width: 230px;">Copy Step 1</button>
-     <button style="width: 230px;">Copy Step 2</button>
+     <button style="width: 230px;" id="copy-button" data-clipboard-target="#WS1">Copy</button>
      <div style="background-color: #012456; color: white; max-height: 400px; overflow: scroll;">
-          <p id="myInput">cd c:\<br>
+          <p id="WS1">cd c:\<br>
 $url = 'https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'<br>
 New-Item -ItemType Directory Zips<br>
 $Dest = 'C:\Zips\MQ.zip'<br>
@@ -60,4 +55,6 @@ Write-Host -Foreground Green ("Close this shell, open a new one, and run the con
 </div>
 
 
-<script src="w3.js" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.4.0/clipboard.min.js">(function(){
+    new Clipboard('#copy-button');
+})();</script>
