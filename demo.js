@@ -7,6 +7,42 @@ function copyMyText() {
      document.execCommand("copy");
 }
 
+function copyMyText2() {
+     //select the element with the id "copyMe", must be a text box
+     var textToCopy = document.getElementById("copyMe2");
+     //select the text in the text box
+     textToCopy.select();
+     //copy the text to the clipboard
+     document.execCommand("copy");
+}
+
+function copyMyText3() {
+     //select the element with the id "copyMe", must be a text box
+     var textToCopy = document.getElementById("copyMe3");
+     //select the text in the text box
+     textToCopy.select();
+     //copy the text to the clipboard
+     document.execCommand("copy");
+}
+
+function copyMyText4() {
+     //select the element with the id "copyMe", must be a text box
+     var textToCopy = document.getElementById("copyMe4");
+     //select the text in the text box
+     textToCopy.select();
+     //copy the text to the clipboard
+     document.execCommand("copy");
+}
+
+function copyMyText5() {
+     //select the element with the id "copyMe", must be a text box
+     var textToCopy = document.getElementById("copyMe5");
+     //select the text in the text box
+     textToCopy.select();
+     //copy the text to the clipboard
+     document.execCommand("copy");
+}
+
 function AdvancedCopy(theText){
      //the text that is to be copied to the clipboard
  
