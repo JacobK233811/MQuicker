@@ -3,8 +3,8 @@ The first priority of this website is to enable copying of Powershell/Terminal t
 
 ### Windows Two-Step
 <div>
-     <button style="width: 230px;">Copy Step 1</button>
-     <button class="button" style="width: 230px;" id="copy-button" data-clipboard-target="#WS1">Step Copy</button>
+     <button style="width: 250px;" onclick="CopyToClipboard('sample');return false;">Copy Step 1</button>
+     <button class="button" style="width: 250px;" onclick="CopyToClipboard('wstep2');return false;">Copy Step 2</button>
      <div style="background-color: #012456; color: white; max-height: 400px; overflow: scroll;">
           <p id="sample">cd c:\<br>
 $url = 'https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'<br>
@@ -51,9 +51,21 @@ Start-Process Miniconda_Install.exe "/S /AddToPath=1 /D=$pwd\$InstallDir" -Wait<
 Remove-Item "Miniconda_Install.exe"<br>
 
 Write-Host -Foreground Green ("Close this shell, open a new one, and run the contents of setup2.ps1")<br></p>
+     </div>    
+     <div style="background-color: #012456; color: white; max-height: 400px; overflow: scroll;">
+          <p id="wstep2">Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force<br>
+cd c:\MQuicker\WindowsSetUp<br>
+pip install virtualenv==20.0.31<br>
+virtualenv mq<br>
+.\mq\Scripts\activate<br>
+Write-Host -Foreground Green ("`Please exercise patience as the following packages install.")<br>
+pip install -r "..\requirements.txt"<br>
+mv ".\MQuicker - For Desktop.lnk" ($env:USERPROFILE + "\Desktop")<br>
+Write-Host ("`nCongratulations on Setting Up MQuicker!!")<br>
+cd ..<br>
+python checker.py</p>
      </div>     
 </div>
-
 {% capture WS2 %}
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 cd c:\MQuicker\WindowsSetUp
