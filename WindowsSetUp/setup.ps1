@@ -29,11 +29,11 @@ $InstallDir="PythonFiles"
 # Comment out the next line if no PyPi dependencies
 $PyPiPackage="-r requirements.txt"
 
-Write-Host ("`nInstalling $AppName to "+(get-location).path+"\$InstallDir")
+Write-Host -Foreground Green ("`nInstalling $AppName to "+(get-location).path+"\$InstallDir")
 
 
 # Download Latest Miniconda Installer
-Write-Host "`nDownloading Miniconda Installer...`n"
+Write-Host -Foreground Green "`nDownloading Miniconda Installer...`n"
 
 (New-Object System.Net.WebClient).DownloadFile("https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe", "$pwd\Miniconda_Install.exe")
 
@@ -44,4 +44,4 @@ Start-Process Miniconda_Install.exe "/S /AddToPath=1 /D=$pwd\$InstallDir" -Wait
 # Cleanup
 Remove-Item "Miniconda_Install.exe"
 
-Write-Host ("Close this shell, open a new one, and run the contents of setup2.ps1")
+Write-Host -Foreground Green ("Close this shell, open a new one, and run the contents of setup2.ps1")

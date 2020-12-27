@@ -11,25 +11,29 @@ Users can run in one click! Just seek out the "MQuicker - For Desktop" shortcut 
 
 <b id="su">If at any time during install it seems as if the program has gotten stuck, try clicking on the window and pressing enter once. Sometimes, working on other tasks or clicking out of the tab will pause the process.</b>
 <h1>Two Step Windows Set Up</h1>
-Note: It is highly recommended to use Ctrl+Click to open each of these in a new tab and then copy their contents into Windows Powershell program on your computer.
+<ul>
+  <li>It is highly recommended to use Ctrl+Click to open each of these in a new tab and then copy their contents into Windows Powershell program on your computer.</li>
+  <li>Find Windows Powershell by clicking the Windows button on your computer and typing Powershell.</li>
+  <li>To paste text into Powershell, use your right click.</li>
+</ul>
 <ol>
   <a href="WindowsSetUp\setup.ps1"><li>Download the ZIP file and Miniconda</li></a>
   <a href="WindowsSetUp\setup2.ps1"><li>Install required packages and run the file</li></a>
   Note: During the second step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.
 </ol>
-<a href="WindowsSetUp\launch.ps1">After setting up in this way, you can click here whenever you'd like to look for new chapters, or just find the launch.ps1 file on your computer :)</a> <p>Also, a shortcut to this program called "MQuicker - For Desktop" is included within C:\Extracts\MQuicker.
-I recommend moving it to your Desktop, and <a href="https://www.top-password.com/blog/set-ps1-script-to-open-with-powershell-by-default/">setting PowerShell as the default program to open .ps1</a> by right clicking the icon, selecting Open With -> Choose Another App -> Always Use this App to Open .ps1 Files -> More Apps -> Look for an App on Your PC and then find and choose powershell.exe to easily access MQuicker from the Desktop.
+<p><a href="WindowsSetUp\launch.ps1">Copying and pasting this</a> or finding the launch.ps1 file within <em>C:\MQuicker\WindowsSetUp</em> and running it in Powershell will open MQuicker. Also, a shortcut to this program called "MQuicker - For Desktop" should appear on your Desktop (specifically <em>C:\Users\YOURNAME\Desktop</em>).
+<a href="https://www.top-password.com/blog/set-ps1-script-to-open-with-powershell-by-default/">Setting PowerShell as the default program to open .ps1</a> by right clicking the icon, selecting Open With -> Choose Another App -> Always Use this App to Open .ps1 Files -> More Apps -> Look for an App on Your PC and then find and choose powershell.exe (the .exe usually is not shown) to easily access MQuicker from the Desktop. Following this, opening the shortcut will run the program.
 (I found Powershell in C:\Windows\System32\WindowsPowerShell\v1.0) Alternatively, right click the shortcut and select "Run with Powershell"</p>
 
-<h1 id="2m">Two Step Set Up on Mac (Experimental)</h1>
+<h1 id="2m">Two Step Set Up on Mac</h1>
 Note: It is highly recommended to use Ctrl+Click to open each of these in a new tab and then copy their contents into Terminal program on your computer.
 <ol>
   <a href="MacSetUp\setup.sh"><li>Download the ZIP file and Miniconda</li></a>
   <a href="MacSetUp\setup2.sh"><li>Install required packages and run the file</li></a>
   Note: During the second step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.
 </ol>
-<a href="MacSetUp\">After setting up in this way, you can click here whenever you'd like to look for new chapters, or just find the launch.sh file on your computer :)</a> <p>Also, a shortcut to this program called "MQuicker - For Desktop" is included within C:\Extracts\MQuicker.
-I recommend moving it to your Desktop, and setting Terminal as the default program to open .sh by right clicking the icon, selecting Open With -> Choose Another App -> Always Use this App to Open .sh Files -> More Apps -> Look for an App on Your PC and then find and choose Terminal to easily access MQuicker from the Desktop.</p>
+<a href="MacSetUp\launch.sh">Copying and pasting this</a> or finding the launch.sh file within <em>C:/MQuicker/MacSetUp</em> and running it in Terrminal will open MQuicker. Also, a shortcut to this program called "MQuicker - For Desktop" should appear on your Desktop (specifically <em>C:/Users/YOURNAME/Desktop</em>).
+Setting Terminal as the default program to open .sh by right clicking the icon, selecting Open With -> Choose Another App -> Always Use this App to Open .sh Files -> More Apps -> Look for an App on Your PC and then find and choose Terminal to easily access MQuicker from the Desktop.</p>
 
 <h1 id="2m">One-Step Set Up on Mac (Only for Those Who Have Python [test by entering pip in Terminal])</h1>
 Note: It is highly recommended to use Ctrl+Click to open each of these in a new tab and then copy their contents into Terminal program on your computer.
@@ -37,8 +41,8 @@ Note: It is highly recommended to use Ctrl+Click to open each of these in a new 
   <a href="MacSetUp\setup_for_python_users.sh"><li>Download the ZIP file, Create a Virtual Environment, and Run the File</li></a>
   Note: During this step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.
 </ol>
-<a href="MacSetUp\launch.sh">After setting up in this way, you can click here whenever you'd like to look for new chapters, or just find the launch.sh file on your computer :)</a> <p>Also, a shortcut to this program called "MQuicker - For Desktop" is included within C:\Extracts\MQuicker.
-I recommend moving it to your Desktop, and setting Terminal as the default program to open .sh by right clicking the icon, selecting Open With -> Choose Another App -> Always Use this App to Open .sh Files -> More Apps -> Look for an App on Your PC and then find and choose Terminal to easily access MQuicker from the Desktop.</p>
+<a href="MacSetUp\launch.sh">Copying and pasting this</a> or finding the launch.sh file within <em>C:/MQuicker/MacSetUp</em> and running it in Terrminal will open MQuicker. Also, a shortcut to this program called "MQuicker - For Desktop" should appear on your Desktop (specifically <em>C:/Users/YOURNAME/Desktop</em>).
+Setting Terminal as the default program to open .sh by right clicking the icon, selecting Open With -> Choose Another App -> Always Use this App to Open .sh Files -> More Apps -> Look for an App on Your PC and then find and choose Terminal to easily access MQuicker from the Desktop.</p>
 
 # Codes
 
