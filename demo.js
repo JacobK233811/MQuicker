@@ -7,9 +7,8 @@ function copyMyText() {
      document.execCommand("copy");
 }
 
-function AdvancedCopy(){
+function AdvancedCopy(theText){
      //the text that is to be copied to the clipboard
-     var theText = 'This is the text that we want to copy to the clipboard';
  
      //create our hidden div element
      var hiddenCopy = document.createElement('div');
