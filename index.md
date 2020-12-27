@@ -1,66 +1,58 @@
 <link type="text/css" rel="stylesheet" href="/alek.css"/>
-{% capture WS1 %}cd c:\
-$url = 'https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'
-New-Item -ItemType Directory Zips
-$Dest = 'C:\Zips\MQ.zip'
-$web = New-Object -TypeName System.Net.WebClient
-$web.DownloadFile($url, $Dest)
-
-# New-Item -ItemType Directory Extracts
-$ExtractDir = 'C:\'
-
-$ExtShell = New-Object -ComObject Shell.Application
-$file = $ExtShell.Namespace($Dest).Items()
-$ExtShell.Namespace($ExtractDir).CopyHere($file)
-# cd MQuicker
-Rename-Item -Path .\MangaNewChapter-MQuicker-minimal .\MQuicker
-rm -r Zips
-cd MQuicker
-
-# Credits to deto's Miniconda-Install GitHub repository
-$ErrorActionPreference = "Stop"
-
-# Name of application to install
-$AppName="Python, Pip, & Conda"
-
-# Set your project's install directory name here
-$InstallDir="PythonFiles"
-
-# Dependencies installed with pip instead
-# Comment out the next line if no PyPi dependencies
-$PyPiPackage="-r requirements.txt"
-
-Write-Host -Foreground Green ("`nInstalling $AppName to "+(get-location).path+"\$InstallDir")
-
-
-# Download Latest Miniconda Installer
-Write-Host -Foreground Green "`nDownloading Miniconda Installer...`n"
-
-(New-Object System.Net.WebClient).DownloadFile("https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe", "$pwd\Miniconda_Install.exe")
-
-# Install Python environment through Miniconda
-Write-Host "Installing Miniconda...`n"
-Start-Process Miniconda_Install.exe "/S /AddToPath=1 /D=$pwd\$InstallDir" -Wait
-
-# Cleanup
-Remove-Item "Miniconda_Install.exe"
-
-Write-Host -Foreground Green ("Close this shell, open a new one, and run the contents of setup2.ps1"){% endcapture %}
 
 ## Welcome to the MQuicker Website
 The first priority of this website is to enable copying of Powershell/Terminal text.
 
 ### Windows Two-Step
 <div>
-     <div id="copyMe" style="background-color: #012456; color: white;">
-          <p>cd c:\
-$url = 'https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'
-New-Item -ItemType Directory Zips
-$Dest = 'C:\Zips\MQ.zip'
-$web = New-Object -TypeName System.Net.WebClient
-$web.DownloadFile($url, $Dest)</p>
-     </div>
-     <button onclick="copyMyText()">Copy To Clipboard</button>
+     <button onclick="copyMyText()" class="copy-code-button">Copy Step 1</button>
+     <div id="copyMe" style="background-color: #012456; color: white; max-height: 400px;">
+          <p>cd c:\<br>
+$url = 'https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'<br>
+New-Item -ItemType Directory Zips<br>
+$Dest = 'C:\Zips\MQ.zip'<br>
+$web = New-Object -TypeName System.Net.WebClient<br>
+$web.DownloadFile($url, $Dest)<br># New-Item -ItemType Directory Extracts<br>
+$ExtractDir = 'C:\'<br>
+
+$ExtShell = New-Object -ComObject Shell.Application<br>
+$file = $ExtShell.Namespace($Dest).Items()<br>
+$ExtShell.Namespace($ExtractDir).CopyHere($file)<br>
+# cd MQuicker<br>
+Rename-Item -Path .\MangaNewChapter-MQuicker-minimal .\MQuicker<br>
+rm -r Zips<br>
+cd MQuicker<br>
+
+# Credits to deto's Miniconda-Install GitHub repository<br>
+$ErrorActionPreference = "Stop"<br>
+
+# Name of application to install<br>
+$AppName="Python, Pip, & Conda"<br>
+
+# Set your project's install directory name here<br>
+$InstallDir="PythonFiles"<br>
+
+# Dependencies installed with pip instead<br>
+# Comment out the next line if no PyPi dependencies<br>
+$PyPiPackage="-r requirements.txt"<br>
+
+Write-Host -Foreground Green ("`nInstalling $AppName to "+(get-location).path+"\$InstallDir")<br>
+
+
+# Download Latest Miniconda Installer<br>
+Write-Host -Foreground Green "`nDownloading Miniconda Installer...`n"<br>
+
+(New-Object System.Net.WebClient).DownloadFile("https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe", "$pwd\Miniconda_Install.exe")<br>
+
+# Install Python environment through Miniconda<br>
+Write-Host "Installing Miniconda...`n"<br>
+Start-Process Miniconda_Install.exe "/S /AddToPath=1 /D=$pwd\$InstallDir" -Wait<br>
+
+# Cleanup<br>
+Remove-Item "Miniconda_Install.exe"<br>
+
+Write-Host -Foreground Green ("Close this shell, open a new one, and run the contents of setup2.ps1")<br></p>
+     </div>     
 </div>
 
 
