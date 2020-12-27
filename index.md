@@ -1,9 +1,12 @@
+<link type="text/css" rel="stylesheet" href="/alek.css"/>
+
 ## Welcome to the MQuicker Website
 The first priority of this website is to enable copying of Powershell/Terminal text.
 
 ### Windows Two-Step
 <div>
-     <p id="copyMe">cd c:\
+     <button class="copy-code-button" onclick="copyMyText()">Copy Step 1 To Clipboard</button>     <button onclick="copyMyText()">Copy Step 1 To Clipboard</button>
+     <p class="copy-code-container" id="copyMe">cd c:\
 $url = 'https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'
 New-Item -ItemType Directory Zips
 $Dest = 'C:\Zips\MQ.zip'
@@ -50,7 +53,6 @@ Start-Process Miniconda_Install.exe "/S /AddToPath=1 /D=$pwd\$InstallDir" -Wait
 Remove-Item "Miniconda_Install.exe"
 
 Write-Host -Foreground Green ("Close this shell, open a new one, and run the contents of setup2.ps1")</p>
-     <button onclick="copyMyText()">Copy Step 1 To Clipboard</button>
 </div>
 
 
