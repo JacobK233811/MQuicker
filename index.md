@@ -9,6 +9,7 @@ The first priority of this website is to enable copying of Powershell/Terminal t
    <button onclick="copyMyText()">Copy To Clipboard</button>
 </div>
 <br>
+<div>
      <button class="copy-code-button" style="width: 300px;">Copy Step 1       </button>
      <button class="copy-code-button" style=style="width: 300px;">Copy Step 2      </button>
      <div style="background-color: #012456; color: white; max-height: 400px; overflow: scroll;">
