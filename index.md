@@ -52,11 +52,13 @@ The first priority of this website is to enable copying of Powershell/Terminal t
 
 ### Windows Two-Step
 <div>
-     <div id="copyMe style="background-color: #012456; color: white;">
-                                                                     <p>cd c:\</p>
-                                                                     <p>$url = 'https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'
-</p>
-                                                                     <p>New-Item -ItemType Directory Zips</p>
+     <div id="copyMe" style="background-color: #012456; color: white;">
+          <p>cd c:\
+$url = 'https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'
+New-Item -ItemType Directory Zips
+$Dest = 'C:\Zips\MQ.zip'
+$web = New-Object -TypeName System.Net.WebClient
+$web.DownloadFile($url, $Dest)</p>
      </div>
      <button onclick="copyMyText()">Copy To Clipboard</button>
 </div>
