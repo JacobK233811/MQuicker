@@ -52,7 +52,8 @@ The first priority of this website is to enable copying of Powershell/Terminal t
 
 ### Windows Two-Step
 <div>
-     <p><button onclick="AdvancedCopy('a.co')">Copy Step 1</button></p>
+     <p id="copyMe" style="background-color: #012456; visibility: hidden;">{{WS1}}</p>
+     <button onclick="copyMyText()">Copy To Clipboard</button>
 </div>
 
 
