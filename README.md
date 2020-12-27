@@ -1,5 +1,5 @@
 # MangaNewChapter
-Stop clicking through endless links to see if there is a new chapter available. This Python script lets you list all your favorite mangas and then checks each one's latest chapter against your most recently read chapter. Currently supports web comics from Mangelo, ReadMng, Zero and Leviatan Scans, Manga Effect, Mankakalot, MangaDex, LHTranslation, and Asura Scans.
+<p>Stop clicking through endless links to see if there is a new chapter available. This Python script lets you <a href="README.md#Function Directory">list all your favorite mangas</a> and then checks each one's latest chapter against your most recently read chapter. Currently <a href="README.md#Codes">supports web comics from</a> Mangelo, ReadMng, Zero and Leviatan Scans, Manga Effect, Mankakalot, MangaDex, LHTranslation, and Asura Scans.</p>
 
 When <a href="#su">setting up for yourself</a>, follow the linked steps for your OS. All Windows Users should go through Two-Step Install, regardless of having Python. Mac Users should go through the Two-Step Install if they do not have Python and One-Step Install if they do.
 
@@ -76,7 +76,7 @@ Setting Terminal as the default program to open .sh by right clicking the icon, 
   <li>asurascans.com -> asura</li>
  </ul>
  
-### Tier - My personal rankings of the "starter pack" manga as seen in tier.txt. Intended to help selective new readers choose only the best. Found as (#) in manga names.
+<h3>Tier - My personal rankings of the "starter pack" manga as seen in <a href="tier.txt">tier.txt</a>. Intended to help selective new readers choose only the best. Found as (#) in manga names.</h3>
 <ol>
   <li>The Top Tier reserved for my favorites.</li>
   <li>The Middle Tier for all the manga I really liked.</li>
@@ -84,7 +84,7 @@ Setting Terminal as the default program to open .sh by right clicking the icon, 
  </ol>
  Note: I read and enjoyed all manga within the initial list.txt file so don't take this to mean Tier 2 or 3 are low quality.
  
-### Categories - My personal categories for the "starter pack" manga as seen in categories.txt. Intended to help readers identify preferences. Found as \[Abcd\] in manga names.
+<h3> Categories - My personal categories for the "starter pack" manga as seen in <a href="categories.txt">categories.txt</a>. Intended to help readers identify preferences. Found as \[Abcd\] in manga names.</h3>
 <ol>
   <li>System Leveling - Worlds where there exists a system of some sort that allows "players" or "hunters" to level up and become physically stronger.</li>
   <li>Culivator Reincarnation - The main character reincarnated and uses his knowledge to cultivate faster. More fantastical/magical than below.</li>
