@@ -8,12 +8,11 @@ The first priority of this website is to enable copying of Powershell/Terminal t
    <input type="text" value="The Text to Copy" id="copyMe">
    <button onclick="copyMyText()">Copy To Clipboard</button>
 </div>
+<br><br>
 <div>
      <button onclick="copyMyText2()" class="copy-code-button" style="text-indent: 5em;">Copy Step 1       </button>
      <button onclick="copyMyText3()" class="copy-code-button" style="text-indent: 5em;">Copy Step 2      </button>
      <input type="text" value="Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
-cd c:\MQuicker\WindowsSetUp
-pip install virtualenv==20.0.31
 virtualenv mq" id="copyMe3">
      <div style="background-color: #012456; color: white; max-height: 400px; overflow: scroll;">
           <p id="copyMe2">cd c:\<br>
