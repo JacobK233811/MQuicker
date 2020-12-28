@@ -168,7 +168,7 @@ python3 checker.py</p>
      </div>     
 </div>
 
-### Mac One-Step (Python users only)
+<h3 id="mos">Mac One-Step (Python users only)</h3>
 <div>
      <button style="width: 500px;" onclick="CopyToClipboard('mstep3');return false;">Copy Step 1</button>
      <br>
