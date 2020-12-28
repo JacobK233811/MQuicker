@@ -1,12 +1,3 @@
-<style>
-  .row {
-  display: flex;
-}
-
-.column {
-  flex: 50%;
-}   
-</style>
 # MangaNewChapter
 <p>Stop clicking through endless links to see if there is a new chapter available. This Python script lets you <a href="README.md#function-directory">list all your favorite mangas</a> and then checks each one's latest chapter against your most recently read chapter. Currently <a href="README.md#Codes">supports web comics from</a> Mangelo, ReadMng, Zero and Leviatan Scans, Manga Effect, Mankakalot, MangaDex, LHTranslation, and Asura Scans.</p>
 
@@ -26,15 +17,10 @@ Windows Users who use the Two-Step Powershell Install can run in one click! Mac 
   <li>To paste text into Powershell, use your right click.</li>
   <li>During the second step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.</li>
 </ul>
-<div class="row">
-  <div class="column">
-    <ol>
-      <a href="WindowsSetUp\setup.ps1"><li>Download the ZIP file and Miniconda</li></a>
-      <a href="WindowsSetUp\setup2.ps1"><li>Install required packages and run the file</li></a>
-    </ol>
-  </div>
-  <div class="column"><a href="https://jacobk233811.github.io/MangaNewChapter/#windows-two-step">Simple to Use Copy & Paste Page</a></div>
-</div>
+<ol>
+  <li><a href="WindowsSetUp\setup.ps1">Download the ZIP file and Miniconda</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://jacobk233811.github.io/MangaNewChapter/#windows-two-step">Simple to Use Copy & Paste Page</a></li>
+  <li><a href="WindowsSetUp\setup2.ps1">Install required packages and run the file</a></li>
+</ol>
 <p><a href="WindowsSetUp\launch.ps1">Copying and pasting this</a> or finding the launch.ps1 file within <em>C:\MQuicker\WindowsSetUp</em> and running it in Powershell will open MQuicker. Also, a shortcut to this program called "MQuicker - For Desktop" should appear on your Desktop (specifically <em>C:\Users\YOURNAME\Desktop</em>).
 <a href="https://www.top-password.com/blog/set-ps1-script-to-open-with-powershell-by-default/">Setting PowerShell as the default program to open .ps1</a> by right clicking the icon, selecting Open With -> Choose Another App -> Always Use this App to Open .ps1 Files -> More Apps -> Look for an App on Your PC and then find and choose powershell.exe (the .exe usually is not shown) to easily access MQuicker from the Desktop. Following this, opening the shortcut will run the program.
 (I found Powershell in C:\Windows\System32\WindowsPowerShell\v1.0) Alternatively, right click the shortcut and select "Run with Powershell"</p>
@@ -59,15 +45,10 @@ Windows Users who use the Two-Step Powershell Install can run in one click! Mac 
   <li>To paste text into Terminal, use Cmnd+V. You may not see all of the lines if you scroll up, but that is simply Terminal limiting your scrolling. They are there.</li>
   <li>During the second step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.</li>
 </ul>
-<div class="row">
-  <div class="column">
-    <ol>
-      <a href="MacSetUp\setup.sh"><li>Download the ZIP file and Miniconda</li></a>
-      <a href="MacSetUp\setup2.sh"><li>Install required packages and run the file</li></a>
-    </ol>
-  </div>
-  <div class="column"><a href="https://jacobk233811.github.io/MangaNewChapter/#mac-two-step">Simple to Use Copy & Paste Page</a></div>
-</div>
+<ol>
+  <li><a href="MacSetUp\setup.sh">Download the ZIP file and Miniconda</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://jacobk233811.github.io/MangaNewChapter/#mac-two-step">Simple to Use Copy & Paste Page</a></li>
+  <li><a href="MacSetUp\setup2.sh">Install required packages and run the file</a></li>
+</ol>
 <a href="MacSetUp\launch.sh">Copying and pasting this</a> or running <em>sh launch.sh</em> in your Terminal will start the program.
 <h1 id="2m">One-Step Set Up on Mac (Only for Those Who Have Python [test by entering pip3 in Terminal])</h1>
 <ul>
@@ -76,14 +57,9 @@ Windows Users who use the Two-Step Powershell Install can run in one click! Mac 
   <li>To paste text into Terminal, use Cmnd+V. You may not see all of the lines if you scroll up, but that is simply Terminal limiting your scrolling. They are there.</li>
   <li>During this step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.</li>
 </ul>
-<div class="row">
-  <div class="column">
-    <ol>
-      <a href="MacSetUp\setup_for_python_users.sh"><li>Download the ZIP file, Create a Virtual Environment, and Run the File</li></a>
-    </ol>
-  </div>
-  <div class="column"><a href="https://jacobk233811.github.io/MangaNewChapter/#mos">Simple to Use Copy & Paste Page</a></div>
-</div>
+<ol>
+  <li><a href="MacSetUp\setup.sh">Download the ZIP file, Create a Virtual Environment, and Run the File</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://jacobk233811.github.io/MangaNewChapter/#mos">Simple to Use Copy & Paste Page</a></li>
+</ol>
 <a href="MacSetUp\launch.sh">Copying and pasting this</a> or running <em>sh launch.sh</em> in your Terminal will start the program.
 
 # Codes
