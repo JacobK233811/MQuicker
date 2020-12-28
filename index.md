@@ -1,4 +1,6 @@
-<link rel="shortcut icon" type="image/x-icon" href="favicon.ico?">
+<head>
+     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico?">
+</head>
 ## Welcome to the MQuicker Website
 The first priority of this website is to enable copying of Powershell/Terminal text into its appropriate program for the MQuicker install. If you would like more details on the aim of this project or the setup process, <a href="https://github.com/JacobK233811/MangaNewChapter#manganewchapter">please see here</a>. When pasting text into Windows Powershell, use the right click.
 ### Windows Two-Step
