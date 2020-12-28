@@ -18,7 +18,7 @@ Windows Users who use the Two-Step Powershell Install can run in one click! Mac 
   <li>During the second step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.</li>
 </ul>
 <ol>
-  <li><a href="WindowsSetUp\setup.ps1">Download the ZIP file and Miniconda</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://jacobk233811.github.io/MangaNewChapter/#windows-two-step">Simple to Use Copy & Paste Page</a></li>
+  <li><a href="WindowsSetUp\setup.ps1">Download the ZIP file and Miniconda</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://jacobk233811.github.io/MangaNewChapter/#windows-two-step"><em><b>Simple to Use Copy & Paste Page</em></b></a></li>
   <li><a href="WindowsSetUp\setup2.ps1">Install required packages and run the file</a></li>
 </ol>
 <p><a href="WindowsSetUp\launch.ps1">Copying and pasting this</a> or finding the launch.ps1 file within <em>C:\MQuicker\WindowsSetUp</em> and running it in Powershell will open MQuicker. Also, a shortcut to this program called "MQuicker - For Desktop" should appear on your Desktop (specifically <em>C:\Users\YOURNAME\Desktop</em>).
@@ -46,7 +46,7 @@ Windows Users who use the Two-Step Powershell Install can run in one click! Mac 
   <li>During the second step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.</li>
 </ul>
 <ol>
-  <li><a href="MacSetUp\setup.sh">Download the ZIP file and Miniconda</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://jacobk233811.github.io/MangaNewChapter/#mac-two-step">Simple to Use Copy & Paste Page</a></li>
+  <li><a href="MacSetUp\setup.sh">Download the ZIP file and Miniconda</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://jacobk233811.github.io/MangaNewChapter/#mac-two-step"><em><b>Simple to Use Copy & Paste Page</em></b></a></li>
   <li><a href="MacSetUp\setup2.sh">Install required packages and run the file</a></li>
 </ol>
 <a href="MacSetUp\launch.sh">Copying and pasting this</a> or running <em>sh launch.sh</em> in your Terminal will start the program.
@@ -58,7 +58,7 @@ Windows Users who use the Two-Step Powershell Install can run in one click! Mac 
   <li>During this step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.</li>
 </ul>
 <ol>
-  <li><a href="MacSetUp\setup.sh">Download the ZIP file, Create a Virtual Environment, and Run the File</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://jacobk233811.github.io/MangaNewChapter/#mos">Simple to Use Copy & Paste Page</a></li>
+  <li><a href="MacSetUp\setup.sh">Download the ZIP file, Create a Virtual Environment, and Run the File</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://jacobk233811.github.io/MangaNewChapter/#mos"><em><b>Simple to Use Copy & Paste Page</em></b></a></li>
 </ol>
 <a href="MacSetUp\launch.sh">Copying and pasting this</a> or running <em>sh launch.sh</em> in your Terminal will start the program.
 
