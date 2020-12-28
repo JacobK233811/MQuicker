@@ -1,12 +1,12 @@
 <link rel="shortcut icon" href="mquicker_icon.png" type="image/png" />
 ## Welcome to the MQuicker Website
-The first priority of this website is to enable copying of Powershell/Terminal text.
+The first priority of this website is to enable copying of Powershell/Terminal text into its appropriate program for the MQuicker install. If you would like more details on the aim of this project or the setup process, <a href="https://github.com/JacobK233811/MangaNewChapter#manganewchapter">please see here</a>. When pasting text into Windows Powershell, use the right click.
 ### Windows Two-Step
 <div>
      <button style="width: 250px;" onclick="CopyToClipboard('wstep1');return false;">Copy Step 1</button>
      <button class="button" style="width: 250px;" onclick="CopyToClipboard('wstep2');return false;">Copy Step 2</button>
-     <br>
-     <div style="background-color: #012456; color: white; max-height: 400px; overflow: scroll;">
+     <br><br>
+     <div style="background-color: #012456; color: white; max-height: 400px; overflow: scroll; padding: 10px;">
           <p id="wstep1">cd c:\<br>
 $url = 'https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'<br>
 New-Item -ItemType Directory Zips<br>
@@ -54,7 +54,7 @@ Remove-Item "Miniconda_Install.exe"<br>
 Write-Host -Foreground Green ("Close this shell, open a new one, and run the contents of setup2.ps1")<br></p>
      </div>
      <br>
-     <div style="background-color: #012456; color: white; max-height: 400px; overflow: scroll;">
+     <div style="background-color: #012456; color: white; max-height: 400px; overflow: scroll; padding: 10px;">
           <p id="wstep2">Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force<br>
 cd c:\MQuicker\WindowsSetUp<br>
 pip install virtualenv==20.0.31<br>
@@ -73,8 +73,8 @@ python checker.py</p>
 <div>
      <button style="width: 250px;" onclick="CopyToClipboard('mstep1');return false;">Copy Step 1</button>
      <button class="button" style="width: 250px;" onclick="CopyToClipboard('mstep2');return false;">Copy Step 2</button>
-     <br>
-     <div style="background-color: #f4f4f4; color: black; max-height: 400px; overflow: scroll;">
+     <br><br>
+     <div style="background-color: #f4f4f4; color: black; max-height: 400px; overflow: scroll; padding: 10px;">
           <p id="mstep1">cd $HOME<br>
 url='https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'<br>
 mkdir Zips<br>
@@ -171,8 +171,8 @@ python3 checker.py</p>
 <h3 id="mos">Mac One-Step (Python users only)</h3>
 <div>
      <button style="width: 500px;" onclick="CopyToClipboard('mstep3');return false;">Copy Step 1</button>
-     <br>
-     <div style="background-color: #f4f4f4; color: black; max-height: 400px; overflow: scroll;">
+     <br><br>
+     <div style="background-color: #f4f4f4; color: black; max-height: 400px; overflow: scroll; padding: 10px;">
           <p id="mstep3">cd $HOME<br>
 url='https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'<br>
 mkdir Zips<br>
