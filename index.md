@@ -53,7 +53,8 @@ Start-Process Miniconda_Install.exe "/S /AddToPath=1 /D=$pwd\$InstallDir" -Wait<
 # Cleanup<br>
 Remove-Item "Miniconda_Install.exe"<br>
 
-Write-Host -Foreground Green ("Close this shell, open a new one, and run the contents of setup2.ps1")<br></p>
+Write-Host -Foreground Green ("Close this shell, open a new one, and run the contents of setup2.ps1")<br>
+# End Step 1 <br></p>
      </div>
      <br>
      <div style="background-color: #012456; color: white; max-height: 400px; overflow: scroll; padding: 10px;">
@@ -67,7 +68,8 @@ pip install -r "..\requirements.txt"<br>
 mv ".\MQuicker - For Desktop.lnk" ($env:USERPROFILE + "\Desktop")<br>
 Write-Host ("`nCongratulations on Setting Up MQuicker!!")<br>
 cd ..<br>
-python checker.py</p>
+python checker.py<br>
+# End Step 2 <br></p>
      </div>     
 </div>
 
@@ -152,7 +154,8 @@ rm Miniconda_Install.sh<br>
 source "./PythonFiles/bin/activate"<br>
 conda init zsh<br>
 
-echo "Close this shell, open a new one, and run the contents of setup2.sh"<br></p>
+echo "Close this shell, open a new one, and run the contents of setup2.sh"<br>
+# End Step 1<br></p>
      </div>
      <br>
      <div style="background-color: #f4f4f4; color: black; max-height: 400px; overflow: scroll; padding: 10px;">
@@ -166,7 +169,8 @@ python3 -m pip install -r "../requirements.txt"<br>
 mv "./launch.sh" $HOME<br>
 echo "Congratulations on Setting Up MQuicker!!"<br>
 cd ..<br>
-python3 checker.py</p>
+python3 checker.py<br>
+# End Step 2<br></p>
      </div>     
 </div>
 
@@ -202,7 +206,8 @@ python3 -m pip install -r "../requirements.txt"<br>
 mv "./launch.sh" $HOME<br>
 echo "Congratulations on Setting Up MQuicker!!"<br>
 cd ..<br>
-python3 checker.py</p>
+python3 checker.py<br>
+# End Step 1<br></p>
      </div>
 </div>
 
