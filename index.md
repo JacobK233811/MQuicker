@@ -167,6 +167,41 @@ python3 checker.py</p>
      </div>     
 </div>
 
+### Mac One-Step (Python users only)
+<div>
+     <button style="width: 500px;" onclick="CopyToClipboard('mstep3');return false;">Copy Step 1</button>
+     <br>
+     <div style="background-color: #f4f4f4; color: black; max-height: 400px; overflow: scroll;">
+          <p id="mstep3">cd $HOME<br>
+url='https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'<br>
+mkdir Zips<br>
+Dest=$HOME/Zips<br>
+
+curl $url -L -o $Dest<br>
+
+# mkdir Extracts<br>
+ExtractDir=$HOME<br>
+cd Zips<br>
+unzip -q main.zip -d $ExtractDir<br>
+# cd $ExtractDir<br>
+cd ..<br>
+rm -r Zips<br>
+mv "./MangaNewChapter-MQuicker-minimal" './MQuicker'<br>
+cd MQuicker<br>
+
+cd $HOME/MQuicker/MacSetUp<br>
+pip3 install virtualenv==20.0.31<br>
+virtualenv mq<br>
+source "./mq/bin/activate"<br>
+python3 -m pip install -U pip<br>
+echo -e "\033[1;33mPlease exercise patience as the following packages install."<br>
+python3 -m pip install -r "../requirements.txt"<br>
+mv "./launch.sh" $HOME<br>
+echo "Congratulations on Setting Up MQuicker!!"<br>
+cd ..<br>
+python3 checker.py</p>
+     </div>
+</div>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.4.0/clipboard.min.js">(function(){
     new Clipboard('#copy-button');
