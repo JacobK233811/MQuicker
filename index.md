@@ -1,3 +1,4 @@
+<link rel="shortcut icon" href="mquicker_icon.png" type="image/x-icon" />
 ## Welcome to the MQuicker Website
 The first priority of this website is to enable copying of Powershell/Terminal text.
 ### Windows Two-Step
