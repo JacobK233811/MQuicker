@@ -82,14 +82,14 @@ python checker.py<br>
           <p id="mstep1">cd $HOME<br>
 url='https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'<br>
 mkdir Zips<br>
-Dest=$HOME/Zips<br>
+Dest=$HOME/Zips/MQ.zip<br>
 
 curl $url -L -o $Dest<br>
 
 # mkdir Extracts<br>
 ExtractDir=$HOME<br>
 cd Zips<br>
-unzip -q MQuicker-minimal.zip -d $ExtractDir<br>
+unzip -q MQ.zip -d $ExtractDir<br>
 # cd $ExtractDir<br>
 cd ..<br>
 rm -r Zips<br>
@@ -159,12 +159,13 @@ echo "Close this shell, open a new one, and run the contents of setup2.sh"<br>
      </div>
      <br>
      <div style="background-color: #f4f4f4; color: black; max-height: 400px; overflow: scroll; padding: 10px;">
-          <p id="mstep2">cd $HOME/MQuicker/MacSetUp<br>
+          <p id="mstep2">source "./PythonFiles/bin/activate"
+          cd $HOME/MQuicker/MacSetUp<br>
 pip3 install virtualenv==20.0.31<br>
 virtualenv mq<br>
 source "./mq/bin/activate"<br>
 python3 -m pip install -U pip<br>
-echo -e "\033[1;33mPlease exercise patience as the following packages install."<br>
+echo -e "\033[1;33mPlease exercise patience as the following packages install.\033[0,0m"<br>
 python3 -m pip install -r "../requirements.txt"<br>
 mv "./launch.sh" $HOME<br>
 echo "Congratulations on Setting Up MQuicker!!"<br>
@@ -182,14 +183,14 @@ python3 checker.py<br>
           <p id="mstep3">cd $HOME<br>
 url='https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'<br>
 mkdir Zips<br>
-Dest=$HOME/Zips<br>
+Dest=$HOME/Zips/MQ.zip<br>
 
 curl $url -L -o $Dest<br>
 
 # mkdir Extracts<br>
 ExtractDir=$HOME<br>
 cd Zips<br>
-unzip -q main.zip -d $ExtractDir<br>
+unzip -q MQ.zip -d $ExtractDir<br>
 # cd $ExtractDir<br>
 cd ..<br>
 rm -r Zips<br>
@@ -201,7 +202,8 @@ pip3 install virtualenv==20.0.31<br>
 virtualenv mq<br>
 source "./mq/bin/activate"<br>
 python3 -m pip install -U pip<br>
-echo -e "\033[1;33mPlease exercise patience as the following packages install."<br>
+python3 -m pip install -U setuptools<br>
+echo -e "\033[1;33mPlease exercise patience as the following packages install.\033[0,0m"<br>
 python3 -m pip install -r "../requirements.txt"<br>
 mv "./launch.sh" $HOME<br>
 echo "Congratulations on Setting Up MQuicker!!"<br>
