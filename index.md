@@ -65,6 +65,8 @@ virtualenv mq<br>
 .\mq\Scripts\activate<br>
 Write-Host -Foreground Green ("`Please exercise patience as the following packages install.")<br>
 pip install -r "..\requirements.txt"<br>
+Invoke-Expression "ls $env:USERPROFILE\OneDrive\Desktop" -ErrorVariable isnotonedrive<br>
+if (!isnotonedrive) {mv ".\MQuicker - For Desktop.lnk" ($env:USERPROFILE + "\OneDrive\Desktop")} else {mv ".\MQuicker - For Desktop.lnk" ($env:USERPROFILE + "\Desktop")}<br>
 mv ".\MQuicker - For Desktop.lnk" ($env:USERPROFILE + "\Desktop")<br>
 Write-Host ("`nCongratulations on Setting Up MQuicker!!")<br>
 cd ..<br>
