@@ -81,7 +81,8 @@ python checker.py<br>
      <button class="button" style="width: 250px;" onclick="CopyToClipboard('mstep2');return false;">Copy Step 2</button>
      <br><br>
      <div style="background-color: #f4f4f4; color: black; max-height: 400px; overflow: scroll; padding: 10px;">
-          <p id="mstep1">cd $HOME<br>
+          <p id="mstep1">setopt interactivecomments<br>
+               cd $HOME<br>
 url='https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'<br>
 mkdir Zips<br>
 Dest=$HOME/Zips/MQ.zip<br>
@@ -98,13 +99,13 @@ rm -r Zips<br>
 mv "./MangaNewChapter-MQuicker-minimal" './MQuicker'<br>
 cd MQuicker<br>
 
-# Credits to deto's Miniconda-Install GitHub repository<br>
+# Credits to detos Miniconda-Install GitHub repository<br>
 set -e<br>
 
 # Name of application to install<br>
 AppName="Python, Pip, & Conda"<br>
 
-# Set your project's install directory name here<br>
+# Set your projects install directory name here<br>
 InstallDir="PythonFiles"<br>
 
 # Install the package from PyPi<br>
@@ -118,7 +119,7 @@ echo<br>
 echo "Installing into: $(pwd)/$InstallDir"<br>
 echo<br>
 
-# Miniconda doesn't work for directory structures with spaces<br>
+# Miniconda doesnt work for directory structures with spaces<br>
 if [[ $(pwd) == *" "* ]]<br>
 then<br>
     &nbsp;&nbsp;&nbsp;&nbsp;echo "ERROR: Cannot install into a directory with a space in its path" >&2<br>
@@ -128,7 +129,7 @@ then<br>
 fi<br>
 
 rm "PythonFiles/create.txt"<br>
-# Test if new directory is empty.  Exit if it's not<br>
+# Test if new directory is empty.  Exit if its not<br>
 if [ -d $(pwd)/$InstallDir ]; then<br>
     &nbsp;&nbsp;&nbsp;&nbsp;if [ "$(ls -A $(pwd)/$InstallDir)" ]; then<br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo "ERROR: Directory is not empty" >&2<br>
@@ -163,7 +164,7 @@ echo "Close this shell, open a new one, and run the contents of setup2.sh"<br>
      <div style="background-color: #f4f4f4; color: black; max-height: 400px; overflow: scroll; padding: 10px;">
           <p id="mstep2">cd $HOME/MQuicker<br>
           source "./PythonFiles/bin/activate"<br>
-          cd MacSetUp
+          cd MacSetUp<br>
 pip3 install virtualenv==20.0.31<br>
 virtualenv mq<br>
 source "./mq/bin/activate"<br>
