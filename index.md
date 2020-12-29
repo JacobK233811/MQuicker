@@ -159,8 +159,9 @@ echo "Close this shell, open a new one, and run the contents of setup2.sh"<br>
      </div>
      <br>
      <div style="background-color: #f4f4f4; color: black; max-height: 400px; overflow: scroll; padding: 10px;">
-          <p id="mstep2">source "./PythonFiles/bin/activate"
-          cd $HOME/MQuicker/MacSetUp<br>
+          <p id="mstep2">cd $HOME/MQuicker<br>
+          source "./PythonFiles/bin/activate"<br>
+          cd MacSetUp
 pip3 install virtualenv==20.0.31<br>
 virtualenv mq<br>
 source "./mq/bin/activate"<br>
