@@ -5,11 +5,9 @@ Dest=$HOME/Zips/MQ.zip
 
 curl $url -L -o $Dest
 
-# mkdir Extracts
 ExtractDir=$HOME
 cd Zips
 unzip -q MQ.zip -d $ExtractDir
-# cd $ExtractDir
 cd ..
 rm -r Zips
 mv "./MangaNewChapter-MQuicker-minimal" './MQuicker'
@@ -27,3 +25,4 @@ mv "./launch.sh" $HOME
 echo "Congratulations on Setting Up MQuicker!!"
 cd ..
 python3 checker.py
+# End Step 1
