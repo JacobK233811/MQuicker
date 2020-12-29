@@ -1,3 +1,5 @@
+setopt interactivecomments
+
 cd $HOME
 url='https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'
 mkdir Zips
@@ -15,13 +17,13 @@ rm -r Zips
 mv "./MangaNewChapter-MQuicker-minimal" './MQuicker'
 cd MQuicker
 
-# Credits to deto's Miniconda-Install GitHub repository
+# Credits to detos Miniconda-Install GitHub repository
 set -e
 
 # Name of application to install
 AppName="Python, Pip, & Conda"
 
-# Set your project's install directory name here
+# Set your projects install directory name here
 InstallDir="PythonFiles"
 
 # Install the package from PyPi
@@ -35,7 +37,7 @@ echo
 echo "Installing into: $(pwd)/$InstallDir"
 echo
 
-# Miniconda doesn't work for directory structures with spaces
+# Miniconda doesnt work for directory structures with spaces
 if [[ $(pwd) == *" "* ]]
 then
     echo "ERROR: Cannot install into a directory with a space in its path" >&2
