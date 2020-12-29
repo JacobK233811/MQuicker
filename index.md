@@ -138,7 +138,7 @@ if [ -d $(pwd)/$InstallDir ]; then<br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo "Exiting..."<br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo<br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit 1<br>
-    fi<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;fi<br>
 fi<br>
 
 # Download and install Miniconda<br>
@@ -192,11 +192,9 @@ Dest=$HOME/Zips/MQ.zip<br>
 
 curl $url -L -o $Dest<br>
 
-# mkdir Extracts<br>
 ExtractDir=$HOME<br>
 cd Zips<br>
 unzip -q MQ.zip -d $ExtractDir<br>
-# cd $ExtractDir<br>
 cd ..<br>
 rm -r Zips<br>
 mv "./MangaNewChapter-MQuicker-minimal" './MQuicker'<br>
