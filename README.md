@@ -3,7 +3,7 @@
 
 When <a href="#su">setting up for yourself</a>, follow the linked steps for your OS. All Windows Users should go through Two-Step Install, regardless of having Python. Mac Users should go through the Two-Step Install if they do not have Python and One-Step Install if they do.
 
-Windows Users who use the Two-Step Powershell Install can run in one click! Mac Users who go through the Four-Step Install and then navigate to the MangaNewChapter-main folder within terminal with <em>cd Downloads/MangaNewChapter-main</em>. Then they can run python3 checker.py. Two-Step Install for Mac needs further testing, but is available <a href="2m">here.</a> After using Two-Step Install, users can open Terminal and run <em>sh launch.sh</em> to start the program. If this does not work, try <em>sh $HOME/launch.sh</em>
+Windows Users who use the Two-Step Powershell Install can run in one click! Mac Users who go through the Four-Step Install and then navigate to the MangaNewChapter-main folder within terminal with <em>cd Downloads/MangaNewChapter-main</em>. Then they can run python3 checker.py. Two-Step Install for Mac needs further testing, but is available <a href="2m">here.</a> After using Two-Step or One-Step Install, users can open Terminal and run <em>sh launch.sh</em> to start the program. If this does not work, try <em>sh $HOME/launch.sh</em> .
 
 <img src="mcheck_ex.png"/>
 
@@ -12,9 +12,9 @@ Windows Users who use the Two-Step Powershell Install can run in one click! Mac 
 <h1 id="su">Two Step Windows Set Up</h1>
 <ul>
   <li>If at any time during install it seems as if the program has gotten stuck, try clicking on the window and pressing enter once. Sometimes, working on other tasks or clicking out of the tab will pause the process.</li>
-  <li>It is highly recommended to use Ctrl+Click to open each of these in a new tab and then copy their contents into Windows Powershell program on your computer.</li>
+  <li>It is highly recommended to use <b>Ctrl+Click</b> to open each of these in a new tab and then copy their contents into Windows Powershell program on your computer. The link on the right side will make the process smoother and does the same job as the other two combined.</li>
   <li>Find Windows Powershell by clicking the Windows button on your computer and typing Powershell.</li>
-  <li>To paste text into Powershell, use your right click.</li>
+  <li>To paste text into Powershell, <b>use your right click.</b></li>
   <li>During the second step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.</li>
 </ul>
 <ol>
@@ -40,10 +40,11 @@ Windows Users who use the Two-Step Powershell Install can run in one click! Mac 
 <h1 id="2m">Two Step Set Up on Mac (Experimental)</h1>
 <ul>
   <li>If at any time during install it seems as if the program has gotten stuck, try clicking on the window and pressing enter once. Sometimes, working on other tasks or clicking out of the tab will pause the process.</li>
-  <li>It is highly recommended to use Cmnd+Click to open each of these in a new tab and then copy their contents into Terminal program on your computer.</li>
+  <li>It is highly recommended to use <b>Cmnd+Click</b> to open each of these in a new tab and then copy their contents into Terminal program on your computer. The link on the right side will make the process smoother and does the same job as the other two combined.</li>
   <li>Find Terminal by going to Spotlight Search (magnifying glass in the top right of the screen) on your computer and typing Terminal.</li>
   <li>To paste text into Terminal, use Cmnd+V. You may not see all of the lines if you scroll up, but that is simply Terminal limiting your scrolling. They are there.</li>
-  <li>During the second step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.</li>
+  <li>During the second step, several Python windows will open and then close one-by-one. <b>Please do not be alarmed</b> by this as it is a normal part of set up.</li>
+  <li>The program looks best in dark mode and if you are not a regular Terminal user, it makes sense to associate opening Terminal with starting MQuicker. You can do both by clicking Preferences in the top left of your screen or simply pressing Cmnd+, within Terminal. <a href="https://www.maketecheasier.com/customize-mac-terminal/">This guide explains the process.</a> I recommend following the steps in the first section, "Tweaking Terminal's Theme," and <b>choosing Pro before running the second step</b>. The second section, "Login Commands," should run the command <em>sh launch.sh</em> if you intend to use this feature. Only set this after installation is completed.</li>
 </ul>
 <ol>
   <li><a href="MacSetUp\setup.sh">Download the ZIP file and Miniconda</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://jacobk233811.github.io/MangaNewChapter/#mac-two-step"><em><b>Simple to Use Copy & Paste Page</em></b></a></li>
@@ -52,10 +53,11 @@ Windows Users who use the Two-Step Powershell Install can run in one click! Mac 
 <a href="MacSetUp\launch.sh">Copying and pasting this</a> or running <em>sh launch.sh</em> in your Terminal will start the program.
 <h1 id="2m">One-Step Set Up on Mac (Only for Those Who Have Python [test by entering pip3 in Terminal])</h1>
 <ul>
-  <li>It is highly recommended to use Cmnd+Click to open each of these in a new tab and their copy their contents into Terminal program on your computer.</li>
+  <li>It is highly recommended to <b>use Cmnd+Click</b> to open each of these in a new tab and their copy their contents into Terminal program on your computer. The link on the right side will make the process smoother and does the same job as the other two combined.</li>
   <li>Find Terminal by going to Spotlight Search (magnifying glass in the top right of the screen) on your computer and typing Terminal.</li>
   <li>To paste text into Terminal, use Cmnd+V. You may not see all of the lines if you scroll up, but that is simply Terminal limiting your scrolling. They are there.</li>
-  <li>During this step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is a normal part of set up.</li>
+  <li>During this step, several Python windows will open and then close one-by-one. <b>Please do not be alarmed</b> by this as it is a normal part of set up.</li>
+  <li>The program looks best in dark mode and if you are not a regular Terminal user, it makes sense to associate opening Terminal with starting MQuicker. You can do both by clicking Preferences in the top left of your screen or simply pressing Cmnd+, within Terminal. <a href="https://www.maketecheasier.com/customize-mac-terminal/">This guide explains the process.</a> I recommend following the steps in the first section, "Tweaking Terminal's Theme," and <b>choosing Pro before running the second step</b>. The second section, "Login Commands," should run the command <em>sh launch.sh</em> if you intend to use this feature. Only set this after installation is completed.</li>
 </ul>
 <ol>
   <li><a href="MacSetUp\setup.sh">Download the ZIP file, Create a Virtual Environment, and Run the File</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://jacobk233811.github.io/MangaNewChapter/#mos"><em><b>Simple to Use Copy & Paste Page</em></b></a></li>

@@ -1,14 +1,14 @@
 cd $HOME
 url='https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'
 mkdir Zips
-Dest=$HOME/Zips
+Dest=$HOME/Zips/MQ.zip
 
 curl $url -L -o $Dest
 
 # mkdir Extracts
 ExtractDir=$HOME
 cd Zips
-unzip -q MQuicker-minimal.zip -d $ExtractDir
+unzip -q MQ.zip -d $ExtractDir
 # cd $ExtractDir
 cd ..
 rm -r Zips
