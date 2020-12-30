@@ -77,7 +77,7 @@ python checker.py<br>
 
 ### Mac Two-Step 
 <div>
-     <button style="margin: 0 auto; max-width: 200px;" onclick="CopyToClipboard('comment');return false;">Allow Comments First</button>
+     <button style="width: 500px;" onclick="CopyToClipboard('comment');return false;">Allow Comments First</button>
      <br>
      <button style="width: 250px;" onclick="CopyToClipboard('mstep1');return false;">Copy Step 1</button>
      <button class="button" style="width: 250px;" onclick="CopyToClipboard('mstep2');return false;">Copy Step 2</button>
