@@ -77,13 +77,13 @@ python checker.py<br>
 
 ### Mac Two-Step 
 <div>
-     <button style="margin: 0 auto;" onclick="CopyToClipboard('comment');return false;">Allow Comments First</button>
+     <button style="width: 500px;" onclick="CopyToClipboard('comment');return false;">Allow Comments First</button>
      <br>
      <button style="width: 250px;" onclick="CopyToClipboard('mstep1');return false;">Copy Step 1</button>
      <button class="button" style="width: 250px;" onclick="CopyToClipboard('mstep2');return false;">Copy Step 2</button>
      <br><br>
-     <div style="background-color: #f4f4f4; color: black; max-height: 400px; padding: 3px auto;">
-                                                                                                              <p id="comment">setopt interactive comments</p>
+     <div style="background-color: #f4f4f4; color: black; max-width: 200px; padding: 3px 100px; margin: 5px auto;">
+                                                                                                              <p id="comment">setopt interactivecomments</p>
                                                                                                               </div><br>
      <div style="background-color: #f4f4f4; color: black; max-height: 400px; overflow: scroll; padding: 10px;">
           <p id="mstep1">cd $HOME<br>
