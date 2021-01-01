@@ -97,10 +97,8 @@ def primer():
             global uname
             uname = written_name
 
-    with open("saved/list.txt", "wt", encoding="utf-8") as names, \
-            open("saved/latest.txt", "wt", encoding="utf-8") as numbers:
-        global mangas
-        global current
+    with open("saved/list_.txt", "wt", encoding="utf-8") as names, \
+            open("saved/latest_.txt", "wt", encoding="utf-8") as numbers:
         keep_counter = 0
         keep_list = []
         for manga in mangas:
@@ -112,21 +110,10 @@ def primer():
                 names.write("|".join(manga))
                 print(f"{Fore.GREEN}Note: If you would like to quickly set up a new \"0 yts\" manga, "
                       + "please press enter without any input for both of the following")
-                status = input(f"\n{Fore.LIGHTWHITE_EX}Which chapter are you on?  {Fore.RESET}"), \
-                         input(
-                             f"{Fore.LIGHTMAGENTA_EX}Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
-                             f"{Fore.LIGHTWHITE_EX}Please enter the corresponding three letter code found in parentheses.  {Fore.RESET}")
-                if status == ("", ""):
-                    numbers.write(" ".join(["0", "yts"]) + "\n")
-                else:
-                    numbers.write(" ".join(status) + "\n")
+                verify_status(numbers)
     add_to_sheet("primer", keep_counter, keep_list)
     print(f"{Fore.LIGHTGREEN_EX}Well Done! You've primed your personal MQuicker.{Fore.RESET}")
-    # Sets the mangas and current lists to the recent adjustments in case of subsequent calls to a, n, or s
-    with open("saved/list.txt", "rt", encoding="utf-8") as new_list:
-        mangas = [line.split("|") for line in new_list.readlines()]
-    with open("saved/latest.txt") as new_latest:
-        current = new_latest.readlines()
+    set_changes()
 
 
 def add():
@@ -141,11 +128,19 @@ def add():
             print(f"{Fore.LIGHTWHITE_EX}Please enter all of the following information for the manga you'd like to add")
             title = input(f'{Fore.RESET}Name  ')
             add_list.append(title)
-            names.write(f"{title}|{input('Link  ')}|{input('Source (see supported source codes)  ')}|\n")
-            numbers.write(f"{input('Current Chapter  ')} {input('Status (yts/wip/utd)  ')}\n")
+            while True:
+                link_var, source_var = input('Link  '), input('Source (see supported source codes)  ')
+                if link_var[:8] == "https://" and "." in link_var and source_var in source_methods:
+                    break
+                else:
+                    print(f"{Fore.LIGHTRED_EX}Please enter a valid link and supported source code.  {Fore.RESET}")
+            names.write(f"{title}|{link_var}|{source_var}|\n")
+            # numbers.write(f"{input('Current Chapter  ')} {input('Status (yts/wip/utd)  ')}\n")
+            verify_status(numbers)
             continuation = input(
                 f"{Fore.LIGHTRED_EX}Press enter to quit {Fore.LIGHTGREEN_EX}or type anything into the input to continue adding manga  ")
     add_to_sheet("add manga", add_counter, add_list)
+    set_changes()
 
 
 def change_current():
@@ -160,14 +155,11 @@ def change_current():
                     f"{Fore.LIGHTWHITE_EX}Right now it is {chapters[i]}" +
                     f"{Fore.LIGHTGREEN_EX}Type anything for yes {Fore.LIGHTRED_EX}or simply press enter for no.  {Fore.RESET}"):
                 change_counter += 1
-                status = input(f"\n{Fore.LIGHTWHITE_EX}Which chapter are you on?  {Fore.RESET}"), \
-                         input(
-                             f"{Fore.LIGHTMAGENTA_EX}Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
-                             f"{Fore.LIGHTWHITE_EX}Please enter the corresponding three letter code found in parentheses.  {Fore.RESET}")
-                numbers.write(" ".join(status) + "\n")
+                verify_status(numbers)
             else:
                 numbers.write(chapters[i])
     add_to_sheet("change current", change_counter)
+    set_changes()
 
 
 # Rate/Recommend Interlude
@@ -330,11 +322,14 @@ def finder(not_parsed, el, i_or_cls):
         tag = 'Error'
 
     # Iterates over all words to find the chapter number and saves that number as an int if possible and if not, a float
-    numbers = num_puller(tag.text)
-    if numbers:
-        output = str(numbers[0])
-    else:
-        output = "0"
+    try:
+        numbers = num_puller(tag.text)
+        if numbers:
+            output = str(numbers[0])
+        else:
+            output = "0"
+    except AttributeError:
+        output = "-1"
 
     # Posting the link directly to the chapter if possible, and to the chapter list if not
     if tag.name == 'a':
@@ -542,6 +537,33 @@ def add_to_sheet(function, mnum=mangas_len, mlst=[]):
             res = worksheet3.get_all_values()
             new_id = int(res[-1][0]) + 1
             worksheet3.append_row([new_id, name] + rating)
+
+
+def set_changes():
+    global mangas
+    global current
+    # Sets the mangas and current lists to the recent adjustments in case of subsequent calls to a, n, or s
+    with open("saved/list.txt", "rt", encoding="utf-8") as new_list:
+        mangas = [line.split("|") for line in new_list.readlines()]
+    with open("saved/latest.txt") as new_latest:
+        current = new_latest.readlines()
+
+
+def verify_status(number_file):
+    while True:
+        status = input(f"\n{Fore.LIGHTWHITE_EX}Which chapter are you on?  {Fore.RESET}"), \
+                 input(
+                     f"{Fore.LIGHTMAGENTA_EX}Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
+                     f"{Fore.LIGHTWHITE_EX}Please enter the corresponding three letter code found in parentheses.  {Fore.RESET}")
+        if "" in status:   # status == ("", "") or
+            number_file.write(" ".join(["0", "yts"]) + "\n")
+            break
+        elif status[0].replace(".", "").isnumeric() and status[1] in ["yts", "wip", "utd"]:
+            number_file.write(" ".join(status) + "\n")
+            break
+        else:
+            print(f"{Fore.LIGHTRED_EX}Please enter a number for the chapter and one of yts, wip, or utd for the code.  {Fore.RESET}")
+    return status
 
 
 options = {"1": a, "2": n, "3": s, "4": change_current, "5": add, "6": primer, "7": rate}
