@@ -97,8 +97,8 @@ def primer():
             global uname
             uname = written_name
 
-    with open("saved/list_.txt", "wt", encoding="utf-8") as names, \
-            open("saved/latest_.txt", "wt", encoding="utf-8") as numbers:
+    with open("saved/list.txt", "wt", encoding="utf-8") as names, \
+            open("saved/latest.txt", "wt", encoding="utf-8") as numbers:
         keep_counter = 0
         keep_list = []
         for manga in mangas:
