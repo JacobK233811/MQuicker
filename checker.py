@@ -7,6 +7,7 @@ from itertools import zip_longest
 import os
 import gspread
 import webbrowser
+from google.auth.exceptions import TransportError
 
 # Modules for dynamic JS websites
 from PyQt5 import QtCore, QtWidgets, QtWebEngineWidgets
@@ -59,7 +60,8 @@ source_elements['Kakalot'] = 'div'
 # Now the i_or_cls parameter of finder comes from this neat dictionary. All except AoT use classes intentionally
 source_methods = {'AoT': 9, 'Mangelo': 'chapter-name text-nowrap', 'ZeroLeviatan': 'text-muted text-sm',
                   'Effect': 'wp-manga-chapter', 'ReadMng': 'val', 'WP': 'wp-manga-chapter',
-                  'MangaDex': 'text-truncate', 'Kakalot': 'chapter-list', "lh": "chapter", "asura": "epcur epcurlast"}
+                  'MangaDex': 'text-truncate', 'Kakalot': 'chapter-list', "lh": "chapter",
+                  "asura": "epcur epcurlast", "Apoth": 6}
 
 # For later use in the update_latest function
 latest_chapters = []
@@ -332,8 +334,11 @@ def finder(not_parsed, el, i_or_cls):
         output = "-1"
 
     # Posting the link directly to the chapter if possible, and to the chapter list if not
-    if tag.name == 'a':
-        return output, tag.attrs['href']
+    try:
+        if tag.name == 'a':
+            return output, tag.attrs['href']
+    except AttributeError:
+        print(Fore.LIGHTRED_EX + "The following comic did not load." + Fore.RESET)
     return output, not_parsed.url
 
 
@@ -501,20 +506,25 @@ def num_puller(body):
     return numbers
 
 
-# Saving data on file use to a Google Sheet
-gc = gspread.service_account(filename="testing/credentials.json")
-sh = gc.open_by_key("1TXi-nkh6G585FzE8-jAo8mnakVCGelDSL9oKo2Pb9tM")
-worksheet = sh.sheet1
-mangas_len, time = len(mangas), datetime.now()
-pname, time_list = os.path.expanduser("~"), time.strftime("%c").split()
-with open("user.txt", encoding="utf-8") as username:
-    uname = username.read().strip()
+try:
+    # Saving data on file use to a Google Sheet
+    gc = gspread.service_account(filename="testing/credentials.json")
+    sh = gc.open_by_key("1TXi-nkh6G585FzE8-jAo8mnakVCGelDSL9oKo2Pb9tM")
+    worksheet = sh.sheet1
+    mangas_len, time = len(mangas), datetime.now()
+    pname, time_list = os.path.expanduser("~"), time.strftime("%c").split()
+    with open("user.txt", encoding="utf-8") as username:
+        uname = username.read().strip()
 
-sh2 = gc.open_by_key("1o2HEEjF4mh8s_eQfTVyMqhd5POOPJMxdLkuA7iORQ64")
-worksheet2 = sh2.sheet1
+    sh2 = gc.open_by_key("1o2HEEjF4mh8s_eQfTVyMqhd5POOPJMxdLkuA7iORQ64")
+    worksheet2 = sh2.sheet1
 
-sh3 = gc.open_by_key("1eG1rgmkOGj6xAMNgLB24uvA4ocjxnDYUKr7svitpLVE")
-worksheet3 = sh3.sheet1
+    sh3 = gc.open_by_key("1eG1rgmkOGj6xAMNgLB24uvA4ocjxnDYUKr7svitpLVE")
+    worksheet3 = sh3.sheet1
+except TransportError:
+    input(Fore.LIGHTRED_EX + "No Internet Access. Please run again when you have connected to WiFi. " +
+                             "Press enter to acknowledge.  " + Fore.RESET)
+    sys.exit(1)
 
 
 def add_to_sheet(function, mnum=mangas_len, mlst=[]):
@@ -572,17 +582,20 @@ option = input(f"{Back.RESET}1: {Fore.LIGHTCYAN_EX}Show All{Fore.RESET}, 2: {For
                f"4: {Fore.LIGHTCYAN_EX}Change Current{Fore.RESET}, 5: {Fore.LIGHTCYAN_EX}Add Manga{Fore.RESET}, " +
                f"6: {Fore.LIGHTCYAN_EX}Primer{Fore.RESET}, 7: {Fore.LIGHTCYAN_EX}Rate{Fore.RESET}, 8: Close  ")
 while option != "8":
-    if not option or option not in options:
+    try:
+        if not option or option not in options:
+            option = input(
+                f"{Back.RESET}1: {Fore.LIGHTCYAN_EX}Show All{Fore.RESET}, 2: {Fore.LIGHTCYAN_EX}Show New{Fore.RESET}, " +
+                f"3: {Fore.LIGHTCYAN_EX}Save Results{Fore.RESET}, " +
+                f"4: {Fore.LIGHTCYAN_EX}Change Current{Fore.RESET}, 5: {Fore.LIGHTCYAN_EX}Add Manga{Fore.RESET}, " +
+                f"6: {Fore.LIGHTCYAN_EX}Primer{Fore.RESET}, 7: {Fore.LIGHTCYAN_EX}Rate{Fore.RESET}, 8: Close  ")
+            continue
+        options[option]()
+        print("\n")
         option = input(
             f"{Back.RESET}1: {Fore.LIGHTCYAN_EX}Show All{Fore.RESET}, 2: {Fore.LIGHTCYAN_EX}Show New{Fore.RESET}, " +
             f"3: {Fore.LIGHTCYAN_EX}Save Results{Fore.RESET}, " +
             f"4: {Fore.LIGHTCYAN_EX}Change Current{Fore.RESET}, 5: {Fore.LIGHTCYAN_EX}Add Manga{Fore.RESET}, " +
             f"6: {Fore.LIGHTCYAN_EX}Primer{Fore.RESET}, 7: {Fore.LIGHTCYAN_EX}Rate{Fore.RESET}, 8: Close  ")
-        continue
-    options[option]()
-    print("\n")
-    option = input(
-        f"{Back.RESET}1: {Fore.LIGHTCYAN_EX}Show All{Fore.RESET}, 2: {Fore.LIGHTCYAN_EX}Show New{Fore.RESET}, " +
-        f"3: {Fore.LIGHTCYAN_EX}Save Results{Fore.RESET}, " +
-        f"4: {Fore.LIGHTCYAN_EX}Change Current{Fore.RESET}, 5: {Fore.LIGHTCYAN_EX}Add Manga{Fore.RESET}, " +
-        f"6: {Fore.LIGHTCYAN_EX}Primer{Fore.RESET}, 7: {Fore.LIGHTCYAN_EX}Rate{Fore.RESET}, 8: Close  ")
+    except requests.exceptions.ConnectionError:
+        option = input("Connection to Internet Failed... 8: Close  ")
