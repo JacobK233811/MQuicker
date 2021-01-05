@@ -95,9 +95,11 @@ def primer():
             f"{Fore.LIGHTGREEN_EX}Type anything for yes {Fore.LIGHTRED_EX}or enter for no.  {Fore.RESET}"):
         with open("user.txt", "wt", encoding="utf-8") as user:
             written_name = input(f"{Fore.LIGHTWHITE_EX}Please enter your name.  {Fore.RESET}")
-            user.write(written_name)
-            global uname
+            generated_id = str(max([int(row[2]) for row in worksheet.get_all_values()[1:]]) + 1)
+            user.write(written_name + "\n" + generated_id)
+            global uname, uid
             uname = written_name
+            uid = generated_id
 
     with open("saved/list.txt", "wt", encoding="utf-8") as names, \
             open("saved/latest.txt", "wt", encoding="utf-8") as numbers:
@@ -383,9 +385,7 @@ def finisher(ans):
         except AttributeError:
             print(f"{Fore.LIGHTRED_EX}Dynamic Websites Unable to Load.")
 
-    global current
-    global latest_chapters
-    global dynamic_chapters
+    global current, latest_chapters, dynamic_chapters
     print(Fore.LIGHTGREEN_EX + "Updating...")
     if ans == "n":
         dynamic_chapters = dynamic_chapters[::-1]
@@ -425,8 +425,7 @@ class WebPage(QtWebEngineWidgets.QWebEnginePage):
         return True
 
     def process_current_page(self, html):
-        global dynamic_run_count
-        global latest_chapters
+        global dynamic_run_count, latest_chapters
         drc = dynamic_run_count
         dms = dynamic_mangas
 
@@ -514,7 +513,9 @@ try:
     mangas_len, time = len(mangas), datetime.now()
     pname, time_list = os.path.expanduser("~"), time.strftime("%c").split()
     with open("user.txt", encoding="utf-8") as username:
-        uname = username.read().strip()
+        lines = username.readlines()
+        uname = lines[0].strip()
+        uid = lines[1].strip()
 
     sh2 = gc.open_by_key("1o2HEEjF4mh8s_eQfTVyMqhd5POOPJMxdLkuA7iORQ64")
     worksheet2 = sh2.sheet1
@@ -536,22 +537,21 @@ def add_to_sheet(function, mnum=mangas_len, mlst=[]):
         name = pname
 
     if function != "rate":
-        worksheet.append_row([new_id, name, function, mnum] + time_list)
+        worksheet.append_row([new_id, name, uid, function, mnum] + time_list)
 
         if function == "primer" or function == "add manga":
             res = worksheet2.get_all_values()
             new_id = int(res[-1][0]) + 1
-            worksheet2.append_row([new_id, name] + mlst)
+            worksheet2.append_row([new_id, name, uid] + mlst)
     else:
         for rating in mlst:
             res = worksheet3.get_all_values()
             new_id = int(res[-1][0]) + 1
-            worksheet3.append_row([new_id, name] + rating)
+            worksheet3.append_row([new_id, name, uid] + rating)
 
 
 def set_changes():
-    global mangas
-    global current
+    global mangas, current
     # Sets the mangas and current lists to the recent adjustments in case of subsequent calls to a, n, or s
     with open("saved/list.txt", "rt", encoding="utf-8") as new_list:
         mangas = [line.split("|") for line in new_list.readlines()]
