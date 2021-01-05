@@ -7,6 +7,7 @@ from itertools import zip_longest
 import os
 import gspread
 import webbrowser
+from google.auth.exceptions import TransportError
 
 # Modules for dynamic JS websites
 from PyQt5 import QtCore, QtWidgets, QtWebEngineWidgets
@@ -59,7 +60,8 @@ source_elements['Kakalot'] = 'div'
 # Now the i_or_cls parameter of finder comes from this neat dictionary. All except AoT use classes intentionally
 source_methods = {'AoT': 9, 'Mangelo': 'chapter-name text-nowrap', 'ZeroLeviatan': 'text-muted text-sm',
                   'Effect': 'wp-manga-chapter', 'ReadMng': 'val', 'WP': 'wp-manga-chapter',
-                  'MangaDex': 'text-truncate', 'Kakalot': 'chapter-list', "lh": "chapter", "asura": "epcur epcurlast"}
+                  'MangaDex': 'text-truncate', 'Kakalot': 'chapter-list', "lh": "chapter",
+                  "asura": "epcur epcurlast", "Apoth": 6}
 
 # For later use in the update_latest function
 latest_chapters = []
@@ -93,9 +95,11 @@ def primer():
             f"{Fore.LIGHTGREEN_EX}Type anything for yes {Fore.LIGHTRED_EX}or enter for no.  {Fore.RESET}"):
         with open("user.txt", "wt", encoding="utf-8") as user:
             written_name = input(f"{Fore.LIGHTWHITE_EX}Please enter your name.  {Fore.RESET}")
-            user.write(written_name)
-            global uname
+            generated_id = str(max([int(row[2]) for row in worksheet.get_all_values()[1:]]) + 1)
+            user.write(written_name + "\n" + generated_id)
+            global uname, uid
             uname = written_name
+            uid = generated_id
 
     with open("saved/list.txt", "wt", encoding="utf-8") as names, \
             open("saved/latest.txt", "wt", encoding="utf-8") as numbers:
@@ -332,8 +336,11 @@ def finder(not_parsed, el, i_or_cls):
         output = "-1"
 
     # Posting the link directly to the chapter if possible, and to the chapter list if not
-    if tag.name == 'a':
-        return output, tag.attrs['href']
+    try:
+        if tag.name == 'a':
+            return output, tag.attrs['href']
+    except AttributeError:
+        print(Fore.LIGHTRED_EX + "The following comic did not load." + Fore.RESET)
     return output, not_parsed.url
 
 
@@ -378,9 +385,7 @@ def finisher(ans):
         except AttributeError:
             print(f"{Fore.LIGHTRED_EX}Dynamic Websites Unable to Load.")
 
-    global current
-    global latest_chapters
-    global dynamic_chapters
+    global current, latest_chapters, dynamic_chapters
     print(Fore.LIGHTGREEN_EX + "Updating...")
     if ans == "n":
         dynamic_chapters = dynamic_chapters[::-1]
@@ -420,8 +425,7 @@ class WebPage(QtWebEngineWidgets.QWebEnginePage):
         return True
 
     def process_current_page(self, html):
-        global dynamic_run_count
-        global latest_chapters
+        global dynamic_run_count, latest_chapters
         drc = dynamic_run_count
         dms = dynamic_mangas
 
@@ -501,20 +505,27 @@ def num_puller(body):
     return numbers
 
 
-# Saving data on file use to a Google Sheet
-gc = gspread.service_account(filename="testing/credentials.json")
-sh = gc.open_by_key("1TXi-nkh6G585FzE8-jAo8mnakVCGelDSL9oKo2Pb9tM")
-worksheet = sh.sheet1
-mangas_len, time = len(mangas), datetime.now()
-pname, time_list = os.path.expanduser("~"), time.strftime("%c").split()
-with open("user.txt", encoding="utf-8") as username:
-    uname = username.read().strip()
+try:
+    # Saving data on file use to a Google Sheet
+    gc = gspread.service_account(filename="testing/credentials.json")
+    sh = gc.open_by_key("1TXi-nkh6G585FzE8-jAo8mnakVCGelDSL9oKo2Pb9tM")
+    worksheet = sh.sheet1
+    mangas_len, time = len(mangas), datetime.now()
+    pname, time_list = os.path.expanduser("~"), time.strftime("%c").split()
+    with open("user.txt", encoding="utf-8") as username:
+        lines = username.readlines()
+        uname = lines[0].strip()
+        uid = lines[1].strip()
 
-sh2 = gc.open_by_key("1o2HEEjF4mh8s_eQfTVyMqhd5POOPJMxdLkuA7iORQ64")
-worksheet2 = sh2.sheet1
+    sh2 = gc.open_by_key("1o2HEEjF4mh8s_eQfTVyMqhd5POOPJMxdLkuA7iORQ64")
+    worksheet2 = sh2.sheet1
 
-sh3 = gc.open_by_key("1eG1rgmkOGj6xAMNgLB24uvA4ocjxnDYUKr7svitpLVE")
-worksheet3 = sh3.sheet1
+    sh3 = gc.open_by_key("1eG1rgmkOGj6xAMNgLB24uvA4ocjxnDYUKr7svitpLVE")
+    worksheet3 = sh3.sheet1
+except TransportError:
+    input(Fore.LIGHTRED_EX + "No Internet Access. Please run again when you have connected to WiFi. " +
+                             "Press enter to acknowledge.  " + Fore.RESET)
+    sys.exit(1)
 
 
 def add_to_sheet(function, mnum=mangas_len, mlst=[]):
@@ -526,22 +537,21 @@ def add_to_sheet(function, mnum=mangas_len, mlst=[]):
         name = pname
 
     if function != "rate":
-        worksheet.append_row([new_id, name, function, mnum] + time_list)
+        worksheet.append_row([new_id, name, uid, function, mnum] + time_list)
 
         if function == "primer" or function == "add manga":
             res = worksheet2.get_all_values()
             new_id = int(res[-1][0]) + 1
-            worksheet2.append_row([new_id, name] + mlst)
+            worksheet2.append_row([new_id, name, uid] + mlst)
     else:
         for rating in mlst:
             res = worksheet3.get_all_values()
             new_id = int(res[-1][0]) + 1
-            worksheet3.append_row([new_id, name] + rating)
+            worksheet3.append_row([new_id, name, uid] + rating)
 
 
 def set_changes():
-    global mangas
-    global current
+    global mangas, current
     # Sets the mangas and current lists to the recent adjustments in case of subsequent calls to a, n, or s
     with open("saved/list.txt", "rt", encoding="utf-8") as new_list:
         mangas = [line.split("|") for line in new_list.readlines()]
@@ -572,17 +582,20 @@ option = input(f"{Back.RESET}1: {Fore.LIGHTCYAN_EX}Show All{Fore.RESET}, 2: {For
                f"4: {Fore.LIGHTCYAN_EX}Change Current{Fore.RESET}, 5: {Fore.LIGHTCYAN_EX}Add Manga{Fore.RESET}, " +
                f"6: {Fore.LIGHTCYAN_EX}Primer{Fore.RESET}, 7: {Fore.LIGHTCYAN_EX}Rate{Fore.RESET}, 8: Close  ")
 while option != "8":
-    if not option or option not in options:
+    try:
+        if not option or option not in options:
+            option = input(
+                f"{Back.RESET}1: {Fore.LIGHTCYAN_EX}Show All{Fore.RESET}, 2: {Fore.LIGHTCYAN_EX}Show New{Fore.RESET}, " +
+                f"3: {Fore.LIGHTCYAN_EX}Save Results{Fore.RESET}, " +
+                f"4: {Fore.LIGHTCYAN_EX}Change Current{Fore.RESET}, 5: {Fore.LIGHTCYAN_EX}Add Manga{Fore.RESET}, " +
+                f"6: {Fore.LIGHTCYAN_EX}Primer{Fore.RESET}, 7: {Fore.LIGHTCYAN_EX}Rate{Fore.RESET}, 8: Close  ")
+            continue
+        options[option]()
+        print("\n")
         option = input(
             f"{Back.RESET}1: {Fore.LIGHTCYAN_EX}Show All{Fore.RESET}, 2: {Fore.LIGHTCYAN_EX}Show New{Fore.RESET}, " +
             f"3: {Fore.LIGHTCYAN_EX}Save Results{Fore.RESET}, " +
             f"4: {Fore.LIGHTCYAN_EX}Change Current{Fore.RESET}, 5: {Fore.LIGHTCYAN_EX}Add Manga{Fore.RESET}, " +
             f"6: {Fore.LIGHTCYAN_EX}Primer{Fore.RESET}, 7: {Fore.LIGHTCYAN_EX}Rate{Fore.RESET}, 8: Close  ")
-        continue
-    options[option]()
-    print("\n")
-    option = input(
-        f"{Back.RESET}1: {Fore.LIGHTCYAN_EX}Show All{Fore.RESET}, 2: {Fore.LIGHTCYAN_EX}Show New{Fore.RESET}, " +
-        f"3: {Fore.LIGHTCYAN_EX}Save Results{Fore.RESET}, " +
-        f"4: {Fore.LIGHTCYAN_EX}Change Current{Fore.RESET}, 5: {Fore.LIGHTCYAN_EX}Add Manga{Fore.RESET}, " +
-        f"6: {Fore.LIGHTCYAN_EX}Primer{Fore.RESET}, 7: {Fore.LIGHTCYAN_EX}Rate{Fore.RESET}, 8: Close  ")
+    except requests.exceptions.ConnectionError:
+        option = input("Connection to Internet Failed... 8: Close  ")
