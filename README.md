@@ -68,7 +68,7 @@ Windows Users who use the Two-Step Powershell Install can run in one click! Two-
 <ul>
   <li>attackontitanmanga.com -> AoT</li>
   <li>mangelo.com -> Mangelo</li>
-  <li>zeroscans.com & leviatanscans.com -> ZeroLeviatan</li>
+  <li>zeroscans.com & leviatanscans.com & skscans.com & reaperscans.com -> ZeroLeviatan</li>
   <li>mangaeffect.com -> Effect</li>
   <li>readmng.com -> ReadMng</li>
   <li>mangadex.org -> MangaDex</li>
