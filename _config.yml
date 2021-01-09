@@ -1,5 +1,4 @@
 theme: jekyll-theme-merlot
-description: Helping people access webcomics in a way that is intuitive, enjoyable, and efficient.
-site_favicon: favicon.ico
+description: Helping people access webcomics in a way that is intuitive, enjoyable, and efficient
 plugins:
   - jekyll-seo-tag
