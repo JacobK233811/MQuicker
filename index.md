@@ -1,4 +1,4 @@
-<link rel="shortcut icon" type="image/png" href="{{ "/favicon.png" | prepend: site.baseurl }}" >
+<link rel="shortcut icon" type="image/png" href="mquicker_icon.png"/>
 
 ## Welcome to the MQuicker Website
 <p>The first priority of this website is to enable copying of Powershell/Terminal text into its appropriate program for the MQuicker install. If you would like more details on the aim of this project or the setup process, <a href="https://github.com/JacobK233811/MangaNewChapter#manganewchapter">please see here</a>. When pasting text into Windows Powershell, use the right click. Scroll down to the section that best describes your situation and copy & paste the steps into your Powershell/Terminal. For the Two-Step Installs, <b>run the first step, close terminal, and then run the second step.</b> <br><br>To join our Discord community, <a href="https://discord.gg/f7r8Emws8G">use this link</a>. Anyone there will happily help you with installation or discuss manga with you.</p>
