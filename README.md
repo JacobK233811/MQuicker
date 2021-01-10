@@ -1,9 +1,9 @@
 # MangaNewChapter
-<p>Stop clicking through endless links to see if there is a new chapter available. This Python script lets you <a href="README.md#function-directory">list all your favorite mangas</a> and then checks each one's latest chapter against your most recently read chapter. Currently <a href="README.md#Codes">supports web comics from</a> Mangelo, ReadMng, Zero and Leviatan Scans, Manga Effect, Mankakalot, MangaDex, LHTranslation, and Asura Scans.</p>
+<p>Stop clicking through endless links to see if there is a new chapter available. This Python script lets you <a href="README.md#function-directory">list all your favorite mangas</a> and then checks each one's latest chapter against your most recently read chapter. Currently <a href="README.md#Codes">supports web comics from</a> Mangelo, ReadMng, Zero and Leviatan Scans, Manga Effect, Mankakalot, MangaDex, LHTranslation, Asura Scans, and Isekais Scans.</p>
 
 When <a href="#su">setting up for yourself</a>, follow the linked steps for your OS. All Windows Users should go through Two-Step Install, regardless of having Python. Mac Users should go through the Two-Step Install if they do not have Python and One-Step Install if they do. To join our Discord community, <a href="https://discord.gg/f7r8Emws8G">use this link</a>. Anyone there will happily help you with installation or discuss manga with you.
 
-Windows Users who use the Two-Step Powershell Install can run in one click! Two-Step Install for Mac is available <a href="#2m">here</a> and has similar functionality. After using Two-Step or One-Step Install, users can open Terminal and run <em>sh launch.sh</em> to start the program. If this does not work, try <em>sh $HOME/launch.sh</em> .
+Windows Users who use the Two-Step Powershell Install can run in one click! Two-Step Install for Mac is available <a href="#2m">here</a> and has similar functionality. After using Two-Step or One-Step Install, users can open Terminal and run <em>sh launch.sh</em> to start the program. If this does not work, try <em>sh $HOME/launch.sh</em> . Choose Show All to see it work and Primer to customize for yourself on first use.
 
 <img src="mcheck_ex.png"/>
 
@@ -47,7 +47,6 @@ Windows Users who use the Two-Step Powershell Install can run in one click! Two-
   <li>It is highly recommended to <b>use Cmnd+Click</b> to open each of these in a new tab and their copy their contents into Terminal program on your computer. The link on the right side will make the process smoother and does the same job as the other two combined.</li>
   <li>Find Terminal by going to Spotlight Search (magnifying glass in the top right of the screen) on your computer and typing Terminal.</li>
   <li>To paste text into Terminal, use Cmnd+V. You may not see all of the lines if you scroll up, but that is simply Terminal limiting your scrolling. They are there.</li>
-  <li>During this step, several Python windows will open and then close one-by-one. <b>Please do not be alarmed</b> by this as it is a normal part of set up.</li>
   <li>The program looks best in dark mode and if you are not a regular Terminal user, it makes sense to associate opening Terminal with starting MQuicker. You can do both by clicking Preferences in the top left of your screen or simply pressing Cmnd+, within Terminal. <a href="https://www.maketecheasier.com/customize-mac-terminal/">This guide explains the process.</a> I recommend following the steps in the first section, "Tweaking Terminal's Theme," and <b>choosing Pro before running the second step</b>. The second section, "Login Commands," should run the command <em>sh launch.sh</em> if you intend to use this feature. Only set this after installation is completed.</li>
   <li>Once the program has started, you make selections by typing in the number that corresponds with the desired action.</li>
 </ul>
@@ -69,12 +68,12 @@ Windows Users who use the Two-Step Powershell Install can run in one click! Two-
 <ul>
   <li>attackontitanmanga.com -> AoT</li>
   <li>mangelo.com -> Mangelo</li>
-  <li>zeroscans.com & leviatanscans.com -> ZeroLeviatan</li>
+  <li>zeroscans.com & leviatanscans.com & skscans.com & reaperscans.com -> ZeroLeviatan</li>
   <li>mangaeffect.com -> Effect</li>
   <li>readmng.com -> ReadMng</li>
   <li>mangadex.org -> MangaDex</li>
   <li>mangkakalot.com -> Kakalot</li>
-  <li>pmscans.com & manhuaplus.com -> WP</li>
+  <li>pmscans.com & manhuaplus.com & isekaiscanmanga.com -> WP</li>
   <li>lhtranslation.net -> lh</li>
   <li>asurascans.com -> asura</li>
  </ul>
