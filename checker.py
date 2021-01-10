@@ -429,7 +429,7 @@ class WebPage(QtWebEngineWidgets.QWebEnginePage):
         drc = dynamic_run_count
         dms = dynamic_mangas
 
-        print(Fore.LIGHTYELLOW_EX + 'Loaded [%d chars] %s' % (len(html), "Dynamically"))
+        print(Fore.GREEN + 'Loaded [%d chars] %s' % (len(html), "Dynamically"))
         try:
             soupy = BeautifulSoup(html, 'html.parser')
             tag = soupy.find("li", class_="wp-manga-chapter").a
@@ -447,7 +447,7 @@ class WebPage(QtWebEngineWidgets.QWebEnginePage):
                 url_num_loc = chapter_link.find("-", -7) + 1
                 chapter_link = chapter_link[:url_num_loc] + f"{previous + 1}/"
 
-            print(Fore.GREEN + f"{dms[drc][0]}: {previous} -> {chapter_num} {Fore.LIGHTBLUE_EX} {chapter_link}")
+            print(Fore.LIGHTYELLOW_EX + f"{dms[drc][0]}: {previous} -> {chapter_num} {Fore.LIGHTBLUE_EX} {chapter_link}")
             dynamic_run_count += 1
         except AttributeError:
             print(f"{Fore.LIGHTRED_EX}Dynamic Website Unable to Load Completely.")
