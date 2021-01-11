@@ -3,11 +3,11 @@
 
 When <a href="#su">setting up for yourself</a>, follow the linked steps for your OS. All Windows Users should go through Two-Step Install, regardless of having Python. Mac Users should go through the Two-Step Install if they do not have Python and One-Step Install if they do. To join our Discord community, <a href="https://discord.gg/f7r8Emws8G">use this link</a>. Anyone there will happily help you with installation or discuss manga with you.
 
-Windows Users who use the Two-Step Powershell Install can run in one click! Two-Step Install for Mac is available <a href="#2m">here</a> and has similar functionality. After using Two-Step or One-Step Install, users can open Terminal and run <em>sh launch.sh</em> to start the program. If this does not work, try <em>sh $HOME/launch.sh</em> . Choose Show All to see it work and Primer to customize for yourself on first use.
+Windows Users who use the Two-Step Powershell Install can run in one click! Two-Step Install for Mac is available <a href="#2m">here</a> and has similar functionality. After using Two-Step or One-Step Install, users can open Terminal and run <em>sh launch.sh</em> to start the program. If this does not work, try <em>sh $HOME/launch.sh</em> . <b>Choose Show All to see it work and Primer to customize for yourself on first use.</b>
 
 <img src="mcheck_ex.png"/>
 
-<a href="https://youtu.be/AyZsZzuTAPg/" target="_blank">For Demo Video Ctrl+Click Here</a>
+<a href="https://youtu.be/AyZsZzuTAPg/" target="_blank"><h1><b>For Demo Video Ctrl+Click Here</b></h1></a>
 
 <h1 id="su">Two Step Windows Set Up</h1>
 <ul>
