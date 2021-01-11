@@ -7,7 +7,7 @@ Windows Users who use the Two-Step Powershell Install can run in one click! Two-
 
 <img src="mcheck_ex.png"/>
 
-<a href="https://youtu.be/AyZsZzuTAPg/" target="_blank"><h1><b>For Demo Video Ctrl+Click Here</b></h1></a>
+<a href="https://youtu.be/AyZsZzuTAPg/" target="_blank"><h4><b>For Demo Video Ctrl+Click Here</b></h4></a>
 
 <h1 id="su">Two Step Windows Set Up</h1>
 <ul>
