@@ -1,4 +1,5 @@
 theme: jekyll-theme-merlot
 description: Helping people access webcomics in a way that is intuitive, enjoyable, and efficient
+google_analytics: 259040386
 plugins:
   - jekyll-seo-tag
