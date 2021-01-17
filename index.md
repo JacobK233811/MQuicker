@@ -99,7 +99,7 @@ python checker.py<br>
      <button class="button" style="width: 250px;" onclick="CopyToClipboard('mstep2');return false;">Copy Step 2</button>
      <br><br>
      <div style="background-color: #f4f4f4; color: black; max-width: 200px; padding: 3px 100px; margin: 5px auto;">
-                                                                                                              <p id="comment">setopt interactivecomments</p>
+                                                                                                              <p id="comment">setopt interactivecomments</p> (not neccessary on bash shell)
                                                                                                               </div><br>
      <div style="background-color: #f4f4f4; color: black; max-height: 400px; overflow: scroll; padding: 10px;">
           <p id="mstep1">cd $HOME<br>
