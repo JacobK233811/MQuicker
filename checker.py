@@ -518,6 +518,7 @@ try:
         gatekeeper = Fernet(c_key)
         with open("access/credentials.json", "wt", encoding="utf-8") as c:
             c.write(gatekeeper.decrypt(c_lock).decode())
+        gc = gspread.service_account(filename="access/credentials.json")
 
     sh = gc.open_by_key("1TXi-nkh6G585FzE8-jAo8mnakVCGelDSL9oKo2Pb9tM")
     worksheet = sh.sheet1
