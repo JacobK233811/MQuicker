@@ -8,6 +8,7 @@ import os
 import gspread
 import webbrowser
 from google.auth.exceptions import TransportError
+from cryptography.fernet import Fernet
 
 # Modules for dynamic JS websites
 from PyQt5 import QtCore, QtWidgets, QtWebEngineWidgets
@@ -507,7 +508,17 @@ def num_puller(body):
 
 try:
     # Saving data on file use to a Google Sheet
-    gc = gspread.service_account(filename="testing/credentials.json")
+    try:
+        gc = gspread.service_account(filename="access/credentials.json")
+    except FileNotFoundError:
+        # Create credentials.json file on first use
+        with open('access/lock.json', 'rb') as lock, open('access/key.key', 'rb') as key:
+            c_lock = lock.read()
+            c_key = key.read()
+        gatekeeper = Fernet(c_key)
+        with open("access/credentials.json", "wt", encoding="utf-8") as c:
+            c.write(gatekeeper.decrypt(c_lock).decode())
+
     sh = gc.open_by_key("1TXi-nkh6G585FzE8-jAo8mnakVCGelDSL9oKo2Pb9tM")
     worksheet = sh.sheet1
     mangas_len, time = len(mangas), datetime.now()
@@ -577,25 +588,18 @@ def verify_status(number_file):
 
 
 options = {"1": a, "2": n, "3": s, "4": change_current, "5": add, "6": primer, "7": rate}
-option = input(f"{Back.RESET}1: {Fore.LIGHTCYAN_EX}Show All{Fore.RESET}, 2: {Fore.LIGHTCYAN_EX}Show New{Fore.RESET}, " +
+display_opt = (f"{Back.RESET}1: {Fore.LIGHTCYAN_EX}Show All{Fore.RESET}, 2: {Fore.LIGHTCYAN_EX}Show New{Fore.RESET}, " +
                f"3: {Fore.LIGHTCYAN_EX}Save Results{Fore.RESET}, " +
                f"4: {Fore.LIGHTCYAN_EX}Change Current{Fore.RESET}, 5: {Fore.LIGHTCYAN_EX}Add Manga{Fore.RESET}, " +
                f"6: {Fore.LIGHTCYAN_EX}Primer{Fore.RESET}, 7: {Fore.LIGHTCYAN_EX}Rate{Fore.RESET}, 8: Close  ")
+option = input(display_opt)
 while option != "8":
     try:
         if not option or option not in options:
-            option = input(
-                f"{Back.RESET}1: {Fore.LIGHTCYAN_EX}Show All{Fore.RESET}, 2: {Fore.LIGHTCYAN_EX}Show New{Fore.RESET}, " +
-                f"3: {Fore.LIGHTCYAN_EX}Save Results{Fore.RESET}, " +
-                f"4: {Fore.LIGHTCYAN_EX}Change Current{Fore.RESET}, 5: {Fore.LIGHTCYAN_EX}Add Manga{Fore.RESET}, " +
-                f"6: {Fore.LIGHTCYAN_EX}Primer{Fore.RESET}, 7: {Fore.LIGHTCYAN_EX}Rate{Fore.RESET}, 8: Close  ")
+            option = input(display_opt)
             continue
         options[option]()
         print("\n")
-        option = input(
-            f"{Back.RESET}1: {Fore.LIGHTCYAN_EX}Show All{Fore.RESET}, 2: {Fore.LIGHTCYAN_EX}Show New{Fore.RESET}, " +
-            f"3: {Fore.LIGHTCYAN_EX}Save Results{Fore.RESET}, " +
-            f"4: {Fore.LIGHTCYAN_EX}Change Current{Fore.RESET}, 5: {Fore.LIGHTCYAN_EX}Add Manga{Fore.RESET}, " +
-            f"6: {Fore.LIGHTCYAN_EX}Primer{Fore.RESET}, 7: {Fore.LIGHTCYAN_EX}Rate{Fore.RESET}, 8: Close  ")
+        option = input(display_opt)
     except requests.exceptions.ConnectionError:
         option = input("Connection to Internet Failed... 8: Close  ")

@@ -46,7 +46,7 @@ then
     exit 1
 fi
 
-rm "PythonFiles/create.txt"
+rm "PythonFiles/.gitkeep"
 # Test if new directory is empty.  Exit if it's not
 if [ -d $(pwd)/$InstallDir ]; then
     if [ "$(ls -A $(pwd)/$InstallDir)" ]; then

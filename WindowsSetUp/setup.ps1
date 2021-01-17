@@ -31,7 +31,7 @@ $PyPiPackage="-r requirements.txt"
 
 Write-Host -Foreground Green ("`nInstalling $AppName to "+(get-location).path+"\$InstallDir")
 
-
+rm "PythonFiles\.gitkeep"
 # Download Latest Miniconda Installer
 Write-Host -Foreground Green "`nDownloading Miniconda Installer...`n"
 
