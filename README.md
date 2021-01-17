@@ -9,6 +9,17 @@ Windows Users who use the Two-Step Powershell Install can run in one click! Two-
 
 <a href="https://youtu.be/AyZsZzuTAPg/" target="_blank"><h2><b>For Demo Video Ctrl+Click Here</b></h2></a>
 
+ 
+# Function Directory
+<ol>
+  <li>a() - Shows all manga on your list with the latest chapter released.</li>
+  <li>n() - Shows all manga on your list where you have not read the latest chapter released.</li>
+  <li>s() - Saves all manga on your list with the latest chapter released to a text file named MM/DD/YY.txt within the saved folder.</li>
+  <li>change_current() - Iterates through every manga on your list and lets you change the latest chapter read and status. Easily skip through with the Enter key.</li>
+  <li>add() - Add a manga to your list by providing the Name (no requirements), Link (include the https://), Source Code (see Source in Codes above), Current Chapter, and Status Code.</li>
+  <li>primer() - Adjusts the initial list.txt file containing which mangas you'd like to track and latest.txt file containing what chapter you are on (both found within the saved folder).</li>
+  <li>rate() - Lets you rate all the manga on your list on a variety of criteria including but not limited to Overall, Action, and Happy.</li>
+</ol>
 
 # Codes
 
@@ -51,15 +62,3 @@ Windows Users who use the Two-Step Powershell Install can run in one click! Two-
   <li>Virtual Reality Game - Worlds where there exists a very popular VR game that the main character enters and becomes famous within.</li>
  </ol>
  Note: Order of categories does not mark my preferences.
- 
-# Function Directory
-<ol>
-  <li>a() - Shows all manga on your list with the latest chapter released.</li>
-  <li>n() - Shows all manga on your list where you have not read the latest chapter released.</li>
-  <li>s() - Saves all manga on your list with the latest chapter released to a text file named MM/DD/YY.txt within the saved folder.</li>
-  <li>change_current() - Iterates through every manga on your list and lets you change the latest chapter read and status. Easily skip through with the Enter key.</li>
-  <li>add() - Add a manga to your list by providing the Name (no requirements), Link (include the https://), Source Code (see Source in Codes above), Current Chapter, and Status Code.</li>
-  <li>primer() - Adjusts the initial list.txt file containing which mangas you'd like to track and latest.txt file containing what chapter you are on (both found within the saved folder).</li>
-  <li>rate() - Lets you rate all the manga on your list on a variety of criteria including but not limited to Overall, Action, and Happy.</li>
-</ol>
-
