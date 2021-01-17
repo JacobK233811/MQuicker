@@ -6,3 +6,5 @@ saved/latest.txt
 saved/list.txt
 user.txt
 *.log
+.idea
+__pycache__
