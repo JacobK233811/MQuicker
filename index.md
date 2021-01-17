@@ -1,24 +1,28 @@
 ## Welcome to the MQuicker Website
-<p>The first priority of this website is to enable copying of Powershell/Terminal text into its appropriate program for the MQuicker install. If you would like more details on the aim of this project or the setup process, <a href="https://github.com/JacobK233811/MQuicker#mquicker">please see here</a>. When pasting text into Windows Powershell, use the right click. Scroll down to the section that best describes your situation and copy & paste the steps into your Powershell/Terminal. <br><br>For the Two-Step Installs, <b>run the first step, close terminal, and then run the second step.</b> <br><br>To join our Discord community, <a href="https://discord.gg/f7r8Emws8G">use this link</a>. Anyone there will happily help you with installation or discuss manga with you.<br><br>Choose Show All to see it work and Primer to customize for yourself on first use.</p>
-### Windows Two-Step
+<p>The first priority of this website is to enable copying of Powershell/Terminal text into its appropriate program for the MQuicker install. If you would like more details on the aim of this project or the setup process, <a href="https://github.com/JacobK233811/MQuicker#mquicker">please see here</a>. When pasting text into Windows Powershell, use the right click. Scroll down to the section that best describes your situation and copy & paste the steps into your Powershell/Terminal. <br><br>For the Two-Step Installs, <b>run the first step, close terminal, and then run the second step.</b> <br><br>To join our Discord community, <a href="https://discord.gg/f7r8Emws8G">use this link</a>. Anyone there will happily help you with installation or discuss manga with you.<br><br>Choose Show All to see it work and Primer to customize for yourself on first use.<br></p>
+### Links for Each Install Scenario
+<a href="windows-two-step">Windows</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="mac-two-step">Mac Regular</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="mos">Mac for Python Users</a>
+##### Some Good to Know Items Below
 <ul>
-  <li>Run the first step, close Powershell, and then run the second step.</li>
+  <li>Run the first step, close Powershell/Terminal, and then run the second step.</li>
   <li>If at any time during install it seems as if the program has gotten stuck, try clicking on the window and pressing enter once. Sometimes, working on other tasks or clicking out of the tab will pause the process.</li>
-  <li>It is highly recommended to use <b>Ctrl+Click</b> to open each of these in a new tab and then copy their contents into Windows Powershell program on your computer. The link on the right side will make the process smoother and does the same job as the other two combined.</li>
+  <li>It is highly recommended to use <b>Ctrl+Click</b> (Cmd+Click on Mac) to open each of these in a new tab and then copy their contents into Windows Powershell or Terminal program on your computer.</li>
   <li>Find Windows Powershell by clicking the Windows button on your computer and typing Powershell.</li>
+  <li>Find Terminal by going to Spotlight Search (magnifying glass in the top right of the screen) on your computer and typing Terminal.</li>
   <li>To paste text into Powershell, <b>use your right click.</b></li>
-  <li>During the second step, several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is <b>a normal part of set up.</b></li>
+  <li>During the second step (Windows only), several Python windows will open and then close one-by-one. Please do not be alarmed by this as it is <b>a normal part of set up.</b></li>
   <li>Once the program has started, you make selections by typing in the number that corresponds with the desired action.</li>
 </ul>
-<ol>
-<div>
-     <button style="width: 250px;" onclick="CopyToClipboard('wstep1');return false;">Copy Step 1<br>Download ZIP file & Miniconda</button>
-     <button class="button" style="width: 250px;" onclick="CopyToClipboard('wstep2');return false;">Copy Step 2<br>Install Required Packages & Run Script</button>
-     <br>
-     <p>Finding the launch.ps1 file within <em>C:\MQuicker\WindowsSetUp</em> and running it in Powershell will open MQuicker. Also, <b>a shortcut to this program</b> called "MQuicker - For Desktop" should appear on your Desktop (specifically <em>C:\Users\YOURNAME\(OneDrive)\Desktop</em>).
+###### Important for Windows
+<p>Finding the launch.ps1 file within <em>C:\MQuicker\WindowsSetUp</em> and running it in Powershell will open MQuicker. Also, <b>a shortcut to this program</b> called "MQuicker - For Desktop" should appear on your Desktop (specifically <em>C:\Users\YOURNAME\(OneDrive)\Desktop</em>).
 <a href="https://www.top-password.com/blog/set-ps1-script-to-open-with-powershell-by-default/">Setting PowerShell as the default program to open .ps1</a> by right clicking the icon, selecting Open With -> Choose Another App -> Always Use this App to Open .ps1 Files -> More Apps -> Look for an App on Your PC and then find and choose powershell.exe (the .exe usually is not shown) to easily access MQuicker from the Desktop. Following this, opening the shortcut will run the program.
 (I found Powershell in C:\Windows\System32\WindowsPowerShell\v1.0) Alternatively, right click the shortcut and select "Run with Powershell"</p>
-     <br>
+###### Important for Mac
+<p>The program looks best in dark mode and if you are not a regular Terminal user, it makes sense to associate opening Terminal with starting MQuicker. You can do both by clicking Preferences in the top left of your screen or simply pressing Cmd+, within Terminal. <a href="https://www.maketecheasier.com/customize-mac-terminal/">This guide explains the process.</a> I recommend following the steps in the first section, "Tweaking Terminal's Theme," and <b>choosing Pro before running the second step</b>. The second section, "Login Commands," should run the command <em>sh launch.sh</em> if you intend to use this feature. Only set this after installation is completed.</p>
+### Windows Two-Step
+<div>
+     <button style="width: 250px;" onclick="CopyToClipboard('wstep1');return false;">Copy Step 1</button>
+     <button class="button" style="width: 250px;" onclick="CopyToClipboard('wstep2');return false;">Copy Step 2</button>
      <br><br>
      <div style="background-color: #012456; color: white; max-height: 400px; overflow: scroll; padding: 10px;">
           <p id="wstep1">cd c:\<br>
@@ -97,15 +101,6 @@ python checker.py<br>
      <div style="background-color: #f4f4f4; color: black; max-width: 200px; padding: 3px 100px; margin: 5px auto;">
                                                                                                               <p id="comment">setopt interactivecomments</p>
                                                                                                               </div><br>
-     <ul>
-  <li>Run the first step, close Terminal, and then run the second step.</li>
-  <li>If at any time during install it seems as if the program has gotten stuck, try clicking on the window and pressing enter once. Sometimes, working on other tasks or clicking out of the tab will pause the process.</li>
-  <li>It is highly recommended to use <b>Cmd+Click</b> to open each of these in a new tab and then copy their contents into Terminal program on your computer. The link on the right side will make the process smoother and does the same job as the other two combined.</li>
-  <li>Find Terminal by going to Spotlight Search (magnifying glass in the top right of the screen) on your computer and typing Terminal.</li>
-  <li>To paste text into Terminal, use Cmd+V. You may not see all of the lines if you scroll up, but that is simply Terminal limiting your scrolling. They are there.</li>
-  <li>The program looks best in dark mode and if you are not a regular Terminal user, it makes sense to associate opening Terminal with starting MQuicker. You can do both by clicking Preferences in the top left of your screen or simply pressing Cmd+, within Terminal. <a href="https://www.maketecheasier.com/customize-mac-terminal/">This guide explains the process.</a> I recommend following the steps in the first section, "Tweaking Terminal's Theme," and <b>choosing Pro before running the second step</b>. The second section, "Login Commands," should run the command <em>sh launch.sh</em> if you intend to use this feature. Only set this after installation is completed.</li>
-  <li>Once the program has started, you make selections by typing in the number that corresponds with the desired action.</li>
-</ul>
      <div style="background-color: #f4f4f4; color: black; max-height: 400px; overflow: scroll; padding: 10px;">
           <p id="mstep1">cd $HOME<br>
 url='https://github.com/JacobK233811/MQuicker/archive/MQuicker-minimal.zip'<br>
@@ -206,13 +201,6 @@ python3 checker.py<br>
 </div>
 
 <h3 id="mos">Mac One-Step (Python users only)</h3>
-<ul>
-  <li>It is highly recommended to <b>use Cmd+Click</b> to open each of these in a new tab and their copy their contents into Terminal program on your computer. The link on the right side will make the process smoother and does the same job as the other two combined.</li>
-  <li>Find Terminal by going to Spotlight Search (magnifying glass in the top right of the screen) on your computer and typing Terminal.</li>
-  <li>To paste text into Terminal, use Cmd+V. You may not see all of the lines if you scroll up, but that is simply Terminal limiting your scrolling. They are there.</li>
-  <li>The program looks best in dark mode and if you are not a regular Terminal user, it makes sense to associate opening Terminal with starting MQuicker. You can do both by clicking Preferences in the top left of your screen or simply pressing Cmd+, within Terminal. <a href="https://www.maketecheasier.com/customize-mac-terminal/">This guide explains the process.</a> I recommend following the steps in the first section, "Tweaking Terminal's Theme," and <b>choosing Pro before running the second step</b>. The second section, "Login Commands," should run the command <em>sh launch.sh</em> if you intend to use this feature. Only set this after installation is completed.</li>
-  <li>Once the program has started, you make selections by typing in the number that corresponds with the desired action.</li>
-</ul>
 <div>
      <button style="width: 500px;" onclick="CopyToClipboard('mstep3');return false;">Copy Step 1</button>
      <br><br>
