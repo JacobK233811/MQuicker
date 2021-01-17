@@ -19,7 +19,7 @@ with open("saved/list.txt", "rt", encoding="utf-8") as m_list:
     mangas = [line.split("|") for line in m_list.readlines()]
 if not mangas:
     mangas = [['Attack on Titan', 'https://attackontitanmanga.com/', 'AoT|\n'],
-              ['Solo Leveling', 'https://manganelo.com/manga/pn918005', 'Mangelo'],
+              ['Solo Leveling', 'https://w3.sololeveling.net/', 'Solo'],
               ['Tales of Demons and Gods', 'https://manganelo.com/manga/hyer5231574354229', 'Mangelo|\n'],
               ['The Great Mage Returns After 4000 Years', 'https://manganelo.com/manga/go922760', 'Mangelo|\n'],
               ['Second Life Ranker', 'https://zeroscans.com/comics/188504-second-life-ranker', 'ZeroLeviatan|\n'],
@@ -54,15 +54,19 @@ with open("MQuicker_Mascot.txt", "rt", encoding="utf-8") as mascot:
 
 # On most sites the desired element will be an anchor 'a' tag. However, this default dict allows us to specify exceptions
 source_elements = defaultdict(lambda: 'a')
-source_elements['ZeroLeviatan'], source_elements['ReadMng'], source_elements["asura"] = ['span'] * 3
+source_elements['ZeroLeviatan'], source_elements['ReadMng'], \
+    source_elements["asura"], source_elements["ManhuaScan"] = ['span'] * 4
 source_elements['Effect'], source_elements['WP'] = ['li'] * 2
 source_elements['Kakalot'] = 'div'
+source_elements['Solo'] = 'td'
+source_elements["Sword"] = 'h3'
 
 # Now the i_or_cls parameter of finder comes from this neat dictionary. All except AoT use classes intentionally
 source_methods = {'AoT': 9, 'Mangelo': 'chapter-name text-nowrap', 'ZeroLeviatan': 'text-muted text-sm',
                   'Effect': 'wp-manga-chapter', 'ReadMng': 'val', 'WP': 'wp-manga-chapter',
                   'MangaDex': 'text-truncate', 'Kakalot': 'chapter-list', "lh": "chapter",
-                  "asura": "epcur epcurlast", "Apoth": 6}
+                  "asura": "epcur epcurlast", "Apoth": 6, "Solo": "", "Sword": "elementor-post__title",
+                  'ManhuaScan': 'title'}
 
 # For later use in the update_latest function
 latest_chapters = []
@@ -364,6 +368,9 @@ def psych_handler(lc, lk, source):
                 ch -= 1
         except AttributeError:
             pass
+    if source == "Solo":
+        if ch_soup.findAll("strong")[1].text[:5] == "=====":
+            ch -= 1
     return str(ch)
 
 
