@@ -54,15 +54,19 @@ with open("MQuicker_Mascot.txt", "rt", encoding="utf-8") as mascot:
 
 # On most sites the desired element will be an anchor 'a' tag. However, this default dict allows us to specify exceptions
 source_elements = defaultdict(lambda: 'a')
-source_elements['ZeroLeviatan'], source_elements['ReadMng'], source_elements["asura"] = ['span'] * 3
+source_elements['ZeroLeviatan'], source_elements['ReadMng'], \
+    source_elements["asura"], source_elements["ManhuaScan"] = ['span'] * 4
 source_elements['Effect'], source_elements['WP'] = ['li'] * 2
 source_elements['Kakalot'] = 'div'
+source_elements['Solo'] = 'td'
+source_elements["Sword"] = 'h3'
 
 # Now the i_or_cls parameter of finder comes from this neat dictionary. All except AoT use classes intentionally
 source_methods = {'AoT': 9, 'Mangelo': 'chapter-name text-nowrap', 'ZeroLeviatan': 'text-muted text-sm',
                   'Effect': 'wp-manga-chapter', 'ReadMng': 'val', 'WP': 'wp-manga-chapter',
                   'MangaDex': 'text-truncate', 'Kakalot': 'chapter-list', "lh": "chapter",
-                  "asura": "epcur epcurlast", "Apoth": 6}
+                  "asura": "epcur epcurlast", "Apoth": 6, "Solo": "", "Sword": "elementor-post__title",
+                  'ManhuaScan': 'title'}
 
 # For later use in the update_latest function
 latest_chapters = []

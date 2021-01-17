@@ -42,6 +42,9 @@ Windows Users who use the Two-Step Powershell Install can run in one click! Two-
   <li>pmscans.com & manhuaplus.com & isekaiscanmanga.com & mangarock.com -> WP</li>
   <li>lhtranslation.net -> lh</li>
   <li>asurascans.com -> asura</li>
+  <li>w3.sololeveling.net -> Solo</li>
+  <li>swordkingstory.com -> Sword</li>
+  <li>manhuascan.com -> ManhuaScan</li>
  </ul>
  
 <h3>Tier - My personal rankings of the "starter pack" manga as seen in <a href="tier.txt">tier.txt</a>. Intended to help selective new readers choose only the best. Found as (#) in manga names.</h3>
