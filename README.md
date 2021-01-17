@@ -3,7 +3,7 @@
 
 When <a href="#su">setting up for yourself</a>, follow the linked steps for your OS. All Windows Users should go through Two-Step Install, regardless of having Python. Mac Users should go through the Two-Step Install if they do not have Python and One-Step Install if they do. To join our Discord community, <a href="https://discord.gg/f7r8Emws8G">use this link</a>. Anyone there will happily help you with installation or discuss manga with you.
 
-Windows Users who use the Two-Step Powershell Install can run in one click! Two-Step Install for Mac is available <a href="#2m">here</a> and has similar functionality. After using Two-Step or One-Step Install, users can open Terminal and run <em>sh launch.sh</em> to start the program. If this does not work, try <em>sh $HOME/launch.sh</em> . <b>Choose Show All to see it work and Primer to customize for yourself on first use.</b>
+Windows Users who use the Two-Step Powershell Install can run in one click! Two-Step Install for Mac is available and has similar functionality. After using Two-Step or One-Step Install, users can open Terminal and run <em>sh launch.sh</em> to start the program. If this does not work, try <em>sh $HOME/launch.sh</em> . <b>Choose Show All to see it work and Primer to customize for yourself on first use.</b>
 
 <img src="mcheck_ex.png"/>
 
@@ -16,7 +16,7 @@ Windows Users who use the Two-Step Powershell Install can run in one click! Two-
   <li>n() - Shows all manga on your list where you have not read the latest chapter released.</li>
   <li>s() - Saves all manga on your list with the latest chapter released to a text file named MM/DD/YY.txt within the saved folder.</li>
   <li>change_current() - Iterates through every manga on your list and lets you change the latest chapter read and status. Easily skip through with the Enter key.</li>
-  <li>add() - Add a manga to your list by providing the Name (no requirements), Link (include the https://), Source Code (see Source in Codes above), Current Chapter, and Status Code.</li>
+  <li>add() - Add a manga to your list by providing the Name (no requirements), Link (include the https://), Source Code (see Source in Codes below), Current Chapter, and Status Code.</li>
   <li>primer() - Adjusts the initial list.txt file containing which mangas you'd like to track and latest.txt file containing what chapter you are on (both found within the saved folder).</li>
   <li>rate() - Lets you rate all the manga on your list on a variety of criteria including but not limited to Overall, Action, and Happy.</li>
 </ol>
