@@ -19,7 +19,7 @@ with open("saved/list.txt", "rt", encoding="utf-8") as m_list:
     mangas = [line.split("|") for line in m_list.readlines()]
 if not mangas:
     mangas = [['Attack on Titan', 'https://attackontitanmanga.com/', 'AoT|\n'],
-              ['Solo Leveling', 'https://manganelo.com/manga/pn918005', 'Mangelo'],
+              ['Solo Leveling', 'https://w3.sololeveling.net/', 'Solo'],
               ['Tales of Demons and Gods', 'https://manganelo.com/manga/hyer5231574354229', 'Mangelo|\n'],
               ['The Great Mage Returns After 4000 Years', 'https://manganelo.com/manga/go922760', 'Mangelo|\n'],
               ['Second Life Ranker', 'https://zeroscans.com/comics/188504-second-life-ranker', 'ZeroLeviatan|\n'],
@@ -368,6 +368,9 @@ def psych_handler(lc, lk, source):
                 ch -= 1
         except AttributeError:
             pass
+    if source == "Solo":
+        if ch_soup.findAll("strong")[1].text[:5] == "=====":
+            ch -= 1
     return str(ch)
 
 
