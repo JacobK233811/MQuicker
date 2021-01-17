@@ -15,7 +15,7 @@ from PyQt5 import QtCore, QtWidgets, QtWebEngineWidgets
 import sys
 
 # Each list within the mangas list has the following parameters: Name, Link, Source
-with open("saved/list_.txt", "rt", encoding="utf-8") as m_list:
+with open("saved/list.txt", "rt", encoding="utf-8") as m_list:
     mangas = [line.split("|") for line in m_list.readlines()]
 if not mangas:
     mangas = [['Attack on Titan', 'https://attackontitanmanga.com/', 'AoT|\n'],
@@ -67,7 +67,7 @@ source_methods = {'AoT': 9, 'Mangelo': 'chapter-name text-nowrap', 'ZeroLeviatan
 # For later use in the update_latest function
 latest_chapters = []
 # Current also features throughout for comparison purposes
-with open("saved/latest_.txt") as f:
+with open("saved/latest.txt") as f:
     current = f.readlines()
 
 # Pertains to dynamic_finder. The run count is used for indexing within dynamic_finder and dynamic_indexes for insertion
@@ -102,8 +102,8 @@ def primer():
             uname = written_name
             uid = generated_id
 
-    with open("saved/list_.txt", "wt", encoding="utf-8") as names, \
-            open("saved/latest_.txt", "wt", encoding="utf-8") as numbers:
+    with open("saved/list.txt", "wt", encoding="utf-8") as names, \
+            open("saved/latest.txt", "wt", encoding="utf-8") as numbers:
         keep_counter = 0
         keep_list = []
         for manga in mangas:
@@ -125,8 +125,8 @@ def add():
     # Quickly add new manga information in both list.txt and latest.txt
     add_counter = 0
     add_list = []
-    with open("saved/list_.txt", "at", encoding="utf-8") as names, \
-            open("saved/latest_.txt", "at", encoding="utf-8") as numbers:
+    with open("saved/list.txt", "at", encoding="utf-8") as names, \
+            open("saved/latest.txt", "at", encoding="utf-8") as numbers:
         continuation = "Yep"
         while continuation:
             add_counter += 1
@@ -151,9 +151,9 @@ def add():
 def change_current():
     # Allows for a fast run-through of all manga on the list and provides the option to update status and chapter
     change_counter = 0
-    with open("saved/latest_.txt", "rt", encoding="utf-8") as numbers_read:
+    with open("saved/latest.txt", "rt", encoding="utf-8") as numbers_read:
         chapters = [line for line in numbers_read.readlines()]
-    with open("saved/latest_.txt", "wt", encoding="utf-8") as numbers:
+    with open("saved/latest.txt", "wt", encoding="utf-8") as numbers:
         for i, manga in enumerate(mangas):
             if input(
                     f"\n{Fore.LIGHTMAGENTA_EX}Would you like to update {manga[0]}'s current chapter? " +
@@ -464,7 +464,7 @@ class WebPage(QtWebEngineWidgets.QWebEnginePage):
 
 def update_latest(news, olds):
     # Changes the latest chapter read for up-to-date mangas to the last chapter released
-    with open("saved/latest_.txt", "wt", encoding="utf-8") as latest:
+    with open("saved/latest.txt", "wt", encoding="utf-8") as latest:
         global dynamic_ch_use
 
         for old, new in zip_longest(olds, news[:mangas_len]):
@@ -518,6 +518,7 @@ try:
         gatekeeper = Fernet(c_key)
         with open("access/credentials.json", "wt", encoding="utf-8") as c:
             c.write(gatekeeper.decrypt(c_lock).decode())
+        gc = gspread.service_account(filename="access/credentials.json")
 
     sh = gc.open_by_key("1TXi-nkh6G585FzE8-jAo8mnakVCGelDSL9oKo2Pb9tM")
     worksheet = sh.sheet1
@@ -564,9 +565,9 @@ def add_to_sheet(function, mnum=mangas_len, mlst=[]):
 def set_changes():
     global mangas, current
     # Sets the mangas and current lists to the recent adjustments in case of subsequent calls to a, n, or s
-    with open("saved/list_.txt", "rt", encoding="utf-8") as new_list:
+    with open("saved/list.txt", "rt", encoding="utf-8") as new_list:
         mangas = [line.split("|") for line in new_list.readlines()]
-    with open("saved/latest_.txt") as new_latest:
+    with open("saved/latest.txt") as new_latest:
         current = new_latest.readlines()
 
 
