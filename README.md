@@ -1,5 +1,5 @@
 # MQuicker
-<p>Stop clicking through endless links to see if there is a new chapter available. This Python script lets you <a href="README.md#function-directory">list all your favorite mangas</a> and then checks each one's latest chapter against your most recently read chapter. Currently <a href="README.md#Codes">supports web comics from</a> Mangelo, ReadMng, Zero and Leviatan Scans, Manga Effect, Mankakalot, MangaDex, LHTranslation, Asura Scans, and Isekais Scans.</p>
+<p>Stop clicking through endless links to see if there is a new chapter available. This Python script lets you <a href="README.md#function-directory">list all your favorite mangas</a> and then checks each one's latest chapter against your most recently read chapter. Currently <a href="README.md#Codes">supports web comics from</a> Zero and Leviatan Scans, LHTranslation, Asura Scans, Isekais Scans, and more.</p>
 
 When <a href="https://jacobk233811.github.io/MQuicker">setting up for yourself</a>, follow the linked steps for your OS. All Windows Users should go through Two-Step Install, regardless of having Python. Mac Users should go through the Two-Step Install if they do not have Python and One-Step Install if they do. To join our Discord community, <a href="https://discord.gg/f7r8Emws8G">use this link</a>. Anyone there will happily help you with installation or discuss manga with you.
 
@@ -33,7 +33,7 @@ Windows Users who use the Two-Step Powershell Install can run in one click! Two-
 ### Source - There is a select list of supported manga sites that is continuously growing. Names are case-sensitive.
 <ul>
   <li>attackontitanmanga.com -> AoT</li>
-  <li>mangelo.com -> Mangelo</li>
+  <li>manganelo.com -> Mangelo</li>
   <li>zeroscans.com & leviatanscans.com & skscans.com & reaperscans.com -> ZeroLeviatan</li>
   <li>mangaeffect.com -> Effect</li>
   <li>readmng.com -> ReadMng</li>
