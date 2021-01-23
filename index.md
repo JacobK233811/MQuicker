@@ -1,12 +1,11 @@
 ## Welcome to the MQuicker Website
-<p>The first priority of this website is to enable copying of Powershell/Terminal text into its appropriate program for the MQuicker install. If you would like more details on the aim of this project or the setup process, <a href="https://github.com/JacobK233811/MQuicker#mquicker">please see here</a>. When pasting text into Windows Powershell, use the right click. Scroll down to the section that best describes your situation and copy & paste the steps into your Powershell/Terminal. <br><br>For the Two-Step Installs, <b>run the first step, close terminal, and then run the second step.</b> <br><br>To join our Discord community, <a href="https://discord.gg/f7r8Emws8G">use this link</a>. Anyone there will happily help you with installation or discuss manga with you.<br><br>Choose Show All to see it work and Primer to customize for yourself on first use.<br></p>
+<p>The first priority of this website is to enable copying of Powershell/Terminal text into its appropriate program for the MQuicker install. If you would like more details on the aim of this project and its implementation, <a href="https://github.com/JacobK233811/MQuicker#mquicker">please see here</a>. When pasting text into Windows Powershell, use the right click. Scroll down to the section that best describes your situation and copy & paste the steps into your Powershell/Terminal. <br><br>For the Two-Step Installs, <b>run the first step, close terminal, and then run the second step.</b> <br><br>To join our Discord community, <a href="https://discord.gg/f7r8Emws8G">use this link</a>. Anyone there will happily help you with installation or discuss manga with you.<br><br>Choose Show All to see it work and Primer to customize for yourself on first use.<br></p>
 ### Links for Each Install Scenario
 <a href="#windows-two-step">Windows</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#mac-two-step">Mac Regular</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#mos">Mac for Python Users</a>
 ##### Some Good to Know Items Below
 <ul>
   <li>Run the first step, close Powershell/Terminal, and then run the second step.</li>
   <li>If at any time during install it seems as if the program has gotten stuck, try clicking on the window and pressing enter once. Sometimes, working on other tasks or clicking out of the tab will pause the process.</li>
-  <li>It is highly recommended to use <b>Ctrl+Click</b> (Cmd+Click on Mac) to open each of these in a new tab and then copy their contents into Windows Powershell or Terminal program on your computer.</li>
   <li>Find Windows Powershell by clicking the Windows button on your computer and typing Powershell.</li>
   <li>Find Terminal by going to Spotlight Search (magnifying glass in the top right of the screen) on your computer and typing Terminal.</li>
   <li>To paste text into Powershell, <b>use your right click.</b></li>
@@ -14,7 +13,7 @@
   <li>Once the program has started, you make selections by typing in the number that corresponds with the desired action.</li>
 </ul>
 ###### Important for Windows
-<p>Finding the launch.ps1 file within <em>C:\MQuicker\WindowsSetUp</em> and running it in Powershell will open MQuicker. Also, <b>a shortcut to this program</b> called "MQuicker - For Desktop" should appear on your Desktop (specifically <em>C:\Users\YOURNAME\(OneDrive)\Desktop</em>).
+<p>Finding the launch.ps1 file within <em>C:\MQuicker\WindowsSetUp</em> and running it in Powershell will open MQuicker. Also, <b>a shortcut to this program</b> called "MQuicker - For Desktop" should appear on your Desktop (specifically <em>C:\Users\YOURNAME(\OneDrive)\Desktop</em>).
 <a href="https://www.top-password.com/blog/set-ps1-script-to-open-with-powershell-by-default/">Setting PowerShell as the default program to open .ps1</a> by right clicking the icon, selecting Open With -> Choose Another App -> Always Use this App to Open .ps1 Files -> More Apps -> Look for an App on Your PC and then find and choose powershell.exe (the .exe usually is not shown) to easily access MQuicker from the Desktop. Following this, opening the shortcut will run the program.
 (I found Powershell in C:\Windows\System32\WindowsPowerShell\v1.0) Alternatively, right click the shortcut and select "Run with Powershell"</p>
 ###### Important for Mac
