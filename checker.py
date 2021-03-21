@@ -61,7 +61,7 @@ source_elements['Kakalot'] = 'div'
 source_elements['Solo'] = 'td'
 source_elements["Sword"] = 'h3'
 
-# Now the i_or_cls parameter of finder comes from this neat dictionary. All except AoT use classes intentionally
+# Now the i_or_cls parameter of finder comes from this neat dictionary. All except AoT & Apoth use classes intentionally
 source_methods = {'AoT': 9, 'Mangelo': 'chapter-name text-nowrap', 'ZeroLeviatan': 'text-muted text-sm',
                   'Effect': 'wp-manga-chapter', 'ReadMng': 'val', 'WP': 'wp-manga-chapter',
                   'MangaDex': 'text-truncate', 'Kakalot': 'chapter-list', "lh": "chapter",
@@ -159,7 +159,7 @@ def change_current():
         chapters = [line for line in numbers_read.readlines()]
     with open("saved/latest.txt", "wt", encoding="utf-8") as numbers:
         for i, manga in enumerate(mangas):
-            if input(
+            if chapters[i].split()[1] != "utd" and input(
                     f"\n{Fore.LIGHTMAGENTA_EX}Would you like to update {manga[0]}'s current chapter? " +
                     f"{Fore.LIGHTWHITE_EX}Right now it is {chapters[i]}" +
                     f"{Fore.LIGHTGREEN_EX}Type anything for yes {Fore.LIGHTRED_EX}or simply press enter for no.  {Fore.RESET}"):
