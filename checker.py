@@ -12,6 +12,7 @@ from cryptography.fernet import Fernet
 
 # Modules for dynamic JS websites
 from PyQt5 import QtCore, QtWidgets, QtWebEngineWidgets
+from PyQt5.QtWebEngineWidgets import QWebEngineView as QWebView
 import sys
 
 # Each list within the mangas list has the following parameters: Name, Link, Source
@@ -387,6 +388,7 @@ def finisher(ans):
         os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--disable-logging"
         try:
             app = QtWidgets.QApplication(sys.argv)
+            fixer = QWebView()  # used to resolve PyQt5 caching errors
             webpage = WebPage()
             webpage.start(d_urls)
             app.exec_()
@@ -479,14 +481,17 @@ def update_latest(news, olds):
                 latest.write(f"0 yts\n")
             else:
                 label = old.split()[1]
-                if label == "utd" and new != "9999":
-                    latest.write(f"{new} utd\n")
-                elif label == "wip" or label == "yts":
+                if label == "wip" or label == "yts" or new == -1:
                     latest.write(old)
+                elif label == "utd" and new != "9999":
+                    latest.write(f"{new} utd\n")
                 else:
                     try:
                         # Spot fix for utd dynamic websites
-                        latest.write(f"{dynamic_chapters[dynamic_ch_use]} utd\n")
+                        dynamic_chapter = dynamic_chapters[dynamic_ch_use]
+                        if dynamic_chapter == -1:
+                            raise IndexError
+                        latest.write(f"{dynamic_chapter} utd\n")
                     except IndexError:
                         latest.write(old)
 
