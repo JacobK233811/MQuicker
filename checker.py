@@ -55,16 +55,16 @@ with open("MQuicker_Mascot.txt", "rt", encoding="utf-8") as mascot:
 
 # On most sites the desired element will be an anchor 'a' tag. However, this default dict allows us to specify exceptions
 source_elements = defaultdict(lambda: 'a')
-source_elements['ZeroLeviatan'], source_elements['ReadMng'], \
-    source_elements["asura"], source_elements["ManhuaScan"] = ['span'] * 4
-source_elements['Effect'], source_elements['WP'] = ['li'] * 2
+source_elements['ZeroLeviatan'], \
+    source_elements["asura"], source_elements["ManhuaScan"] = ['span'] * 3
+source_elements['WP'] = 'li'
 source_elements['Kakalot'] = 'div'
 source_elements['Solo'] = 'td'
 source_elements["Sword"] = 'h3'
 
 # Now the i_or_cls parameter of finder comes from this neat dictionary. All except AoT & Apoth use classes intentionally
 source_methods = {'AoT': 9, 'Mangelo': 'chapter-name text-nowrap', 'ZeroLeviatan': 'text-muted text-sm',
-                  'Effect': 'wp-manga-chapter', 'ReadMng': 'val', 'WP': 'wp-manga-chapter',
+                  'ReadMng': 'chnumber', 'WP': 'wp-manga-chapter',
                   'MangaDex': 'text-truncate', 'Kakalot': 'chapter-list', "lh": "chapter",
                   "asura": "epcur epcurlast", "Apoth": 6, "Solo": "", "Sword": "elementor-post__title",
                   'ManhuaScan': 'title'}
@@ -304,7 +304,11 @@ def manga_strip(manga):
 
     # In case it is a local reference to the chapter page (as with MangaDex)
     if link[:8] != "https://":
-        link = source_url + link
+        if "readmng" in source_url:
+            link = source_url + "/" + link.split("/")[-1]
+        else:
+            link = source_url + link
+        
     latest_chapter = psych_handler(latest_chapter, link, manga[2])
 
     return latest_chapter, link
