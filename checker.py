@@ -19,26 +19,11 @@ import sys
 with open("saved/list.txt", "rt", encoding="utf-8") as m_list:
     mangas = [line.split("|") for line in m_list.readlines()]
 if not mangas:
-    mangas = [['Attack on Titan', 'https://attackontitanmanga.com/', 'AoT|\n'],
-              ['Solo Leveling', 'https://w3.sololeveling.net/', 'Solo'],
-              ['Tales of Demons and Gods', 'https://manganelo.com/manga/hyer5231574354229', 'Mangelo|\n'],
-              ['The Great Mage Returns After 4000 Years', 'https://manganelo.com/manga/go922760', 'Mangelo|\n'],
-              ['Second Life Ranker', 'https://zeroscans.com/comics/188504-second-life-ranker', 'ZeroLeviatan|\n'],
-              ['I am the Sorcerer King', 'https://leviatanscans.com/comics/i-am-the-sorcerer-king', 'ZeroLeviatan|\n'],
-              ['Descent of the Demonic Master', 'https://mangaeffect.com/manga/the-descent-of-the-demonic-master/',
-               'Effect|\n'],
-              ['Chronicles of Heavenly Demon', 'https://www.readmng.com/chronicles-of-heavenly-demon-3', 'ReadMng|\n'],
+    mangas = [['Chronicles of Heavenly Demon', 'https://www.readmng.com/chronicles-of-heavenly-demon-3', 'ReadMng|\n'],
               ['Iruma-Kun', 'https://www.readmng.com/mairimashita-iruma-kun', 'ReadMng|\n'],
               ['Kingdom', 'https://www.readmng.com/kingdom', 'ReadMng|\n'],
-              ['Solo Auto Hunting', 'https://mangaeffect.com/manga/solo-auto-hunting/', 'Effect|\n'],
+              ['Solo Auto Hunting', 'https://mangaeffect.com/manga/solo-auto-hunting/', 'WP|\n'],
               ["The Scholar's Reincarnation", 'https://www.readmng.com/the-scholars-reincarnation', 'ReadMng|\n'],
-              ["LESSA - Servant of Cosmos", 'https://mangakakalot.com/read-qu0ei158524508422', 'Kakalot|\n'],
-              ["Demon Magic Emperor", 'https://mangadex.org/title/43692/demonic-emperor', 'MangaDex|\n'],
-              ["Leveling Up, by Only Eating!", 'https://mangadex.org/title/48217/leveling-up-by-only-eating',
-               'MangaDex|\n'],
-              ["Apothesis", "https://mangadex.org/title/23001/apotheosis-ascension-to-godhood", "MangaDex|\n"],
-              ["Yuan Zun", "https://mangakakalot.tv/manga/yuan_zun", "Kakalot|\n"],
-              ["Martial Peak", "https://manganelo.com/manga/martial_peak", "Mangelo|\n"],
               ["Legendary Moonlight Sculptor", "https://www.readmng.com/Dalbic-Jogaksa-2/", "ReadMng|\n"]
               ]
 
@@ -376,6 +361,9 @@ def psych_handler(lc, lk, source):
     if source == "Solo":
         if ch_soup.findAll("strong")[1].text[:5] == "=====":
             ch -= 1
+    if "academia" in lk:
+        ch -= 1
+
     return str(ch)
 
 
