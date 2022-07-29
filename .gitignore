@@ -9,3 +9,5 @@ user.txt
 .idea
 __pycache__
 walkthrough
+user.txt
+access/credentials.json

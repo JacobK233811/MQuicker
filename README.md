@@ -32,19 +32,10 @@ Windows Users who use the Two-Step Powershell Install can run in one click! Two-
 
 ### Source - There is a select list of supported manga sites that is continuously growing. Names are case-sensitive.
 <ul>
-  <li>attackontitanmanga.com -> AoT</li>
-  <li>manganelo.com -> Mangelo</li>
-  <li>zeroscans.com & leviatanscans.com & skscans.com & reaperscans.com -> ZeroLeviatan</li>
-  <li>mangaeffect.com -> Effect</li>
+  <li>manganato.com -> Mangelo</li>
   <li>readmng.com -> ReadMng</li>
-  <li>mangadex.org -> MangaDex</li>
   <li>mangkakalot.com -> Kakalot</li>
-  <li>pmscans.com & manhuaplus.com & isekaiscanmanga.com & mangarock.com -> WP</li>
-  <li>lhtranslation.net -> lh</li>
-  <li>asurascans.com -> asura</li>
-  <li>w3.sololeveling.net -> Solo</li>
-  <li>swordkingstory.com -> Sword</li>
-  <li>manhuascan.com -> ManhuaScan</li>
+  <li>pmscans.com & manhuaplus.com & isekaiscanmanga.com & mangarock.com & mangaeffect.com & muheroacademia.com & mangalogy.com & manhwaworld.com-> WP</li>
  </ul>
  
 <h3>Tier - My personal rankings of the "starter pack" manga as seen in <a href="tier.txt">tier.txt</a>. Intended to help selective new readers choose only the best. Found as (#) in manga names.</h3>

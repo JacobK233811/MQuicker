@@ -12,32 +12,18 @@ from cryptography.fernet import Fernet
 
 # Modules for dynamic JS websites
 from PyQt5 import QtCore, QtWidgets, QtWebEngineWidgets
+from PyQt5.QtWebEngineWidgets import QWebEngineView as QWebView
 import sys
 
 # Each list within the mangas list has the following parameters: Name, Link, Source
 with open("saved/list.txt", "rt", encoding="utf-8") as m_list:
     mangas = [line.split("|") for line in m_list.readlines()]
 if not mangas:
-    mangas = [['Attack on Titan', 'https://attackontitanmanga.com/', 'AoT|\n'],
-              ['Solo Leveling', 'https://w3.sololeveling.net/', 'Solo'],
-              ['Tales of Demons and Gods', 'https://manganelo.com/manga/hyer5231574354229', 'Mangelo|\n'],
-              ['The Great Mage Returns After 4000 Years', 'https://manganelo.com/manga/go922760', 'Mangelo|\n'],
-              ['Second Life Ranker', 'https://zeroscans.com/comics/188504-second-life-ranker', 'ZeroLeviatan|\n'],
-              ['I am the Sorcerer King', 'https://leviatanscans.com/comics/i-am-the-sorcerer-king', 'ZeroLeviatan|\n'],
-              ['Descent of the Demonic Master', 'https://mangaeffect.com/manga/the-descent-of-the-demonic-master/',
-               'Effect|\n'],
-              ['Chronicles of Heavenly Demon', 'https://www.readmng.com/chronicles-of-heavenly-demon-3', 'ReadMng|\n'],
+    mangas = [['Chronicles of Heavenly Demon', 'https://www.readmng.com/chronicles-of-heavenly-demon-3', 'ReadMng|\n'],
               ['Iruma-Kun', 'https://www.readmng.com/mairimashita-iruma-kun', 'ReadMng|\n'],
               ['Kingdom', 'https://www.readmng.com/kingdom', 'ReadMng|\n'],
-              ['Solo Auto Hunting', 'https://mangaeffect.com/manga/solo-auto-hunting/', 'Effect|\n'],
+              ['Solo Auto Hunting', 'https://mangaeffect.com/manga/solo-auto-hunting/', 'WP|\n'],
               ["The Scholar's Reincarnation", 'https://www.readmng.com/the-scholars-reincarnation', 'ReadMng|\n'],
-              ["LESSA - Servant of Cosmos", 'https://mangakakalot.com/read-qu0ei158524508422', 'Kakalot|\n'],
-              ["Demon Magic Emperor", 'https://mangadex.org/title/43692/demonic-emperor', 'MangaDex|\n'],
-              ["Leveling Up, by Only Eating!", 'https://mangadex.org/title/48217/leveling-up-by-only-eating',
-               'MangaDex|\n'],
-              ["Apothesis", "https://mangadex.org/title/23001/apotheosis-ascension-to-godhood", "MangaDex|\n"],
-              ["Yuan Zun", "https://mangakakalot.tv/manga/yuan_zun", "Kakalot|\n"],
-              ["Martial Peak", "https://manganelo.com/manga/martial_peak", "Mangelo|\n"],
               ["Legendary Moonlight Sculptor", "https://www.readmng.com/Dalbic-Jogaksa-2/", "ReadMng|\n"]
               ]
 
@@ -54,16 +40,16 @@ with open("MQuicker_Mascot.txt", "rt", encoding="utf-8") as mascot:
 
 # On most sites the desired element will be an anchor 'a' tag. However, this default dict allows us to specify exceptions
 source_elements = defaultdict(lambda: 'a')
-source_elements['ZeroLeviatan'], source_elements['ReadMng'], \
-    source_elements["asura"], source_elements["ManhuaScan"] = ['span'] * 4
-source_elements['Effect'], source_elements['WP'] = ['li'] * 2
+source_elements['ZeroLeviatan'], \
+    source_elements["asura"], source_elements["ManhuaScan"] = ['span'] * 3
+source_elements['WP'] = 'li'
 source_elements['Kakalot'] = 'div'
 source_elements['Solo'] = 'td'
 source_elements["Sword"] = 'h3'
 
-# Now the i_or_cls parameter of finder comes from this neat dictionary. All except AoT use classes intentionally
+# Now the i_or_cls parameter of finder comes from this neat dictionary. All except AoT & Apoth use classes intentionally
 source_methods = {'AoT': 9, 'Mangelo': 'chapter-name text-nowrap', 'ZeroLeviatan': 'text-muted text-sm',
-                  'Effect': 'wp-manga-chapter', 'ReadMng': 'val', 'WP': 'wp-manga-chapter',
+                  'ReadMng': 'chnumber', 'WP': 'wp-manga-chapter',
                   'MangaDex': 'text-truncate', 'Kakalot': 'chapter-list', "lh": "chapter",
                   "asura": "epcur epcurlast", "Apoth": 6, "Solo": "", "Sword": "elementor-post__title",
                   'ManhuaScan': 'title'}
@@ -159,7 +145,7 @@ def change_current():
         chapters = [line for line in numbers_read.readlines()]
     with open("saved/latest.txt", "wt", encoding="utf-8") as numbers:
         for i, manga in enumerate(mangas):
-            if input(
+            if chapters[i].split()[1] != "utd" and input(
                     f"\n{Fore.LIGHTMAGENTA_EX}Would you like to update {manga[0]}'s current chapter? " +
                     f"{Fore.LIGHTWHITE_EX}Right now it is {chapters[i]}" +
                     f"{Fore.LIGHTGREEN_EX}Type anything for yes {Fore.LIGHTRED_EX}or simply press enter for no.  {Fore.RESET}"):
@@ -303,7 +289,11 @@ def manga_strip(manga):
 
     # In case it is a local reference to the chapter page (as with MangaDex)
     if link[:8] != "https://":
-        link = source_url + link
+        if "readmng" in source_url:
+            link = source_url + "/" + link.split("/")[-1]
+        else:
+            link = source_url + link
+        
     latest_chapter = psych_handler(latest_chapter, link, manga[2])
 
     return latest_chapter, link
@@ -371,6 +361,9 @@ def psych_handler(lc, lk, source):
     if source == "Solo":
         if ch_soup.findAll("strong")[1].text[:5] == "=====":
             ch -= 1
+    if "academia" in lk:
+        ch -= 1
+
     return str(ch)
 
 
@@ -387,6 +380,7 @@ def finisher(ans):
         os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--disable-logging"
         try:
             app = QtWidgets.QApplication(sys.argv)
+            fixer = QWebView()  # used to resolve PyQt5 caching errors
             webpage = WebPage()
             webpage.start(d_urls)
             app.exec_()
@@ -479,14 +473,17 @@ def update_latest(news, olds):
                 latest.write(f"0 yts\n")
             else:
                 label = old.split()[1]
-                if label == "utd" and new != "9999":
-                    latest.write(f"{new} utd\n")
-                elif label == "wip" or label == "yts":
+                if label == "wip" or label == "yts" or new == -1:
                     latest.write(old)
+                elif label == "utd" and new != "9999":
+                    latest.write(f"{new} utd\n")
                 else:
                     try:
                         # Spot fix for utd dynamic websites
-                        latest.write(f"{dynamic_chapters[dynamic_ch_use]} utd\n")
+                        dynamic_chapter = dynamic_chapters[dynamic_ch_use]
+                        if dynamic_chapter == -1:
+                            raise IndexError
+                        latest.write(f"{dynamic_chapter} utd\n")
                     except IndexError:
                         latest.write(old)
 
