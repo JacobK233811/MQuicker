@@ -450,11 +450,10 @@ class WebPage(QtWebEngineWidgets.QWebEnginePage):
                 chapter_link = chapter_link[:url_num_loc] + f"{previous + 1}/"
 
             print(Fore.LIGHTYELLOW_EX + f"{dms[drc][0]}: {previous} -> {chapter_num} {Fore.LIGHTBLUE_EX} {chapter_link}")
-            dynamic_run_count += 1
         except AttributeError:
             print(f"{Fore.LIGHTRED_EX}Dynamic Website Unable to Load Completely.")
-            dynamic_chapters.append(-1)
-            dynamic_run_count += 1
+            dynamic_chapters.append(-1) 
+        dynamic_run_count += 1
 
         if not self.fetch_next():
             QtWidgets.qApp.quit()
@@ -507,7 +506,7 @@ def num_puller(body):
                 numbers.append(float(word.strip()))
             except ValueError:
                 pass
-    return numbers
+    return numbers or [-1]
 
 
 try:
