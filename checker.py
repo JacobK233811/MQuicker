@@ -40,19 +40,16 @@ with open("MQuicker_Mascot.txt", "rt", encoding="utf-8") as mascot:
 
 # On most sites the desired element will be an anchor 'a' tag. However, this default dict allows us to specify exceptions
 source_elements = defaultdict(lambda: 'a')
-source_elements['ZeroLeviatan'], \
-    source_elements["asura"], source_elements["ManhuaScan"] = ['span'] * 3
 source_elements['WP'] = 'li'
 source_elements['Kakalot'] = 'div'
-source_elements['Solo'] = 'td'
-source_elements["Sword"] = 'h3'
+source_elements['asura'] = 'div'
 
-# Now the i_or_cls parameter of finder comes from this neat dictionary. All except AoT & Apoth use classes intentionally
-source_methods = {'AoT': 9, 'Mangelo': 'chapter-name text-nowrap', 'ZeroLeviatan': 'text-muted text-sm',
+
+# Now the i_or_cls parameter of finder comes from this neat dictionary. Preference toward classes intentionally
+source_methods = {'Mangelo': 'chapter-name text-nowrap',
                   'ReadMng': 'chnumber', 'WP': 'wp-manga-chapter',
-                  'MangaDex': 'text-truncate', 'Kakalot': 'chapter-list', "lh": "chapter",
-                  "asura": "epcur epcurlast", "Apoth": 6, "Solo": "", "Sword": "elementor-post__title",
-                  'ManhuaScan': 'title'}
+                  'Kakalot': 'chapter-list', "lh": "chapter",
+                  "asura": "eph-num"}
 
 # For later use in the update_latest function
 latest_chapters = []
@@ -182,7 +179,7 @@ def rate():
 def a():
     # Simply outputs chapter information for every include manga within list.txt
     for i, manga in enumerate(mangas):
-        if manga[2] == "WP":
+        if manga[2] in ["WP", "asura"]:
             dynamic_indexes.append(i)
             dynamic_mangas.append(manga)
             latest_chapters.append("9999")
@@ -434,7 +431,11 @@ class WebPage(QtWebEngineWidgets.QWebEnginePage):
         print(Fore.GREEN + 'Loaded [%d chars] %s' % (len(html), "Dynamically"))
         try:
             soupy = BeautifulSoup(html, 'html.parser')
-            tag = soupy.find("li", class_="wp-manga-chapter").a
+
+            if "asura" in html:
+                tag = soupy.find(source_elements["asura"], class_=source_methods["asura"]).a
+            else:
+                tag = soupy.find(source_elements["WP"], class_=source_methods["WP"]).a
             chapter_num = num_puller(tag.text)[0]
             dynamic_chapters.append(chapter_num)
             chapter_link = tag.attrs["href"]
