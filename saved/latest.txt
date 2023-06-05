@@ -1,7 +1,7 @@
+150 wip
 305.1 wip
 59 wip
 67 utd
-77 wip
 124 wip
 183 wip
 663 wip
@@ -9,8 +9,6 @@
 149 wip
 19 wip
 148 wip
-50 wip
 25.5 wip
-46 wip
-22 wip
-121 utd
+100 wip
+90 wip

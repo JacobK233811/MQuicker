@@ -21,10 +21,7 @@ with open("saved/list.txt", "rt", encoding="utf-8") as m_list:
 if not mangas:
     mangas = [['Chronicles of Heavenly Demon', 'https://www.readmng.com/chronicles-of-heavenly-demon-3', 'ReadMng|\n'],
               ['Iruma-Kun', 'https://www.readmng.com/mairimashita-iruma-kun', 'ReadMng|\n'],
-              ['Kingdom', 'https://www.readmng.com/kingdom', 'ReadMng|\n'],
-              ['Solo Auto Hunting', 'https://mangaeffect.com/manga/solo-auto-hunting/', 'WP|\n'],
-              ["The Scholar's Reincarnation", 'https://www.readmng.com/the-scholars-reincarnation', 'ReadMng|\n'],
-              ["Legendary Moonlight Sculptor", "https://www.readmng.com/Dalbic-Jogaksa-2/", "ReadMng|\n"]
+              ['Kingdom', 'https://www.readmng.com/kingdom', 'ReadMng|\n']
               ]
 
 # Set up the saved folder if it doesn't exist yet
@@ -40,16 +37,20 @@ with open("MQuicker_Mascot.txt", "rt", encoding="utf-8") as mascot:
 
 # On most sites the desired element will be an anchor 'a' tag. However, this default dict allows us to specify exceptions
 source_elements = defaultdict(lambda: 'a')
-source_elements['WP'] = 'li'
-source_elements['Kakalot'] = 'div'
-source_elements['asura'] = 'div'
+source_elements['WP'], source_elements["MR"] = ['li'] * 2
+source_elements['Kakalot'], source_elements['asura'], source_elements['Zero'] = ['div'] * 3
+source_elements['ManhuaScan'], source_elements['MangaDex'] = ['span'] * 2
+
 
 
 # Now the i_or_cls parameter of finder comes from this neat dictionary. Preference toward classes intentionally
 source_methods = {'Mangelo': 'chapter-name text-nowrap',
                   'ReadMng': 'chnumber', 'WP': 'wp-manga-chapter',
+                  'MR': 'wp-manga-chapter',
                   'Kakalot': 'chapter-list', "lh": "chapter",
-                  "asura": "eph-num"}
+                  "asura": "eph-num", "Zero": "col-md-6 col-12",
+                  "ManhuaScan": "title", "MangaDex": "chapter-link",
+                  "InManga": "list-group-item custom-list-group-item "}
 
 # For later use in the update_latest function
 latest_chapters = []
@@ -62,6 +63,7 @@ dynamic_mangas = []
 dynamic_run_count = 0
 dynamic_indexes = []
 dynamic_happened = False
+dynamic_sources = ["WP", "asura", "Zero", "MangaDex", "InManga"]
 # The following declarations help properly update_latest for the dynamics
 dynamic_ch_use = 0
 dynamic_chapters = []
@@ -179,7 +181,7 @@ def rate():
 def a():
     # Simply outputs chapter information for every include manga within list.txt
     for i, manga in enumerate(mangas):
-        if manga[2] in ["WP", "asura"]:
+        if manga[2] in dynamic_sources:
             dynamic_indexes.append(i)
             dynamic_mangas.append(manga)
             latest_chapters.append("9999")
@@ -215,7 +217,7 @@ def n():
     global current
     current = current[::-1]
     for i, manga in enumerate(mangas[::-1]):
-        if manga[2] == "WP":
+        if manga[2] in dynamic_sources:
             dynamic_indexes.append(i)
             dynamic_mangas.append(manga)
             latest_chapters.append("9999")
@@ -244,7 +246,7 @@ def s():
     # Outputs chapter information for every manga into a text file for later reference
     with open(f'saved/{datetime.strftime(datetime.now(), "%m%d%y")}.txt', "wt", encoding="utf-8") as file_access:
         for i, manga in enumerate(mangas):
-            if manga[2] == "WP":
+            if manga[2] in dynamic_sources:
                 dynamic_indexes.append(i)
                 dynamic_mangas.append(manga)
                 latest_chapters.append("9999")
@@ -428,14 +430,24 @@ class WebPage(QtWebEngineWidgets.QWebEnginePage):
         drc = dynamic_run_count
         dms = dynamic_mangas
 
+        title_of = "unknown"
         print(Fore.GREEN + 'Loaded [%d chars] %s' % (len(html), "Dynamically"))
+
         try:
             soupy = BeautifulSoup(html, 'html.parser')
+            
+            title_of = soupy.find("title").text
+            elem_clas = lambda src: soupy.find(source_elements[src], class_=source_methods[src]).a
 
-            if "asura" in html:
-                tag = soupy.find(source_elements["asura"], class_=source_methods["asura"]).a
+            if "Asura" in title_of:
+                tag = elem_clas("asura")
+            elif "InManga" in title_of:
+                tag = elem_clas("InManga")
+                # presently dysfunctional due to slow page load               
+
             else:
                 tag = soupy.find(source_elements["WP"], class_=source_methods["WP"]).a
+
             chapter_num = num_puller(tag.text)[0]
             dynamic_chapters.append(chapter_num)
             chapter_link = tag.attrs["href"]
@@ -451,8 +463,8 @@ class WebPage(QtWebEngineWidgets.QWebEnginePage):
                 chapter_link = chapter_link[:url_num_loc] + f"{previous + 1}/"
 
             print(Fore.LIGHTYELLOW_EX + f"{dms[drc][0]}: {previous} -> {chapter_num} {Fore.LIGHTBLUE_EX} {chapter_link}")
-        except AttributeError:
-            print(f"{Fore.LIGHTRED_EX}Dynamic Website Unable to Load Completely.")
+        except AttributeError as e:
+            print(f"{Fore.LIGHTRED_EX}Dynamic Website {title_of} Unable to Load Completely Because {e}.")
             dynamic_chapters.append(-1) 
         dynamic_run_count += 1
 
