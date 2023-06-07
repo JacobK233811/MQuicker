@@ -132,7 +132,7 @@ def add():
             # numbers.write(f"{input('Current Chapter  ')} {input('Status (yts/wip/utd)  ')}\n")
             verify_status(numbers)
             continuation = input(
-                f"{Fore.LIGHTRED_EX}Press enter to quit {Fore.LIGHTGREEN_EX}or type anything into the input to continue adding manga  ")
+                f"{Fore.LIGHTRED_EX}Press enter to quit {Fore.LIGHTGREEN_EX}or type anything into the input to continue adding manga  {Fore.RESET}")
     add_to_sheet("add manga", add_counter, add_list)
     set_changes()
 
@@ -290,6 +290,8 @@ def manga_strip(manga):
     if link[:8] != "https://":
         if "readmng" in source_url:
             link = source_url + "/" + link.split("/")[-1]
+        elif "ww5.mangakakalot" in source_url:
+            link = "https://ww5.mangakakalot.tv" + link
         else:
             link = source_url + link
         
