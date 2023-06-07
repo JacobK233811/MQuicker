@@ -204,7 +204,7 @@ python3 checker.py<br>
      <br><br>
      <div style="background-color: #f4f4f4; color: black; max-height: 400px; overflow: scroll; padding: 10px;">
           <p id="mstep3">cd $HOME<br>
-url='https://github.com/JacobK233811/MQuicker/archive/MQuicker-minimal.zip'<br>
+url='https://github.com/JacobK233811/MQuicker/archive/refs/heads/MQuicker-minimal.zip'<br>
 mkdir Zips<br>
 Dest=$HOME/Zips/MQ.zip<br>
 
