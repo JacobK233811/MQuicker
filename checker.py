@@ -12,33 +12,16 @@ from cryptography.fernet import Fernet
 
 # Modules for dynamic JS websites
 from PyQt5 import QtCore, QtWidgets, QtWebEngineWidgets
+from PyQt5.QtWebEngineWidgets import QWebEngineView as QWebView
 import sys
 
 # Each list within the mangas list has the following parameters: Name, Link, Source
 with open("saved/list.txt", "rt", encoding="utf-8") as m_list:
     mangas = [line.split("|") for line in m_list.readlines()]
 if not mangas:
-    mangas = [['Attack on Titan', 'https://attackontitanmanga.com/', 'AoT|\n'],
-              ['Solo Leveling', 'https://w3.sololeveling.net/', 'Solo'],
-              ['Tales of Demons and Gods', 'https://manganelo.com/manga/hyer5231574354229', 'Mangelo|\n'],
-              ['The Great Mage Returns After 4000 Years', 'https://manganelo.com/manga/go922760', 'Mangelo|\n'],
-              ['Second Life Ranker', 'https://zeroscans.com/comics/188504-second-life-ranker', 'ZeroLeviatan|\n'],
-              ['I am the Sorcerer King', 'https://leviatanscans.com/comics/i-am-the-sorcerer-king', 'ZeroLeviatan|\n'],
-              ['Descent of the Demonic Master', 'https://mangaeffect.com/manga/the-descent-of-the-demonic-master/',
-               'Effect|\n'],
-              ['Chronicles of Heavenly Demon', 'https://www.readmng.com/chronicles-of-heavenly-demon-3', 'ReadMng|\n'],
+    mangas = [['Chronicles of Heavenly Demon', 'https://www.readmng.com/chronicles-of-heavenly-demon-3', 'ReadMng|\n'],
               ['Iruma-Kun', 'https://www.readmng.com/mairimashita-iruma-kun', 'ReadMng|\n'],
-              ['Kingdom', 'https://www.readmng.com/kingdom', 'ReadMng|\n'],
-              ['Solo Auto Hunting', 'https://mangaeffect.com/manga/solo-auto-hunting/', 'Effect|\n'],
-              ["The Scholar's Reincarnation", 'https://www.readmng.com/the-scholars-reincarnation', 'ReadMng|\n'],
-              ["LESSA - Servant of Cosmos", 'https://mangakakalot.com/read-qu0ei158524508422', 'Kakalot|\n'],
-              ["Demon Magic Emperor", 'https://mangadex.org/title/43692/demonic-emperor', 'MangaDex|\n'],
-              ["Leveling Up, by Only Eating!", 'https://mangadex.org/title/48217/leveling-up-by-only-eating',
-               'MangaDex|\n'],
-              ["Apothesis", "https://mangadex.org/title/23001/apotheosis-ascension-to-godhood", "MangaDex|\n"],
-              ["Yuan Zun", "https://mangakakalot.tv/manga/yuan_zun", "Kakalot|\n"],
-              ["Martial Peak", "https://manganelo.com/manga/martial_peak", "Mangelo|\n"],
-              ["Legendary Moonlight Sculptor", "https://www.readmng.com/Dalbic-Jogaksa-2/", "ReadMng|\n"]
+              ['Kingdom', 'https://www.readmng.com/kingdom', 'ReadMng|\n']
               ]
 
 # Set up the saved folder if it doesn't exist yet
@@ -54,19 +37,20 @@ with open("MQuicker_Mascot.txt", "rt", encoding="utf-8") as mascot:
 
 # On most sites the desired element will be an anchor 'a' tag. However, this default dict allows us to specify exceptions
 source_elements = defaultdict(lambda: 'a')
-source_elements['ZeroLeviatan'], source_elements['ReadMng'], \
-    source_elements["asura"], source_elements["ManhuaScan"] = ['span'] * 4
-source_elements['Effect'], source_elements['WP'] = ['li'] * 2
-source_elements['Kakalot'] = 'div'
-source_elements['Solo'] = 'td'
-source_elements["Sword"] = 'h3'
+source_elements['WP'], source_elements["MR"] = ['li'] * 2
+source_elements['Kakalot'], source_elements['asura'], source_elements['Zero'] = ['div'] * 3
+source_elements['ManhuaScan'], source_elements['MangaDex'] = ['span'] * 2
 
-# Now the i_or_cls parameter of finder comes from this neat dictionary. All except AoT use classes intentionally
-source_methods = {'AoT': 9, 'Mangelo': 'chapter-name text-nowrap', 'ZeroLeviatan': 'text-muted text-sm',
-                  'Effect': 'wp-manga-chapter', 'ReadMng': 'val', 'WP': 'wp-manga-chapter',
-                  'MangaDex': 'text-truncate', 'Kakalot': 'chapter-list', "lh": "chapter",
-                  "asura": "epcur epcurlast", "Apoth": 6, "Solo": "", "Sword": "elementor-post__title",
-                  'ManhuaScan': 'title'}
+
+
+# Now the i_or_cls parameter of finder comes from this neat dictionary. Preference toward classes intentionally
+source_methods = {'Mangelo': 'chapter-name text-nowrap',
+                  'ReadMng': 'chnumber', 'WP': 'wp-manga-chapter',
+                  'MR': 'wp-manga-chapter',
+                  'Kakalot': 'chapter-list', "lh": "chapter",
+                  "asura": "eph-num", "Zero": "col-md-6 col-12",
+                  "ManhuaScan": "title", "MangaDex": "chapter-link",
+                  "InManga": "list-group-item custom-list-group-item "}
 
 # For later use in the update_latest function
 latest_chapters = []
@@ -79,6 +63,7 @@ dynamic_mangas = []
 dynamic_run_count = 0
 dynamic_indexes = []
 dynamic_happened = False
+dynamic_sources = ["WP", "asura", "Zero", "MangaDex", "InManga"]
 # The following declarations help properly update_latest for the dynamics
 dynamic_ch_use = 0
 dynamic_chapters = []
@@ -147,7 +132,7 @@ def add():
             # numbers.write(f"{input('Current Chapter  ')} {input('Status (yts/wip/utd)  ')}\n")
             verify_status(numbers)
             continuation = input(
-                f"{Fore.LIGHTRED_EX}Press enter to quit {Fore.LIGHTGREEN_EX}or type anything into the input to continue adding manga  ")
+                f"{Fore.LIGHTRED_EX}Press enter to quit {Fore.LIGHTGREEN_EX}or type anything into the input to continue adding manga  {Fore.RESET}")
     add_to_sheet("add manga", add_counter, add_list)
     set_changes()
 
@@ -159,7 +144,7 @@ def change_current():
         chapters = [line for line in numbers_read.readlines()]
     with open("saved/latest.txt", "wt", encoding="utf-8") as numbers:
         for i, manga in enumerate(mangas):
-            if input(
+            if chapters[i].split()[1] != "utd" and input(
                     f"\n{Fore.LIGHTMAGENTA_EX}Would you like to update {manga[0]}'s current chapter? " +
                     f"{Fore.LIGHTWHITE_EX}Right now it is {chapters[i]}" +
                     f"{Fore.LIGHTGREEN_EX}Type anything for yes {Fore.LIGHTRED_EX}or simply press enter for no.  {Fore.RESET}"):
@@ -196,7 +181,7 @@ def rate():
 def a():
     # Simply outputs chapter information for every include manga within list.txt
     for i, manga in enumerate(mangas):
-        if manga[2] == "WP":
+        if manga[2] in dynamic_sources:
             dynamic_indexes.append(i)
             dynamic_mangas.append(manga)
             latest_chapters.append("9999")
@@ -232,7 +217,7 @@ def n():
     global current
     current = current[::-1]
     for i, manga in enumerate(mangas[::-1]):
-        if manga[2] == "WP":
+        if manga[2] in dynamic_sources:
             dynamic_indexes.append(i)
             dynamic_mangas.append(manga)
             latest_chapters.append("9999")
@@ -261,7 +246,7 @@ def s():
     # Outputs chapter information for every manga into a text file for later reference
     with open(f'saved/{datetime.strftime(datetime.now(), "%m%d%y")}.txt', "wt", encoding="utf-8") as file_access:
         for i, manga in enumerate(mangas):
-            if manga[2] == "WP":
+            if manga[2] in dynamic_sources:
                 dynamic_indexes.append(i)
                 dynamic_mangas.append(manga)
                 latest_chapters.append("9999")
@@ -297,13 +282,25 @@ def manga_strip(manga):
     element = source_elements[manga[2]]
     method = source_methods[manga[2]]
 
-    webpage_request = requests.get(source_url)
+    if manga[2] != "ReadMng":
+        webpage_request = requests.get(source_url)
+    else:
+        sesh = requests.Session()
+        sesh.headers['User-Agent'] = "MTapper" + datetime.strftime(datetime.now(), "%m%d%y")
+        webpage_request = sesh.get(source_url)
+
     # Finder function enables one line to check any new properly defined list item (see line 16 comment)
     latest_chapter, link = finder(webpage_request, element, method)
 
     # In case it is a local reference to the chapter page (as with MangaDex)
     if link[:8] != "https://":
-        link = source_url + link
+        if "readmng" in source_url:
+            link = source_url + "/" + link.split("/")[-1]
+        elif "ww5.mangakakalot" in source_url:
+            link = "https://ww5.mangakakalot.tv" + link
+        else:
+            link = source_url + link
+        
     latest_chapter = psych_handler(latest_chapter, link, manga[2])
 
     return latest_chapter, link
@@ -371,6 +368,9 @@ def psych_handler(lc, lk, source):
     if source == "Solo":
         if ch_soup.findAll("strong")[1].text[:5] == "=====":
             ch -= 1
+    if "academia" in lk:
+        ch -= 1
+
     return str(ch)
 
 
@@ -387,6 +387,7 @@ def finisher(ans):
         os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--disable-logging"
         try:
             app = QtWidgets.QApplication(sys.argv)
+            fixer = QWebView()  # used to resolve PyQt5 caching errors
             webpage = WebPage()
             webpage.start(d_urls)
             app.exec_()
@@ -437,10 +438,24 @@ class WebPage(QtWebEngineWidgets.QWebEnginePage):
         drc = dynamic_run_count
         dms = dynamic_mangas
 
+        title_of = "unknown"
         print(Fore.GREEN + 'Loaded [%d chars] %s' % (len(html), "Dynamically"))
+
         try:
             soupy = BeautifulSoup(html, 'html.parser')
-            tag = soupy.find("li", class_="wp-manga-chapter").a
+            
+            title_of = soupy.find("title").text
+            elem_clas = lambda src: soupy.find(source_elements[src], class_=source_methods[src]).a
+
+            if "Asura" in title_of:
+                tag = elem_clas("asura")
+            elif "InManga" in title_of:
+                tag = elem_clas("InManga")
+                # presently dysfunctional due to slow page load               
+
+            else:
+                tag = soupy.find(source_elements["WP"], class_=source_methods["WP"]).a
+
             chapter_num = num_puller(tag.text)[0]
             dynamic_chapters.append(chapter_num)
             chapter_link = tag.attrs["href"]
@@ -456,11 +471,10 @@ class WebPage(QtWebEngineWidgets.QWebEnginePage):
                 chapter_link = chapter_link[:url_num_loc] + f"{previous + 1}/"
 
             print(Fore.LIGHTYELLOW_EX + f"{dms[drc][0]}: {previous} -> {chapter_num} {Fore.LIGHTBLUE_EX} {chapter_link}")
-            dynamic_run_count += 1
-        except AttributeError:
-            print(f"{Fore.LIGHTRED_EX}Dynamic Website Unable to Load Completely.")
-            dynamic_chapters.append(-1)
-            dynamic_run_count += 1
+        except AttributeError as e:
+            print(f"{Fore.LIGHTRED_EX}Dynamic Website {title_of} Unable to Load Completely Because {e}.")
+            dynamic_chapters.append(-1) 
+        dynamic_run_count += 1
 
         if not self.fetch_next():
             QtWidgets.qApp.quit()
@@ -479,14 +493,17 @@ def update_latest(news, olds):
                 latest.write(f"0 yts\n")
             else:
                 label = old.split()[1]
-                if label == "utd" and new != "9999":
-                    latest.write(f"{new} utd\n")
-                elif label == "wip" or label == "yts":
+                if label == "wip" or label == "yts" or new == -1:
                     latest.write(old)
+                elif label == "utd" and new != "9999":
+                    latest.write(f"{new} utd\n")
                 else:
                     try:
                         # Spot fix for utd dynamic websites
-                        latest.write(f"{dynamic_chapters[dynamic_ch_use]} utd\n")
+                        dynamic_chapter = dynamic_chapters[dynamic_ch_use]
+                        if dynamic_chapter == -1:
+                            raise IndexError
+                        latest.write(f"{dynamic_chapter} utd\n")
                     except IndexError:
                         latest.write(old)
 
@@ -510,7 +527,7 @@ def num_puller(body):
                 numbers.append(float(word.strip()))
             except ValueError:
                 pass
-    return numbers
+    return numbers or [-1]
 
 
 try:
