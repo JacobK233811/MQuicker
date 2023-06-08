@@ -1,7 +1,6 @@
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 cd c:\MQuicker\WindowsSetUp
-pip install virtualenv==20.0.31
-virtualenv mq
+python -m venv mq
 .\mq\Scripts\activate
 Write-Host -Foreground Green ("`Please exercise patience as the following packages install.")
 pip install -r "..\requirements.txt"

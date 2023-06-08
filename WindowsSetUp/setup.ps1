@@ -1,5 +1,5 @@
 cd c:\
-$url = 'https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'
+$url = 'https://github.com/JacobK233811/MQuicker/archive/refs/heads/MQuicker-minimal.zip'
 New-Item -ItemType Directory Zips
 $Dest = 'C:\Zips\MQ.zip'
 $web = New-Object -TypeName System.Net.WebClient

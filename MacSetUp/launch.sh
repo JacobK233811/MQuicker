@@ -3,4 +3,4 @@ source "./PythonFiles/bin/activate"
 cd MacSetUp
 source "./mq/bin/activate"
 cd ..
-python3 checker.py
+arch -x86_64 python3 checker.py

@@ -1,7 +1,7 @@
 setopt interactivecomments
 
 cd $HOME
-url='https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'
+url='https://github.com/JacobK233811/MQuicker/archive/refs/heads/MQuicker-minimal.zip'
 mkdir Zips
 Dest=$HOME/Zips/MQ.zip
 

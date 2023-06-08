@@ -11,4 +11,4 @@ python3 -m pip install -r "../requirements.txt"
 mv "./launch.sh" $HOME
 echo "Congratulations on Setting Up MQuicker!!"
 cd ..
-python3 checker.py
+arch -x86_64 python3 checker.py
