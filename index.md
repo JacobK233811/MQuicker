@@ -75,8 +75,7 @@ Write-Host -Foreground Green ("Close this shell, open a new one, and run the con
      <div style="background-color: #012456; color: white; max-height: 400px; overflow: scroll; padding: 10px;">
           <p id="wstep2">Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force<br>
 cd c:\MQuicker\WindowsSetUp<br>
-pip install virtualenv==20.0.31<br>
-virtualenv mq<br>
+python -m venv mq<br>
 .\mq\Scripts\activate<br>
 Write-Host -Foreground Green ("`Please exercise patience as the following packages install.")<br>
 pip install -r "..\requirements.txt"<br>
@@ -183,8 +182,7 @@ echo "Close this shell, open a new one, and run the contents of setup2.sh"<br>
           <p id="mstep2">cd $HOME/MQuicker<br>
           source "./PythonFiles/bin/activate"<br>
           cd MacSetUp<br>
-pip3 install virtualenv==20.0.31<br>
-virtualenv mq<br>
+python3 -m venv mq<br>
 source "./mq/bin/activate"<br>
 python3 -m pip install -U pip<br>
 python3 -m pip install -U setuptools<br>
@@ -193,7 +191,7 @@ python3 -m pip install -r "../requirements.txt"<br>
 mv "./launch.sh" $HOME<br>
 echo "Congratulations on Setting Up MQuicker!!"<br>
 cd ..<br>
-python3 checker.py<br>
+arch -x86_64 python3 checker.py<br>
 # End Step 2<br></p>
      </div>     
 </div>
@@ -219,8 +217,7 @@ mv "./MQuicker-MQuicker-minimal" './MQuicker'<br>
 cd MQuicker<br>
 
 cd $HOME/MQuicker/MacSetUp<br>
-pip3 install virtualenv==20.0.31<br>
-virtualenv mq<br>
+python3 -m venv mq<br>
 source "./mq/bin/activate"<br>
 python3 -m pip install -U pip<br>
 python3 -m pip install -U setuptools<br>
