@@ -282,7 +282,13 @@ def manga_strip(manga):
     element = source_elements[manga[2]]
     method = source_methods[manga[2]]
 
-    webpage_request = requests.get(source_url)
+    if manga[2] != "ReadMng":
+        webpage_request = requests.get(source_url)
+    else:
+        sesh = requests.Session()
+        sesh.headers['User-Agent'] = "MTapper" + datetime.strftime(datetime.now(), "%m%d%y")
+        webpage_request = sesh.get(source_url)
+
     # Finder function enables one line to check any new properly defined list item (see line 16 comment)
     latest_chapter, link = finder(webpage_request, element, method)
 
