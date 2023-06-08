@@ -1,5 +1,5 @@
 cd $HOME
-url='https://github.com/JacobK233811/MangaNewChapter/archive/MQuicker-minimal.zip'
+url='https://github.com/JacobK233811/MQuicker/archive/refs/heads/MQuicker-minimal.zip'
 mkdir Zips
 Dest=$HOME/Zips/MQ.zip
 
@@ -14,8 +14,7 @@ mv "./MangaNewChapter-MQuicker-minimal" './MQuicker'
 cd MQuicker
 
 cd $HOME/MQuicker/MacSetUp
-pip3 install virtualenv==20.0.31
-virtualenv mq
+python3 -m venv mq
 source "./mq/bin/activate"
 python3 -m pip install -U pip
 python3 -m pip install -U setuptools
@@ -24,5 +23,5 @@ python3 -m pip install -r "../requirements.txt"
 mv "./launch.sh" $HOME
 echo "Congratulations on Setting Up MQuicker!!"
 cd ..
-python3 checker.py
+arch -x86_64 python3 checker.py
 # End Step 1
