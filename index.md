@@ -187,7 +187,7 @@ source "./mq/bin/activate"<br>
 python3 -m pip install -U pip<br>
 python3 -m pip install -U setuptools<br>
 echo -e "\033[1;33mPlease exercise patience as the following packages install.\033[0,0m"<br>
-python3 -m pip install -r "../requirements.txt"<br>
+arch -x86_64 python3 -m pip install -r "../requirements.txt"<br>
 mv "./launch.sh" $HOME<br>
 echo "Congratulations on Setting Up MQuicker!!"<br>
 cd ..<br>
@@ -222,7 +222,7 @@ source "./mq/bin/activate"<br>
 python3 -m pip install -U pip<br>
 python3 -m pip install -U setuptools<br>
 echo -e "\033[1;33mPlease exercise patience as the following packages install.\033[0,0m"<br>
-python3 -m pip install -r "../requirements.txt"<br>
+arch -x86_64 python3 -m pip install -r "../requirements.txt"<br>
 mv "./launch.sh" $HOME<br>
 echo "Congratulations on Setting Up MQuicker!!"<br>
 cd ..<br>
