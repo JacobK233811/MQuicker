@@ -1,19 +1,19 @@
 from bs4 import BeautifulSoup
 import requests
 from colorama import Fore, Back
-from collections import defaultdict
 from datetime import datetime
 from itertools import zip_longest
 import os
-import gspread
 import webbrowser
-from google.auth.exceptions import TransportError
-from cryptography.fernet import Fernet
 
 # Modules for dynamic JS websites
 from PyQt5 import QtCore, QtWidgets, QtWebEngineWidgets
 from PyQt5.QtWebEngineWidgets import QWebEngineView as QWebView
 import sys
+
+# Shared mutable variables and helper functions
+from config import * 
+from utils import num_puller, set_changes, add_to_sheet, mangas_len, worksheet
 
 # Each list within the mangas list has the following parameters: Name, Link, Source
 with open("saved/list.txt", "rt", encoding="utf-8") as m_list:
@@ -34,39 +34,6 @@ os.system("Cls")
 print(Fore.LIGHTGREEN_EX + "Welcome to MQuicker!" + Fore.RESET)
 with open("MQuicker_Mascot.txt", "rt", encoding="utf-8") as mascot:
     print(mascot.read())
-
-# On most sites the desired element will be an anchor 'a' tag. However, this default dict allows us to specify exceptions
-source_elements = defaultdict(lambda: 'a')
-source_elements['WP'], source_elements["MR"] = ['li'] * 2
-source_elements['Kakalot'], source_elements['asura'], source_elements['Zero'] = ['div'] * 3
-source_elements['ManhuaScan'], source_elements['MangaDex'] = ['span'] * 2
-
-
-
-# Now the i_or_cls parameter of finder comes from this neat dictionary. Preference toward classes intentionally
-source_methods = {'Mangelo': 'chapter-name text-nowrap',
-                  'ReadMng': 'chnumber', 'WP': 'wp-manga-chapter',
-                  'MR': 'wp-manga-chapter',
-                  'Kakalot': 'chapter-list', "lh": "chapter",
-                  "asura": "eph-num", "Zero": "col-md-6 col-12",
-                  "ManhuaScan": "title", "MangaDex": "chapter-link",
-                  "InManga": "list-group-item custom-list-group-item "}
-
-# For later use in the update_latest function
-latest_chapters = []
-# Current also features throughout for comparison purposes
-with open("saved/latest.txt") as f:
-    current = f.readlines()
-
-# Pertains to dynamic_finder. The run count is used for indexing within dynamic_finder and dynamic_indexes for insertion
-dynamic_mangas = []
-dynamic_run_count = 0
-dynamic_indexes = []
-dynamic_happened = False
-dynamic_sources = ["WP", "asura", "Zero", "MangaDex", "InManga"]
-# The following declarations help properly update_latest for the dynamics
-dynamic_ch_use = 0
-dynamic_chapters = []
 
 
 # The following three functions pertain to .txt file handling to keep new users from having to ever open a text file
@@ -214,7 +181,6 @@ def a():
 
 def n():
     # Outputs chapter information for only the mangas which have a new chapter to show
-    global current
     current = current[::-1]
     for i, manga in enumerate(mangas[::-1]):
         if manga[2] in dynamic_sources:
@@ -379,7 +345,6 @@ def psych_handler(lc, lk, source):
 def finisher(ans):
     # Runs dynamic website handling, updates latest.txt, and exits
     d_urls = [m[1] for m in dynamic_mangas]
-    global dynamic_happened
     if d_urls and not dynamic_happened:
         dynamic_happened = True
         print(Fore.LIGHTGREEN_EX + "Handling Dynamic Websites...")
@@ -394,7 +359,6 @@ def finisher(ans):
         except AttributeError:
             print(f"{Fore.LIGHTRED_EX}Dynamic Websites Unable to Load.")
 
-    global current, latest_chapters, dynamic_chapters
     print(Fore.LIGHTGREEN_EX + "Updating...")
     if ans == "n":
         dynamic_chapters = dynamic_chapters[::-1]
@@ -434,7 +398,7 @@ class WebPage(QtWebEngineWidgets.QWebEnginePage):
         return True
 
     def process_current_page(self, html):
-        global dynamic_run_count, latest_chapters
+        global dynamic_run_count
         drc = dynamic_run_count
         dms = dynamic_mangas
 
@@ -487,7 +451,6 @@ def update_latest(news, olds):
     # Changes the latest chapter read for up-to-date mangas to the last chapter released
     with open("saved/latest.txt", "wt", encoding="utf-8") as latest:
         global dynamic_ch_use
-
         for old, new in zip_longest(olds, news[:mangas_len]):
             if old is None:
                 latest.write(f"0 yts\n")
@@ -514,87 +477,6 @@ def update_latest(news, olds):
     return None
 
 
-# Doesn't quite belong in any section. An incredibly useful tool sprinkled in different functions.
-def num_puller(body):
-    # Iterates over all words to find the chapter number and saves that number as an int if possible and if not, a float
-    numbers = []
-    for word in body.split():
-        word = word.replace(":", "")
-        try:
-            numbers.append(int(word.strip()))
-        except ValueError:
-            try:
-                numbers.append(float(word.strip()))
-            except ValueError:
-                pass
-    return numbers or [-1]
-
-
-try:
-    # Saving data on file use to a Google Sheet
-    try:
-        gc = gspread.service_account(filename="access/credentials.json")
-    except FileNotFoundError:
-        # Create credentials.json file on first use
-        with open('access/lock.json', 'rb') as lock, open('access/key.key', 'rb') as key:
-            c_lock = lock.read()
-            c_key = key.read()
-        gatekeeper = Fernet(c_key)
-        with open("access/credentials.json", "wt", encoding="utf-8") as c:
-            c.write(gatekeeper.decrypt(c_lock).decode())
-        gc = gspread.service_account(filename="access/credentials.json")
-
-    sh = gc.open_by_key("1TXi-nkh6G585FzE8-jAo8mnakVCGelDSL9oKo2Pb9tM")
-    worksheet = sh.sheet1
-    mangas_len, time = len(mangas), datetime.now()
-    pname, time_list = os.path.expanduser("~"), time.strftime("%c").split()
-    with open("user.txt", encoding="utf-8") as username:
-        lines = username.readlines()
-        uname = lines[0].strip()
-        uid = lines[1].strip()
-
-    sh2 = gc.open_by_key("1o2HEEjF4mh8s_eQfTVyMqhd5POOPJMxdLkuA7iORQ64")
-    worksheet2 = sh2.sheet1
-
-    sh3 = gc.open_by_key("1eG1rgmkOGj6xAMNgLB24uvA4ocjxnDYUKr7svitpLVE")
-    worksheet3 = sh3.sheet1
-except TransportError:
-    input(Fore.LIGHTRED_EX + "No Internet Access. Please run again when you have connected to WiFi. " +
-                             "Press enter to acknowledge.  " + Fore.RESET)
-    sys.exit(1)
-
-
-def add_to_sheet(function, mnum=mangas_len, mlst=[]):
-    res = worksheet.get_all_values()
-    new_id = int(res[-1][0]) + 1
-    if uname != "Fill":
-        name = uname
-    else:
-        name = pname
-
-    if function != "rate":
-        worksheet.append_row([new_id, name, uid, function, mnum] + time_list)
-
-        if function == "primer" or function == "add manga":
-            res = worksheet2.get_all_values()
-            new_id = int(res[-1][0]) + 1
-            worksheet2.append_row([new_id, name, uid] + mlst)
-    else:
-        for rating in mlst:
-            res = worksheet3.get_all_values()
-            new_id = int(res[-1][0]) + 1
-            worksheet3.append_row([new_id, name, uid] + rating)
-
-
-def set_changes():
-    global mangas, current
-    # Sets the mangas and current lists to the recent adjustments in case of subsequent calls to a, n, or s
-    with open("saved/list.txt", "rt", encoding="utf-8") as new_list:
-        mangas = [line.split("|") for line in new_list.readlines()]
-    with open("saved/latest.txt") as new_latest:
-        current = new_latest.readlines()
-
-
 def verify_status(number_file):
     while True:
         status = input(f"\n{Fore.LIGHTWHITE_EX}Which chapter are you on?  {Fore.RESET}"), \
@@ -610,7 +492,6 @@ def verify_status(number_file):
         else:
             print(f"{Fore.LIGHTRED_EX}Please enter a number for the chapter and one of yts, wip, or utd for the code.  {Fore.RESET}")
     return status
-
 
 options = {"1": a, "2": n, "3": s, "4": change_current, "5": add, "6": primer, "7": rate}
 display_opt = (f"{Back.RESET}1: {Fore.LIGHTCYAN_EX}Show All{Fore.RESET}, 2: {Fore.LIGHTCYAN_EX}Show New{Fore.RESET}, " +
