@@ -13,7 +13,8 @@ import sys
 
 # Shared mutable variables and helper functions
 from config import * 
-from utils import num_puller, set_changes, add_to_sheet, mangas_len, worksheet
+from utils import num_puller, set_changes, add_to_sheet, mangas_len, worksheet, \
+                rate
 
 # Each list within the mangas list has the following parameters: Name, Link, Source
 with open("saved/list.txt", "rt", encoding="utf-8") as m_list:
@@ -121,25 +122,6 @@ def change_current():
                 numbers.write(chapters[i])
     add_to_sheet("change current", change_counter)
     set_changes()
-
-
-# Rate/Recommend Interlude
-def rate():
-    # The rate function collects user ratings to help build a database for a future recommend feature
-    rate_list = []
-    for manga in mangas:
-        if input(f"\n{Fore.LIGHTYELLOW_EX}Would you like to rate {manga[0]}? " +
-                 f"{Fore.LIGHTGREEN_EX}Type anything for yes {Fore.LIGHTRED_EX}or simply press enter for no.  {Fore.RESET}"):
-            ratings = [manga[0]]
-            for scale in ["Overall", "Plot", "Action", "Romance", "Comedy", "Art"]:
-                ratings.append(float(input(
-                    f"\n{Fore.LIGHTMAGENTA_EX}How would you rate {manga[0]}'s {scale} on a scale of 1 - 10? {Fore.RESET}")))
-            for boolean in ["Family Friendly", "Happy"]:
-                ratings.append(float(input(f"\n{Fore.LIGHTMAGENTA_EX}Did you find {manga[0]} {boolean} " +
-                                           f"{Fore.LIGHTGREEN_EX}Type 1 for yes {Fore.LIGHTRED_EX}and 0 for no  {Fore.RESET}")))
-            rate_list.append(ratings)
-    add_to_sheet("rate", mlst=rate_list)
-
 
 # The following three functions construct the core of this application's three query types: all, new, and save
 # Each one goes through the list of manga, calling other functions in this .py file for various functionality
@@ -274,7 +256,7 @@ def manga_strip(manga):
 
 # The i_or_cls parameter defined in source_methods will decide whether to find by index or class
 # This process will use the typing of that same item to do so.
-def finder(not_parsed, el, i_or_cls):
+def finder(not_parsed: requests.Response, el, i_or_cls):
     # Makes use of bs4 to get the right tag, it's text, and the number from that text
     parsed = BeautifulSoup(not_parsed.content, 'html.parser')
     typ = type(i_or_cls)

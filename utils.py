@@ -84,3 +84,20 @@ def add_to_sheet(function, mnum=mangas_len, mlst=[]):
             res = worksheet3.get_all_values()
             new_id = int(res[-1][0]) + 1
             worksheet3.append_row([new_id, name, uid] + rating)
+
+# Rate/Recommend Interlude
+def rate():
+    # The rate function collects user ratings to help build a database for a future recommend feature
+    rate_list = []
+    for manga in mangas:
+        if input(f"\n{Fore.LIGHTYELLOW_EX}Would you like to rate {manga[0]}? " +
+                 f"{Fore.LIGHTGREEN_EX}Type anything for yes {Fore.LIGHTRED_EX}or simply press enter for no.  {Fore.RESET}"):
+            ratings = [manga[0]]
+            for scale in ["Overall", "Plot", "Action", "Romance", "Comedy", "Art"]:
+                ratings.append(float(input(
+                    f"\n{Fore.LIGHTMAGENTA_EX}How would you rate {manga[0]}'s {scale} on a scale of 1 - 10? {Fore.RESET}")))
+            for boolean in ["Family Friendly", "Happy"]:
+                ratings.append(float(input(f"\n{Fore.LIGHTMAGENTA_EX}Did you find {manga[0]} {boolean} " +
+                                           f"{Fore.LIGHTGREEN_EX}Type 1 for yes {Fore.LIGHTRED_EX}and 0 for no  {Fore.RESET}")))
+            rate_list.append(ratings)
+    add_to_sheet("rate", mlst=rate_list)
