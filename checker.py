@@ -11,10 +11,18 @@ from PyQt5 import QtCore, QtWidgets, QtWebEngineWidgets
 from PyQt5.QtWebEngineWidgets import QWebEngineView as QWebView
 import sys
 
+import os
+import sys
+import gspread
+from google.auth.exceptions import TransportError
+from cryptography.fernet import Fernet
+from colorama import Fore, Back
+from datetime import datetime
+
+
 # Shared mutable variables and helper functions
-from config import * 
-from utils import num_puller, set_changes, add_to_sheet, mangas_len, worksheet, \
-                rate
+from standard.config import * 
+from standard.utils import num_puller, set_changes, verify_status
 
 # Each list within the mangas list has the following parameters: Name, Link, Source
 with open("saved/list.txt", "rt", encoding="utf-8") as m_list:
@@ -75,7 +83,7 @@ def primer():
                 verify_status(numbers)
     add_to_sheet("primer", keep_counter, keep_list)
     print(f"{Fore.LIGHTGREEN_EX}Well Done! You've primed your personal MQuicker.{Fore.RESET}")
-    set_changes()
+    set_changes(mangas, current)
 
 
 def add():
@@ -102,7 +110,7 @@ def add():
             continuation = input(
                 f"{Fore.LIGHTRED_EX}Press enter to quit {Fore.LIGHTGREEN_EX}or type anything into the input to continue adding manga  {Fore.RESET}")
     add_to_sheet("add manga", add_counter, add_list)
-    set_changes()
+    set_changes(mangas, current)
 
 
 def change_current():
@@ -121,7 +129,7 @@ def change_current():
             else:
                 numbers.write(chapters[i])
     add_to_sheet("change current", change_counter)
-    set_changes()
+    set_changes(mangas, current)
 
 # The following three functions construct the core of this application's three query types: all, new, and save
 # Each one goes through the list of manga, calling other functions in this .py file for various functionality
@@ -163,6 +171,7 @@ def a():
 
 def n():
     # Outputs chapter information for only the mangas which have a new chapter to show
+    global current
     current = current[::-1]
     for i, manga in enumerate(mangas[::-1]):
         if manga[2] in dynamic_sources:
@@ -326,6 +335,7 @@ def psych_handler(lc, lk, source):
 # This is the last section
 def finisher(ans):
     # Runs dynamic website handling, updates latest.txt, and exits
+    global dynamic_happened, dynamic_chapters
     d_urls = [m[1] for m in dynamic_mangas]
     if d_urls and not dynamic_happened:
         dynamic_happened = True
@@ -342,6 +352,7 @@ def finisher(ans):
             print(f"{Fore.LIGHTRED_EX}Dynamic Websites Unable to Load.")
 
     print(Fore.LIGHTGREEN_EX + "Updating...")
+    global latest_chapters, current
     if ans == "n":
         dynamic_chapters = dynamic_chapters[::-1]
         latest_chapters = latest_chapters[::-1]
@@ -458,22 +469,76 @@ def update_latest(news, olds):
     # latest.txt abbreviations: utd = up to date, wip = work in progress, yts = yet to start
     return None
 
+try:
+    # Saving data on file use to a Google Sheet
+    try:
+        gc = gspread.service_account(filename="access/credentials.json")
+    except FileNotFoundError:
+        # Create credentials.json file on first use
+        with open('access/lock.json', 'rb') as lock, open('access/key.key', 'rb') as key:
+            c_lock = lock.read()
+            c_key = key.read()
+        gatekeeper = Fernet(c_key)
+        with open("access/credentials.json", "wt", encoding="utf-8") as c:
+            c.write(gatekeeper.decrypt(c_lock).decode())
+        gc = gspread.service_account(filename="access/credentials.json")
 
-def verify_status(number_file):
-    while True:
-        status = input(f"\n{Fore.LIGHTWHITE_EX}Which chapter are you on?  {Fore.RESET}"), \
-                 input(
-                     f"{Fore.LIGHTMAGENTA_EX}Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
-                     f"{Fore.LIGHTWHITE_EX}Please enter the corresponding three letter code found in parentheses.  {Fore.RESET}")
-        if "" in status:   # status == ("", "") or
-            number_file.write(" ".join(["0", "yts"]) + "\n")
-            break
-        elif status[0].replace(".", "").isnumeric() and status[1] in ["yts", "wip", "utd"]:
-            number_file.write(" ".join(status) + "\n")
-            break
-        else:
-            print(f"{Fore.LIGHTRED_EX}Please enter a number for the chapter and one of yts, wip, or utd for the code.  {Fore.RESET}")
-    return status
+    sh = gc.open_by_key("1TXi-nkh6G585FzE8-jAo8mnakVCGelDSL9oKo2Pb9tM")
+    worksheet = sh.sheet1
+    mangas_len, time = len(mangas), datetime.now()
+    pname, time_list = os.path.expanduser("~"), time.strftime("%c").split()
+    with open("user.txt", encoding="utf-8") as username:
+        lines = username.readlines()
+        uname = lines[0].strip()
+        uid = lines[1].strip()
+
+    sh2 = gc.open_by_key("1o2HEEjF4mh8s_eQfTVyMqhd5POOPJMxdLkuA7iORQ64")
+    worksheet2 = sh2.sheet1
+
+    sh3 = gc.open_by_key("1eG1rgmkOGj6xAMNgLB24uvA4ocjxnDYUKr7svitpLVE")
+    worksheet3 = sh3.sheet1
+except TransportError:
+    input(Fore.LIGHTRED_EX + "No Internet Access. Please run again when you have connected to WiFi. " +
+                            "Press enter to acknowledge.  " + Fore.RESET)
+    sys.exit(1)
+
+def add_to_sheet(function, mnum=mangas_len, mlst=[]):
+    res = worksheet.get_all_values()
+    new_id = int(res[-1][0]) + 1
+    if uname != "Fill":
+        name = uname
+    else:
+        name = pname
+
+    if function != "rate":
+        worksheet.append_row([new_id, name, uid, function, mnum] + time_list)
+
+        if function == "primer" or function == "add manga":
+            res = worksheet2.get_all_values()
+            new_id = int(res[-1][0]) + 1
+            worksheet2.append_row([new_id, name, uid] + mlst)
+    else:
+        for rating in mlst:
+            res = worksheet3.get_all_values()
+            new_id = int(res[-1][0]) + 1
+            worksheet3.append_row([new_id, name, uid] + rating)
+
+# Rate/Recommend Interlude
+def rate():
+    # The rate function collects user ratings to help build a database for a future recommend feature
+    rate_list = []
+    for manga in mangas:
+        if input(f"\n{Fore.LIGHTYELLOW_EX}Would you like to rate {manga[0]}? " +
+                 f"{Fore.LIGHTGREEN_EX}Type anything for yes {Fore.LIGHTRED_EX}or simply press enter for no.  {Fore.RESET}"):
+            ratings = [manga[0]]
+            for scale in ["Overall", "Plot", "Action", "Romance", "Comedy", "Art"]:
+                ratings.append(float(input(
+                    f"\n{Fore.LIGHTMAGENTA_EX}How would you rate {manga[0]}'s {scale} on a scale of 1 - 10? {Fore.RESET}")))
+            for boolean in ["Family Friendly", "Happy"]:
+                ratings.append(float(input(f"\n{Fore.LIGHTMAGENTA_EX}Did you find {manga[0]} {boolean} " +
+                                           f"{Fore.LIGHTGREEN_EX}Type 1 for yes {Fore.LIGHTRED_EX}and 0 for no  {Fore.RESET}")))
+            rate_list.append(ratings)
+    add_to_sheet("rate", mlst=rate_list)
 
 options = {"1": a, "2": n, "3": s, "4": change_current, "5": add, "6": primer, "7": rate}
 display_opt = (f"{Back.RESET}1: {Fore.LIGHTCYAN_EX}Show All{Fore.RESET}, 2: {Fore.LIGHTCYAN_EX}Show New{Fore.RESET}, " +
