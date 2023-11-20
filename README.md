@@ -7,7 +7,8 @@ Windows Users who use the Two-Step Powershell Install can run in one click! Two-
 
 <img src="mcheck_ex.png"/>
 
-<a href="https://youtu.be/AyZsZzuTAPg/" target="_blank"><h2><b>For Demo Video Ctrl+Click Here</b></h2></a>
+<h2><b>For Demo Video, Ctrl+Click</b></h2>
+<a href="https://youtu.be/AyZsZzuTAPg/" target="_blank">YouTube Recording</a>
 
  
 # Function Directory
