@@ -25,12 +25,7 @@ latest_chapters = []
 with open("saved/latest.txt") as f:
     current = f.readlines()
 
-# Pertains to dynamic_finder. The run count is used for indexing within dynamic_finder and dynamic_indexes for insertion
-dynamic_mangas = []
-dynamic_run_count = 0
-dynamic_indexes = []
-dynamic_happened = False
 dynamic_sources = ["WP", "asura", "Zero", "MangaDex", "InManga"]
-# The following declarations help properly update_latest for the dynamics
-dynamic_ch_use = 0
-dynamic_chapters = []
+# Live Datastores
+dynamic_mangas = []
+dynamic_indexes = []
