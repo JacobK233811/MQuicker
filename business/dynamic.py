@@ -24,10 +24,84 @@ from standard.utils import num_puller
 from standard.config import source_elements, source_methods
 
 def finisher(ans, dynamic_mangas, latest_chapters, current, dynamic_indexes, mangas_len):
+    
     # Runs dynamic website handling, updates latest.txt, and exits
     global dynamic_happened, dynamic_chapters
     dest_current = current
     dest_dynamic_indexes = dynamic_indexes
+        
+    # included within scope to allow access to dynamic_mangas variable
+    class WebPage(QtWebEngineWidgets.QWebEnginePage):
+        # Creates a QtWebEngine to load in JavaScript dependent elements with chapter information
+        def __init__(self):
+            super(WebPage, self).__init__()
+            self.loadFinished.connect(self.handle_load_finished)
+
+        def start(self, urls):
+            self._urls = iter(urls)
+            self.fetch_next()
+
+        def javaScriptConsoleMessage(self, level, msg, line, sourceID):
+            # To suppress error messages in calls of PyQt5 WebEngine
+            pass
+
+        def fetch_next(self):
+            try:
+                url = next(self._urls)
+            except StopIteration:
+                return False
+            else:
+                self.load(QtCore.QUrl(url))
+            return True
+
+        def process_current_page(self, html):
+            global dynamic_run_count
+            drc = dynamic_run_count
+            dms = dynamic_mangas
+
+            title_of = "unknown"
+            print(Fore.GREEN + 'Loaded [%d chars] %s' % (len(html), "Dynamically"))
+
+            try:
+                soupy = BeautifulSoup(html, 'html.parser')
+                
+                title_of = soupy.find("title").text
+                elem_clas = lambda src: soupy.find(source_elements[src], class_=source_methods[src]).a
+
+                if "Asura" in title_of:
+                    tag = elem_clas("asura")
+                elif "InManga" in title_of:
+                    tag = elem_clas("InManga")
+                    # presently dysfunctional due to slow page load               
+
+                else:
+                    tag = soupy.find(source_elements["WP"], class_=source_methods["WP"]).a
+
+                chapter_num = num_puller(tag.text)[0]
+                dynamic_chapters.append(chapter_num)
+                chapter_link = tag.attrs["href"]
+                index_ = dest_dynamic_indexes[dynamic_run_count]
+
+                try:
+                    previous = num_puller(dest_current[index_])[0]
+                except IndexError:
+                    previous = 0
+
+                if previous < chapter_num - 5:
+                    url_num_loc = chapter_link.find("-", -7) + 1
+                    chapter_link = chapter_link[:url_num_loc] + f"{previous + 1}/"
+
+                print(Fore.LIGHTYELLOW_EX + f"{dms[drc][0]}: {previous} -> {chapter_num} {Fore.LIGHTBLUE_EX} {chapter_link}")
+            except AttributeError as e:
+                print(f"{Fore.LIGHTRED_EX}Dynamic Website {title_of} Unable to Load Completely Because {e}.")
+                dynamic_chapters.append(-1) 
+            dynamic_run_count += 1
+
+            if not self.fetch_next():
+                QtWidgets.qApp.quit()
+
+        def handle_load_finished(self):
+            self.toHtml(self.process_current_page)
 
     d_urls = [m[1] for m in dynamic_mangas]
     if d_urls and not dynamic_happened:
@@ -87,75 +161,3 @@ def update_latest(news, olds, dynamic_chapters, mangas_len):
 
     # latest.txt abbreviations: utd = up to date, wip = work in progress, yts = yet to start
     return None
-
-class WebPage(QtWebEngineWidgets.QWebEnginePage):
-    # Creates a QtWebEngine to load in JavaScript dependent elements with chapter information
-    def __init__(self):
-        super(WebPage, self).__init__()
-        self.loadFinished.connect(self.handle_load_finished)
-
-    def start(self, urls):
-        self._urls = iter(urls)
-        self.fetch_next()
-
-    def javaScriptConsoleMessage(self, level, msg, line, sourceID):
-        # To suppress error messages in calls of PyQt5 WebEngine
-        pass
-
-    def fetch_next(self):
-        try:
-            url = next(self._urls)
-        except StopIteration:
-            return False
-        else:
-            self.load(QtCore.QUrl(url))
-        return True
-
-    def process_current_page(self, html):
-        global dynamic_run_count
-        drc = dynamic_run_count
-        dms = dynamic_mangas
-
-        title_of = "unknown"
-        print(Fore.GREEN + 'Loaded [%d chars] %s' % (len(html), "Dynamically"))
-
-        try:
-            soupy = BeautifulSoup(html, 'html.parser')
-            
-            title_of = soupy.find("title").text
-            elem_clas = lambda src: soupy.find(source_elements[src], class_=source_methods[src]).a
-
-            if "Asura" in title_of:
-                tag = elem_clas("asura")
-            elif "InManga" in title_of:
-                tag = elem_clas("InManga")
-                # presently dysfunctional due to slow page load               
-
-            else:
-                tag = soupy.find(source_elements["WP"], class_=source_methods["WP"]).a
-
-            chapter_num = num_puller(tag.text)[0]
-            dynamic_chapters.append(chapter_num)
-            chapter_link = tag.attrs["href"]
-            index_ = dest_dynamic_indexes[dynamic_run_count]
-
-            try:
-                previous = num_puller(dest_current[index_])[0]
-            except IndexError:
-                previous = 0
-
-            if previous < chapter_num - 5:
-                url_num_loc = chapter_link.find("-", -7) + 1
-                chapter_link = chapter_link[:url_num_loc] + f"{previous + 1}/"
-
-            print(Fore.LIGHTYELLOW_EX + f"{dms[drc][0]}: {previous} -> {chapter_num} {Fore.LIGHTBLUE_EX} {chapter_link}")
-        except AttributeError as e:
-            print(f"{Fore.LIGHTRED_EX}Dynamic Website {title_of} Unable to Load Completely Because {e}.")
-            dynamic_chapters.append(-1) 
-        dynamic_run_count += 1
-
-        if not self.fetch_next():
-            QtWidgets.qApp.quit()
-
-    def handle_load_finished(self):
-        self.toHtml(self.process_current_page)

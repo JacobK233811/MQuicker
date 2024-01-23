@@ -163,7 +163,7 @@ def a():
             color = Fore.CYAN
             link_placeholder = ""
         print(color + f"{manga[0]}: {previous} -> {latest} {Fore.LIGHTBLUE_EX} {link_placeholder}")
-    finisher("a")
+    finisher("a", dynamic_mangas, latest_chapters, current, dynamic_indexes, mangas_len)
     add_to_sheet("all")
 
 
@@ -193,7 +193,7 @@ def n():
             print(Fore.LIGHTMAGENTA_EX + f"{manga[0]}: {previous} -> {latest} Copy to see it:  {Fore.LIGHTBLUE_EX} {link}")
         elif i % 5 == 0 and i != 0:
             print(Fore.LIGHTGREEN_EX + "Loading...")
-    finisher("n")
+    finisher("n", dynamic_mangas, latest_chapters, current, dynamic_indexes, mangas_len)
     add_to_sheet("new")
 
 
@@ -225,7 +225,7 @@ def s():
             file_access.write(color + f"{manga[0]}: {previous} -> {latest}{link_placeholder}\n\n")
             if i % 4 == 0 and i != 0:
                 print(Fore.LIGHTGREEN_EX + "Loading...")
-    finisher("s")
+    finisher("s", dynamic_mangas, latest_chapters, current, dynamic_indexes, mangas_len)
     add_to_sheet("save")
 
 
