@@ -1,19 +1,27 @@
 from bs4 import BeautifulSoup
 import requests
 from colorama import Fore, Back
-from collections import defaultdict
 from datetime import datetime
-from itertools import zip_longest
 import os
-import gspread
 import webbrowser
+
+import os
+import sys
+import gspread
 from google.auth.exceptions import TransportError
 from cryptography.fernet import Fernet
+from colorama import Fore, Back
+from datetime import datetime
 
-# Modules for dynamic JS websites
-from PyQt5 import QtCore, QtWidgets, QtWebEngineWidgets
-from PyQt5.QtWebEngineWidgets import QWebEngineView as QWebView
-import sys
+
+# Shared mutable variables and helper functions
+from standard.config import mangas, source_elements, source_methods, latest_chapters, \
+                            current, dynamic_mangas, dynamic_indexes, dynamic_sources
+from standard.utils import num_puller, set_changes, verify_status
+
+# Logical separation of functional components
+from business.dynamic import finisher
+from business.personalize import change_current, primer, add, rate
 
 # Each list within the mangas list has the following parameters: Name, Link, Source
 with open("saved/list.txt", "rt", encoding="utf-8") as m_list:
@@ -35,149 +43,10 @@ print(Fore.LIGHTGREEN_EX + "Welcome to MQuicker!" + Fore.RESET)
 with open("MQuicker_Mascot.txt", "rt", encoding="utf-8") as mascot:
     print(mascot.read())
 
-# On most sites the desired element will be an anchor 'a' tag. However, this default dict allows us to specify exceptions
-source_elements = defaultdict(lambda: 'a')
-source_elements['WP'], source_elements["MR"] = ['li'] * 2
-source_elements['Kakalot'], source_elements['asura'], source_elements['Zero'] = ['div'] * 3
-source_elements['ManhuaScan'], source_elements['MangaDex'] = ['span'] * 2
-
-
-
-# Now the i_or_cls parameter of finder comes from this neat dictionary. Preference toward classes intentionally
-source_methods = {'Mangelo': 'chapter-name text-nowrap',
-                  'ReadMng': 'chnumber', 'WP': 'wp-manga-chapter',
-                  'MR': 'wp-manga-chapter',
-                  'Kakalot': 'chapter-list', "lh": "chapter",
-                  "asura": "eph-num", "Zero": "col-md-6 col-12",
-                  "ManhuaScan": "title", "MangaDex": "chapter-link",
-                  "InManga": "list-group-item custom-list-group-item "}
-
-# For later use in the update_latest function
-latest_chapters = []
-# Current also features throughout for comparison purposes
-with open("saved/latest.txt") as f:
-    current = f.readlines()
-
-# Pertains to dynamic_finder. The run count is used for indexing within dynamic_finder and dynamic_indexes for insertion
-dynamic_mangas = []
-dynamic_run_count = 0
-dynamic_indexes = []
-dynamic_happened = False
-dynamic_sources = ["WP", "asura", "Zero", "MangaDex", "InManga"]
-# The following declarations help properly update_latest for the dynamics
-dynamic_ch_use = 0
-dynamic_chapters = []
-
-
-# The following three functions pertain to .txt file handling to keep new users from having to ever open a text file
-# Progressive input statements provide a clean text editing experience with proper formatting and alignment
-# Deters user error or frustration with sensitive entries. Next code section starts at line 175
-def primer():
-    # Choosing which manga of the base list to keep and setting their current chapter/status for that one-by-one
-    if not input(
-            f"{Fore.LIGHTYELLOW_EX}Are you sure? This is a somewhat long process meant only for first-time users." +
-            f"\n{Fore.LIGHTRED_EX}Press enter to cancel. {Fore.LIGHTGREEN_EX}Typing anything else will begin the " +
-            f"priming procedure.  {Fore.RESET}"):
-        return "Interrupt"
-
-    if input(
-            f"{Fore.LIGHTMAGENTA_EX}Are you comfortable entering a first name or user name? " +
-            f"{Fore.LIGHTGREEN_EX}Type anything for yes {Fore.LIGHTRED_EX}or enter for no.  {Fore.RESET}"):
-        with open("user.txt", "wt", encoding="utf-8") as user:
-            written_name = input(f"{Fore.LIGHTWHITE_EX}Please enter your name.  {Fore.RESET}")
-            generated_id = str(max([int(row[2]) for row in worksheet.get_all_values()[1:]]) + 1)
-            user.write(written_name + "\n" + generated_id)
-            global uname, uid
-            uname = written_name
-            uid = generated_id
-
-    with open("saved/list.txt", "wt", encoding="utf-8") as names, \
-            open("saved/latest.txt", "wt", encoding="utf-8") as numbers:
-        keep_counter = 0
-        keep_list = []
-        for manga in mangas:
-            title = manga[0]
-            if input(f"\n\n{Fore.LIGHTYELLOW_EX}Would you like to keep {title} on your list? " +
-                     f"\n{Fore.LIGHTGREEN_EX}Type anything for yes {Fore.LIGHTRED_EX}or enter for no.  {Fore.RESET}"):
-                keep_list.append(title)
-                keep_counter += 1
-                names.write("|".join(manga))
-                print(f"{Fore.GREEN}Note: If you would like to quickly set up a new \"0 yts\" manga, "
-                      + "please press enter without any input for both of the following")
-                verify_status(numbers)
-    add_to_sheet("primer", keep_counter, keep_list)
-    print(f"{Fore.LIGHTGREEN_EX}Well Done! You've primed your personal MQuicker.{Fore.RESET}")
-    set_changes()
-
-
-def add():
-    # Quickly add new manga information in both list.txt and latest.txt
-    add_counter = 0
-    add_list = []
-    with open("saved/list.txt", "at", encoding="utf-8") as names, \
-            open("saved/latest.txt", "at", encoding="utf-8") as numbers:
-        continuation = "Yep"
-        while continuation:
-            add_counter += 1
-            print(f"{Fore.LIGHTWHITE_EX}Please enter all of the following information for the manga you'd like to add")
-            title = input(f'{Fore.RESET}Name  ')
-            add_list.append(title)
-            while True:
-                link_var, source_var = input('Link  '), input('Source (see supported source codes)  ')
-                if link_var[:8] == "https://" and "." in link_var and source_var in source_methods:
-                    break
-                else:
-                    print(f"{Fore.LIGHTRED_EX}Please enter a valid link and supported source code.  {Fore.RESET}")
-            names.write(f"{title}|{link_var}|{source_var}|\n")
-            # numbers.write(f"{input('Current Chapter  ')} {input('Status (yts/wip/utd)  ')}\n")
-            verify_status(numbers)
-            continuation = input(
-                f"{Fore.LIGHTRED_EX}Press enter to quit {Fore.LIGHTGREEN_EX}or type anything into the input to continue adding manga  {Fore.RESET}")
-    add_to_sheet("add manga", add_counter, add_list)
-    set_changes()
-
-
-def change_current():
-    # Allows for a fast run-through of all manga on the list and provides the option to update status and chapter
-    change_counter = 0
-    with open("saved/latest.txt", "rt", encoding="utf-8") as numbers_read:
-        chapters = [line for line in numbers_read.readlines()]
-    with open("saved/latest.txt", "wt", encoding="utf-8") as numbers:
-        for i, manga in enumerate(mangas):
-            if chapters[i].split()[1] != "utd" and input(
-                    f"\n{Fore.LIGHTMAGENTA_EX}Would you like to update {manga[0]}'s current chapter? " +
-                    f"{Fore.LIGHTWHITE_EX}Right now it is {chapters[i]}" +
-                    f"{Fore.LIGHTGREEN_EX}Type anything for yes {Fore.LIGHTRED_EX}or simply press enter for no.  {Fore.RESET}"):
-                change_counter += 1
-                verify_status(numbers)
-            else:
-                numbers.write(chapters[i])
-    add_to_sheet("change current", change_counter)
-    set_changes()
-
-
-# Rate/Recommend Interlude
-def rate():
-    # The rate function collects user ratings to help build a database for a future recommend feature
-    rate_list = []
-    for manga in mangas:
-        if input(f"\n{Fore.LIGHTYELLOW_EX}Would you like to rate {manga[0]}? " +
-                 f"{Fore.LIGHTGREEN_EX}Type anything for yes {Fore.LIGHTRED_EX}or simply press enter for no.  {Fore.RESET}"):
-            ratings = [manga[0]]
-            for scale in ["Overall", "Plot", "Action", "Romance", "Comedy", "Art"]:
-                ratings.append(float(input(
-                    f"\n{Fore.LIGHTMAGENTA_EX}How would you rate {manga[0]}'s {scale} on a scale of 1 - 10? {Fore.RESET}")))
-            for boolean in ["Family Friendly", "Happy"]:
-                ratings.append(float(input(f"\n{Fore.LIGHTMAGENTA_EX}Did you find {manga[0]} {boolean} " +
-                                           f"{Fore.LIGHTGREEN_EX}Type 1 for yes {Fore.LIGHTRED_EX}and 0 for no  {Fore.RESET}")))
-            rate_list.append(ratings)
-    add_to_sheet("rate", mlst=rate_list)
-
-
 # The following three functions construct the core of this application's three query types: all, new, and save
 # Each one goes through the list of manga, calling other functions in this .py file for various functionality
 # Users call these whenever they want to check for new chapters and each one caters to a different need
-# Near every line of code comes into play on the call of one of these functions. Next sections starts line 270
+# Near every line of code comes into play on the call of one of these functions.
 def a():
     # Simply outputs chapter information for every include manga within list.txt
     for i, manga in enumerate(mangas):
@@ -208,7 +77,7 @@ def a():
             color = Fore.CYAN
             link_placeholder = ""
         print(color + f"{manga[0]}: {previous} -> {latest} {Fore.LIGHTBLUE_EX} {link_placeholder}")
-    finisher("a")
+    finisher("a", dynamic_mangas, latest_chapters, current, dynamic_indexes, mangas_len)
     add_to_sheet("all")
 
 
@@ -238,7 +107,7 @@ def n():
             print(Fore.LIGHTMAGENTA_EX + f"{manga[0]}: {previous} -> {latest} Copy to see it:  {Fore.LIGHTBLUE_EX} {link}")
         elif i % 5 == 0 and i != 0:
             print(Fore.LIGHTGREEN_EX + "Loading...")
-    finisher("n")
+    finisher("n", dynamic_mangas, latest_chapters, current, dynamic_indexes, mangas_len)
     add_to_sheet("new")
 
 
@@ -270,12 +139,12 @@ def s():
             file_access.write(color + f"{manga[0]}: {previous} -> {latest}{link_placeholder}\n\n")
             if i % 4 == 0 and i != 0:
                 print(Fore.LIGHTGREEN_EX + "Loading...")
-    finisher("s")
+    finisher("s", dynamic_mangas, latest_chapters, current, dynamic_indexes, mangas_len)
     add_to_sheet("save")
 
 
 # The following three functions pertain to sending HTTP requests to websites to get their html content
-# Ends with the desired most recent chapter number. Next and final section start on line 346
+# Ends with the desired most recent chapter number.
 def manga_strip(manga):
     # Pulling all the necessary info out of the manga list for quick reference
     source_url = manga[1]
@@ -289,7 +158,7 @@ def manga_strip(manga):
         sesh.headers['User-Agent'] = "MTapper" + datetime.strftime(datetime.now(), "%m%d%y")
         webpage_request = sesh.get(source_url)
 
-    # Finder function enables one line to check any new properly defined list item (see line 16 comment)
+    # Finder function enables one line to check any new properly defined list item
     latest_chapter, link = finder(webpage_request, element, method)
 
     # In case it is a local reference to the chapter page (as with MangaDex)
@@ -308,7 +177,7 @@ def manga_strip(manga):
 
 # The i_or_cls parameter defined in source_methods will decide whether to find by index or class
 # This process will use the typing of that same item to do so.
-def finder(not_parsed, el, i_or_cls):
+def finder(not_parsed: requests.Response, el, i_or_cls):
     # Makes use of bs4 to get the right tag, it's text, and the number from that text
     parsed = BeautifulSoup(not_parsed.content, 'html.parser')
     typ = type(i_or_cls)
@@ -374,161 +243,7 @@ def psych_handler(lc, lk, source):
     return str(ch)
 
 
-# The following three functions close out the program
-# This is the last section
-def finisher(ans):
-    # Runs dynamic website handling, updates latest.txt, and exits
-    d_urls = [m[1] for m in dynamic_mangas]
-    global dynamic_happened
-    if d_urls and not dynamic_happened:
-        dynamic_happened = True
-        print(Fore.LIGHTGREEN_EX + "Handling Dynamic Websites...")
-        # To suppress error messages in calls of PyQt5 WebEngine
-        os.environ["QTWEBENGINE_CHROMIUM_FLAGS"] = "--disable-logging"
-        try:
-            app = QtWidgets.QApplication(sys.argv)
-            fixer = QWebView()  # used to resolve PyQt5 caching errors
-            webpage = WebPage()
-            webpage.start(d_urls)
-            app.exec_()
-        except AttributeError:
-            print(f"{Fore.LIGHTRED_EX}Dynamic Websites Unable to Load.")
-
-    global current, latest_chapters, dynamic_chapters
-    print(Fore.LIGHTGREEN_EX + "Updating...")
-    if ans == "n":
-        dynamic_chapters = dynamic_chapters[::-1]
-        latest_chapters = latest_chapters[::-1]
-        current = current[::-1]
-    elif ans == "s" and dynamic_chapters[-2:] != [-1] * 2:
-        with open(f'saved/{datetime.strftime(datetime.now(), "%m%d%y")}.txt', "at", encoding="utf-8") as file_access:
-            file_access.write(
-                "\n\n".join(['\nDynamics', "\n".join([str(lst) for lst in dynamic_mangas]), str(dynamic_chapters)]))
-    update_latest(latest_chapters, current)
-    print(Fore.LIGHTGREEN_EX + "Done!" + Fore.RESET)
-    #
-    # sys.exit(0)
-
-
-class WebPage(QtWebEngineWidgets.QWebEnginePage):
-    # Creates a QtWebEngine to load in JavaScript dependent elements with chapter information
-    def __init__(self):
-        super(WebPage, self).__init__()
-        self.loadFinished.connect(self.handle_load_finished)
-
-    def start(self, urls):
-        self._urls = iter(urls)
-        self.fetch_next()
-
-    def javaScriptConsoleMessage(self, level, msg, line, sourceID):
-        # To suppress error messages in calls of PyQt5 WebEngine
-        pass
-
-    def fetch_next(self):
-        try:
-            url = next(self._urls)
-        except StopIteration:
-            return False
-        else:
-            self.load(QtCore.QUrl(url))
-        return True
-
-    def process_current_page(self, html):
-        global dynamic_run_count, latest_chapters
-        drc = dynamic_run_count
-        dms = dynamic_mangas
-
-        title_of = "unknown"
-        print(Fore.GREEN + 'Loaded [%d chars] %s' % (len(html), "Dynamically"))
-
-        try:
-            soupy = BeautifulSoup(html, 'html.parser')
-            
-            title_of = soupy.find("title").text
-            elem_clas = lambda src: soupy.find(source_elements[src], class_=source_methods[src]).a
-
-            if "Asura" in title_of:
-                tag = elem_clas("asura")
-            elif "InManga" in title_of:
-                tag = elem_clas("InManga")
-                # presently dysfunctional due to slow page load               
-
-            else:
-                tag = soupy.find(source_elements["WP"], class_=source_methods["WP"]).a
-
-            chapter_num = num_puller(tag.text)[0]
-            dynamic_chapters.append(chapter_num)
-            chapter_link = tag.attrs["href"]
-            index_ = dynamic_indexes[dynamic_run_count]
-
-            try:
-                previous = num_puller(current[index_])[0]
-            except IndexError:
-                previous = 0
-
-            if previous < chapter_num - 5:
-                url_num_loc = chapter_link.find("-", -7) + 1
-                chapter_link = chapter_link[:url_num_loc] + f"{previous + 1}/"
-
-            print(Fore.LIGHTYELLOW_EX + f"{dms[drc][0]}: {previous} -> {chapter_num} {Fore.LIGHTBLUE_EX} {chapter_link}")
-        except AttributeError as e:
-            print(f"{Fore.LIGHTRED_EX}Dynamic Website {title_of} Unable to Load Completely Because {e}.")
-            dynamic_chapters.append(-1) 
-        dynamic_run_count += 1
-
-        if not self.fetch_next():
-            QtWidgets.qApp.quit()
-
-    def handle_load_finished(self):
-        self.toHtml(self.process_current_page)
-
-
-def update_latest(news, olds):
-    # Changes the latest chapter read for up-to-date mangas to the last chapter released
-    with open("saved/latest.txt", "wt", encoding="utf-8") as latest:
-        global dynamic_ch_use
-
-        for old, new in zip_longest(olds, news[:mangas_len]):
-            if old is None:
-                latest.write(f"0 yts\n")
-            else:
-                label = old.split()[1]
-                if label == "wip" or label == "yts" or new == -1:
-                    latest.write(old)
-                elif label == "utd" and new != "9999":
-                    latest.write(f"{new} utd\n")
-                else:
-                    try:
-                        # Spot fix for utd dynamic websites
-                        dynamic_chapter = dynamic_chapters[dynamic_ch_use]
-                        if dynamic_chapter == -1:
-                            raise IndexError
-                        latest.write(f"{dynamic_chapter} utd\n")
-                    except IndexError:
-                        latest.write(old)
-
-            if new == "9999":
-                dynamic_ch_use += 1
-
-    # latest.txt abbreviations: utd = up to date, wip = work in progress, yts = yet to start
-    return None
-
-
-# Doesn't quite belong in any section. An incredibly useful tool sprinkled in different functions.
-def num_puller(body):
-    # Iterates over all words to find the chapter number and saves that number as an int if possible and if not, a float
-    numbers = []
-    for word in body.split():
-        word = word.replace(":", "")
-        try:
-            numbers.append(int(word.strip()))
-        except ValueError:
-            try:
-                numbers.append(float(word.strip()))
-            except ValueError:
-                pass
-    return numbers or [-1]
-
+# This last function closes out the program
 
 try:
     # Saving data on file use to a Google Sheet
@@ -560,9 +275,8 @@ try:
     worksheet3 = sh3.sheet1
 except TransportError:
     input(Fore.LIGHTRED_EX + "No Internet Access. Please run again when you have connected to WiFi. " +
-                             "Press enter to acknowledge.  " + Fore.RESET)
+                            "Press enter to acknowledge.  " + Fore.RESET)
     sys.exit(1)
-
 
 def add_to_sheet(function, mnum=mangas_len, mlst=[]):
     res = worksheet.get_all_values()
@@ -585,33 +299,6 @@ def add_to_sheet(function, mnum=mangas_len, mlst=[]):
             new_id = int(res[-1][0]) + 1
             worksheet3.append_row([new_id, name, uid] + rating)
 
-
-def set_changes():
-    global mangas, current
-    # Sets the mangas and current lists to the recent adjustments in case of subsequent calls to a, n, or s
-    with open("saved/list.txt", "rt", encoding="utf-8") as new_list:
-        mangas = [line.split("|") for line in new_list.readlines()]
-    with open("saved/latest.txt") as new_latest:
-        current = new_latest.readlines()
-
-
-def verify_status(number_file):
-    while True:
-        status = input(f"\n{Fore.LIGHTWHITE_EX}Which chapter are you on?  {Fore.RESET}"), \
-                 input(
-                     f"{Fore.LIGHTMAGENTA_EX}Are you yet to start (yts), work in progress (wip), or up to date (utd)?\n" +
-                     f"{Fore.LIGHTWHITE_EX}Please enter the corresponding three letter code found in parentheses.  {Fore.RESET}")
-        if "" in status:   # status == ("", "") or
-            number_file.write(" ".join(["0", "yts"]) + "\n")
-            break
-        elif status[0].replace(".", "").isnumeric() and status[1] in ["yts", "wip", "utd"]:
-            number_file.write(" ".join(status) + "\n")
-            break
-        else:
-            print(f"{Fore.LIGHTRED_EX}Please enter a number for the chapter and one of yts, wip, or utd for the code.  {Fore.RESET}")
-    return status
-
-
 options = {"1": a, "2": n, "3": s, "4": change_current, "5": add, "6": primer, "7": rate}
 display_opt = (f"{Back.RESET}1: {Fore.LIGHTCYAN_EX}Show All{Fore.RESET}, 2: {Fore.LIGHTCYAN_EX}Show New{Fore.RESET}, " +
                f"3: {Fore.LIGHTCYAN_EX}Save Results{Fore.RESET}, " +
@@ -624,6 +311,7 @@ while option != "8":
             option = input(display_opt)
             continue
         options[option]()
+        func_name = options[option].__name__
         print("\n")
         option = input(display_opt)
     except requests.exceptions.ConnectionError:
